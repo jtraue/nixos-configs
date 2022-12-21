@@ -1,0 +1,436 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set ai                                  " Copy indent from current line when starting a new one
+set autoread                            " Set to auto read when a file is changed from the outside
+set background=dark
+set backspace=indent,eol,start          " allow backspace over indents, etc.
+set cmdheight=2                         " number of screen lines for command line
+set colorcolumn=80
+set cursorline                          " highlight line in which the cursor is
+set encoding=utf8                       " Set utf8 as standard encoding
+set expandtab                           " Use spaces instead of tabs
+set ffs=unix,dos,mac                    " Use Unix as the standard file type
+set hidden                              " keep buffers open - preserves history
+set laststatus=2                        " always show a status line
+set lbr                                 " Linebreak on 500 characters
+set list                                " turn whitespace display on
+set listchars=tab:»·,trail:•,nbsp:•,extends:»,precedes:« " display these whitespaces graphically
+set nobackup
+set noerrorbells                        " No annoying sound on errors
+set nofoldenable                        " do not fold
+set noswapfile
+set novisualbell                        " again: no sounds
+set nu                                  " Show line numbers
+set path+=**                            " for find look into subfolders
+set ruler                               " Always show current position
+set shiftwidth=4                        " 1 tab == 4 spaces
+set smartindent                          " Smart indent
+set smarttab                            " Be smart when using tabs ;)
+set spell                               " enable spell checking
+" set spellcapcheck                       " start sentences with a capital letter
+set spelllang=en                        " default spellcheck language
+set t_vb=                               " no visual bell
+set tabstop=4                           " ...
+set tm=500                              " ...
+set tw=500                              " text width
+set wildmenu                            " enhanced command-line completion mode
+set wrap                                " Wrap lines
+set writebackup                         " make a backup before overwriting a file
+
+" use project local vimrc
+set exrc
+set secure
+let g:localvimrc_persistent=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+filetype plugin on
+filetype indent on
+
+" hard mode: disable arrow keys
+noremap <Up>    <NOP>
+noremap <Down>  <NOP>
+noremap <Left>  <NOP>
+noremap <Right> <NOP>
+
+" move around panes with h,j,k,l
+noremap <C-k> :wincmd k <CR>
+noremap <C-l> :wincmd l <CR>
+noremap <C-h> :wincmd h <CR>
+noremap <C-j> :wincmd j <CR>
+
+" close window like buffer list
+nmap \x :cclose<CR>
+
+" buffer list
+let g:BufferListWidth    = 50
+let g:BufferListMaxWidth = 50
+map <silent> <C-b> :call BufExplorer() <CR>
+
+" remove trailing whitespace before saving
+autocmd FileType bash,c,cmake,cpp,hpp,markdown,nix,python,tex,txt,vimwiki autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" file type specific settings
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.tikz set filetype=tex
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" enable syntax highlighting
+syntax enable
+
+hi SpellBad cterm=underline
+
+" fix gitgutter's color with solarized
+highlight clear SignColumn
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => color scheme switch
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Consider the current color scheme.
+" We watch for changes as in:
+" https://felix-kling.de/blog/2021/linux-toggle-dark-mode.html
+lua <<EOF
+local colorFile = vim.fn.expand('~/.vimrc.color')
+local function reload() 
+	vim.cmd("source ".. colorFile)
+end
+
+local w = vim.loop.new_fs_event()
+local on_change
+local function watch_file(fname)
+	w:start(fname, {}, vim.schedule_wrap(on_change))
+end
+on_change = function()
+	reload()
+	-- Debounce: stop/start.
+	w:stop()
+	watch_file(colorFile)
+end
+
+-- reload vim config when background changes
+watch_file(colorFile)
+reload()
+
+vim.cmd("colorscheme solarized")
+EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" nerd tree
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_winsize = 25
+let g:netrw_altv=1
+let g:netrw_liststyle=1
+let g:netrw_listhide=netrw_gitignore#Hide()
+
+function! ToggleNetrw()
+let i = bufnr("$")
+let wasOpen = 0
+while (i >= 1)
+    if (getbufvar(i, "&filetype") == "netrw")
+        silent exe "bwipeout " . i
+        let wasOpen = 1
+    endif
+    let i-=1
+endwhile
+if !wasOpen
+    silent Lexplore
+endif
+endfunction
+map <F3> :call ToggleNetrw() <CR>
+
+""" airline
+let g:airline_theme='solarized'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+""" ale
+let g:airline#extensions#ale#enabled = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 1
+" nmap <silent> <C-[> <Plug>(ale_previous_wrap) "C-[ is Esc :/
+" nmap <silent> <C-]> <Plug>(ale_next_wrap)
+" highlight ALEWarning ctermbg=DarkMagenta
+let g:ale_sign_error = '💣'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let b:ale_linters = {
+\ 'python': ['flake8', 'mypy'],
+\ 'cmake': ['cmake-lint'],
+\ 'cpp': ['ccls'],
+\ 'rust': ['analyzer', 'cargo']
+\}
+let g:ale_yaml_yamllint_options = ' -d "{extends: relaxed, rules: {line-length: {max: 120}}}"'
+let g:ale_c_parse_compile_commands=1
+let g:ale_cpp_parse_compile_commands=1
+let g:ale_md_yaml_yamllint_options = ' -d "{extends: relaxed, rules: {line-length: {max: 120}}}"'
+let g:ale_rust_cargo_use_clippy=1
+
+" exclude line lenght check in markdownlint
+let g:ale_markdown_mdl_options = '--rules "~MD013"'
+
+nmap ]a :ALENextWrap<CR>
+nmap [a :ALEPreviousWrap<CR>
+
+""" autoformat
+nnoremap <buffer><F8> :<C-u>Autoformat<CR>
+vnoremap <F8> :Autoformat<CR>
+
+""" nerd commenter
+map <F1> <Plug>NERDCommenterToggle
+map <F2> <Plug>NERDCommenterMinimal
+" map <F3> <Plug>NERDCommenterSexy
+let NERDCompactSexyComs=1
+let NERDSpaceDelims=1
+
+" fall back to vim's indent file/retabbing/whitespace removal
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+let g:formatters_python = ['yapf']
+let g:formatters_cmake = ['cmake_format']
+let g:formatdef_cmake_format = '"cmake-format - "'
+let g:formatdef_nix = '"nixpkgs-fmt"'
+let g:formatters_nix = [ 'nix' ]
+
+augroup Autoformatting
+    " Remove all vimrc autocommands in this group (useful if vimrc is sourced twice)
+    autocmd!
+    autocmd BufWritePre * :Autoformat
+augroup END
+
+augroup NoAutoformattingProjects
+    " Remove all vimrc autocommands in this group (useful if vimrc is sourced twice)
+    autocmd!
+    autocmd BufNewFile,BufRead ~/src/dev/supernova-core/**/* autocmd! Autoformatting
+    autocmd BufNewFile,BufRead ~/src/dev/particle/**/*.py autocmd! Autoformatting
+    autocmd BufNewFile,BufRead ~/src/external/**/* autocmd! Autoformatting
+    autocmd BufNewFile,BufRead ~/src/doc/makedocument/**/* autocmd! Autoformatting
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => LanguageClient-neovim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Required for operations modifying multiple buffers like rename.
+set hidden
+let g:LanguageClient_serverCommands = {
+  \ 'c': ['ccls'],
+  \ 'cpp': ['ccls'],
+  \ 'nix': ['rnix-lsp'],
+  \ 'python': ['pylsp'],
+  \ 'tex': ['texlab'],
+  \ 'rust': ['rls']
+\ }
+
+let g:LanguageClient_autoStart = 1
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+nnoremap <silent> gd <Plug>(lcn-definition)
+nnoremap <silent> gr <Plug>(lcn-references)
+nnoremap <silent> gi <Plug>(lcn-implementation)
+nnoremap <silent> gmv <Plug>(lcn-rename)
+nnoremap <silent>K <Plug>(lcn-hover)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vimwiki
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <Leader>wm :e @wiki@/meeting_notes/index.wiki<CR>
+" use tab to switch buffers
+" vimwiki overwrites the tab keyboard shortcut and plugins are loaded after the vimrc has been loaded, so we need this hack
+autocmd VimEnter * noremap <tab> :bnext<cr>
+autocmd VimEnter * noremap <S-tab> :bprev<cr>
+
+" if no file given to start with, use vimwiki
+" does not work with vimwiki-dev :(
+" autocmd VimEnter * if argc() == 0 | execute 'VimwikiIndex' | endif
+
+au filetype vimwiki silent! iunmap <buffer> <Tab>
+
+
+" default wiki location
+let g:vimwiki_list = [{
+\ 'automatic_nested_syntaxes':1,
+\ 'path': '@wiki@',
+\ 'syntax': 'markdown',
+\ 'diary_frequency': 'weekly',
+\ 'diary_start_week_monday': 1,
+\ 'ext': '.wiki'}]
+
+" a useful shortcut
+command! Diary VimwikiDiaryIndex
+augroup vimwikigroup
+autocmd!
+" automatically update links on read diary
+autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+augroup end
+
+autocmd BufNewFile */diary/[0-9]*.wiki :silent 0r !diary_helper '%'
+autocmd BufNewFile */meeting_notes/[0-9]*.wiki :silent 0r !meeting_helper '%'
+
+" Do not use the vimwiki filetype for non-vimwiki markdown files
+let g:vimwiki_global_ext = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => rust
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rustfmt_autosave = 1
+if executable('@ack@')
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = ['.git', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', '%ack% --nocolor -g "" %s']
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => rust ide
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Set completeopt to have a better completion experience
+" :help completeopt
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+let g:ale_completion_enabled = 1
+
+" Avoid showing extra messages when using completion
+set shortmess+=c
+
+" Configure LSP through rust-tools.nvim plugin.
+" rust-tools will configure and enable certain LSP features for us.
+" See https://github.com/simrat39/rust-tools.nvim#configuration
+lua <<EOF
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+require'lspconfig'.pylsp.setup{
+     pylsp = {
+         plugins = { 
+             pydocstyle = {enabled = true},
+             pyflakes = {enabled = false},
+             flake8 = {enabled = true},
+         },
+     }
+ }
+
+EOF
+
+" Setup Completion
+" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
+
+" Code navigation shortcuts
+autocmd FileType rust nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+autocmd FileType rust nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+autocmd FileType rust nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+autocmd FileType rust nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+autocmd FileType rust nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+autocmd FileType rust nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+autocmd FileType rust nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+autocmd FileType rust nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+autocmd FileType rust nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+
+autocmd FileType rust nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
+" Show diagnostic popup on cursor hold
+" autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+
+" Goto previous/next diagnostic warning/error
+autocmd FileType rust nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
+autocmd FileType rust nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
+
+
+" nicer formatting for rust doc
+" see https://github.com/rust-lang/rust.vim/issues/435
+augroup filetype_rust
+    autocmd!
+    autocmd FileType rust setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*[-*+]\\s\\+\\\|^\\[^\\ze[^\\]]\\+\\]:
+augroup END
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => markdown preview
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:mkdp_filetypes = ['markdown', 'vimwiki']
+let g:mkdp_auto_close = 0
+
