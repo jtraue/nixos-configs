@@ -113,3 +113,9 @@ let g:rainbow_conf = {
 """ markdown preview
 let g:mkdp_filetypes = ['markdown', 'vimwiki']
 let g:mkdp_auto_close = 0
+
+""" telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>

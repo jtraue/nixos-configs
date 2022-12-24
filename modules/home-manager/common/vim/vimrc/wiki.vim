@@ -9,11 +9,9 @@ autocmd VimEnter * noremap <tab> :bnext<cr>
 autocmd VimEnter * noremap <S-tab> :bprev<cr>
 
 " if no file given to start with, use vimwiki
-" does not work with vimwiki-dev :(
-" autocmd VimEnter * if argc() == 0 | execute 'VimwikiIndex' | endif
+autocmd VimEnter * if argc() == 0 | execute 'VimwikiIndex' | endif
 
 au filetype vimwiki silent! iunmap <buffer> <Tab>
-
 
 " default wiki location
 let g:vimwiki_list = [{
