@@ -5,6 +5,10 @@
   ]
   ++ builtins.attrValues nixosModules;
 
+  # Let's see whether this fixes random audio outages
+  # as suggested in https://discourse.nixos.org/t/weird-audio-behavior-pipewire-pulseaudio-not-working-sometimes/24124/2
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   services.tailscale.enable = true;
   networking.firewall.checkReversePath = "loose"; # for tailscale
 
