@@ -8,14 +8,16 @@
   modifications = final: prev: {
 
     # Print ipxe output to serial as well (handy when using headless qemu).
-    ipxe = prev.ipxe.overrideAttrs (oldAttrs: rec {
-      additionalOptions = [
-        "CONSOLE_SERIAL"
-      ];
+    ipxe = (prev.ipxe.overrideAttrs (oldAttrs: rec {
       patches = [
         # Taken from https://gitlab.vpn.cyberus-technology.de/sotest/sotest/-/tree/master/nix/ipxe for microvm (which uses 9 modules)
         ./ipxe/0001-multiboot-Increase-module-count-and-cmdline-length.patch
       ];
-    });
+    })).override {
+      additionalOptions =  [
+        "CONSOLE_SERIAL"
+      ];
+      embedScript = ./ipxe/ipxe-default.cfg;
+    };
   };
 }

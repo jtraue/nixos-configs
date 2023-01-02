@@ -94,7 +94,7 @@ else
         -display none \
         -netdev user,id=my1,tftp="${TFTP_ROOT}",bootfile=ipxe.kpxe,hostfwd=tcp::2221-:22 \
         -device e1000,netdev=my1,mac="${MAC_BIOS}" \
-        -serial stdio -serial tcp::1234,server=on \
+        -serial stdio \
         ${@}
 fi
 

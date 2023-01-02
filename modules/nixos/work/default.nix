@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.nixos-modules.work;
-  ipxeConfig = ./ipxe-default.cfg;
 in
 {
   options.nixos-modules.work = {
@@ -296,7 +295,6 @@ in
               ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
               ${pkgs.coreutils}/bin/cp ${pkgs.ipxe}/undionly.kpxe  ${cfg.networkboot.tftpFolder}/ipxe.kpxe
               ${pkgs.coreutils}/bin/cp ${pkgs.ipxe}/ipxe.efi  ${cfg.networkboot.tftpFolder}
-              ${pkgs.coreutils}/bin/cp ${ipxeConfig} ${cfg.networkboot.tftpFolder}/ipxe-default.cfg
             '';
             # Change file permissions (because we copy read only files and may want to change/replace them during experiments).
             serviceConfig = {
