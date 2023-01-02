@@ -52,11 +52,28 @@
         "type": "github"
       }
     },
+    "nixpkgs-meshcommander": {
+      "locked": {
+        "lastModified": 1664383307,
+        "narHash": "sha256-jNG3fXTxNMjZ9H+yPK+7kXPOAueTmTZesqQtE8QvuZ8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7030b3d11c05cbaa31429e1a6dc9eed156591c47",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7030b3d11c05cbaa31429e1a6dc9eed156591c47",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-meshcommander": "nixpkgs-meshcommander"
       }
     },
     "utils": {

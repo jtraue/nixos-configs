@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nixpkgs-meshcommander, ... }:
 with lib;
 let
   cfg = config.nixos-modules.work;
@@ -199,7 +199,7 @@ in
       (mkIf cfg.networkboot.enable {
 
         environment.systemPackages = [
-          pkgs.nodePackages.meshcommander
+          nixpkgs-meshcommander.legacyPackages.x86_64-linux.nodePackages.meshcommander
         ];
 
         networking = {

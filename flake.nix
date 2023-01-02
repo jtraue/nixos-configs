@@ -3,6 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+
+    # Meshcommander is broken since commit 07b207c5e9a47b640fe30861c9eedf419c38dce0
+    # Did not yet debug further - something in the nodejs build changed.
+    nixpkgs-meshcommander.url = "github:nixos/nixpkgs?rev=7030b3d11c05cbaa31429e1a6dc9eed156591c47";
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -10,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSupportedSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -35,7 +40,7 @@
 
         e14 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit overlays nixos-hardware; };
+          specialArgs = { inherit overlays nixos-hardware nixpkgs-meshcommander; };
           modules = [
             ./hosts/e14/configuration.nix
             ./hosts/e14/hardware-configuration.nix
