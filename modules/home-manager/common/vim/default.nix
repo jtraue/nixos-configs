@@ -94,6 +94,19 @@ in
             ];
           }
         ]
+        ++ [{
+          config = builtins.readFile ./vimrc/autoformat.vim;
+          plugins = with vimPlugins; [
+            vim-autoformat
+            vim-clang-format
+          ];
+          extraPackages = with pkgs;[
+            clang-tools
+            cmake-format
+            nixpkgs-fmt
+            yapf
+          ];
+        }]
         ++ (lib.optionals cfg.withColorSwitch [{
           config = builtins.readFile ./vimrc/colorswitch.vim;
         }])
