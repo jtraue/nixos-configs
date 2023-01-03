@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
 
     # Meshcommander is broken since commit 07b207c5e9a47b640fe30861c9eedf419c38dce0
     # Did not yet debug further - something in the nodejs build changed.
@@ -15,7 +16,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, nixpkgs-unstable, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSupportedSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -50,7 +51,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.jtraue = import ./hosts/e14/home-configuration.nix;
               home-manager.extraSpecialArgs = {
-                inherit homeManagerModules;
+                inherit homeManagerModules nixpkgs-unstable;
                 hostname = "e14";
               };
             }

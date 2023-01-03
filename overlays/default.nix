@@ -14,10 +14,11 @@
         ./ipxe/0001-multiboot-Increase-module-count-and-cmdline-length.patch
       ];
     })).override {
-      additionalOptions =  [
+      additionalOptions = [
         "CONSOLE_SERIAL"
       ];
       embedScript = ./ipxe/ipxe-default.cfg;
     };
+
   };
 }
