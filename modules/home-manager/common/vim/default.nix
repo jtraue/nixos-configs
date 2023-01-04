@@ -135,12 +135,13 @@ in
             LanguageClient-neovim
             nvim-lspconfig
             lsp-status-nvim
-            # null-ls-nvim
+            null-ls-nvim
           ];
           extraPackages = with pkgs;[
             clang-tools
             rust-analyzer
             rnix-lsp
+            gitlint
           ];
         }])
         ++ (lib.optionals cfg.withWiki [{

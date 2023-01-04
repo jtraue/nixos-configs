@@ -44,4 +44,11 @@ lsp_status.config({
   status_symbol = ''
 })
 
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.diagnostics.gitlint,
+    },
+})
+
 EOF
