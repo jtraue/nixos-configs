@@ -15,10 +15,14 @@ function print_usage {
     echo "    -b | --bios  Use UEFI (uefi is default)"
     echo "    -m | --mem   Specify memory  (in bytes)"
     echo "    -v           Verbose"
+    echo "    --           End of arguments. Additional arguments are passed to qemu."
     echo ""
     echo "Configuration via environment variables:"
     echo "    TFTP_ROOT:   Folder containing ipxe boot files (ipxe.kpxe or ipxe.efi)"
     echo "    OVMF_FOLDER: Folder firmware files for UEFI boot (OVMF_CODE.fd)"
+    echo ""
+    echo "Example invocation:"
+    echo "    qemu-ipxe -- -serial tcp::1234,server=on"
     exit 0
 }
 
@@ -51,6 +55,11 @@ while [[ $# -gt 0 ]]; do
             set -x
             shift # past key
         ;;
+        --)
+            shift # past key
+            ADDITIONAL_QEMU_ARGS="$@"
+            break
+        ;;
         *) # unknown option
             POSITIONAL+=("$1") # save for later in array
             shift
@@ -82,7 +91,8 @@ if ((UEFI==1)) ; then
         -bios "${OVMF_FOLDER}" \
         -drive if=pflash,format=raw,readonly=on,file="${OVMF_FOLDER}"/OVMF_CODE.fd \
         -serial stdio  \
-        -display none
+        -display none \
+        $ADDITIONAL_QEMU_ARGS
 else
     qemu-system-x86_64 \
         -enable-kvm \
@@ -95,6 +105,6 @@ else
         -netdev user,id=my1,tftp="${TFTP_ROOT}",bootfile=ipxe.kpxe,hostfwd=tcp::2221-:22 \
         -device e1000,netdev=my1,mac="${MAC_BIOS}" \
         -serial stdio \
-        ${@}
+        $ADDITIONAL_QEMU_ARGS
 fi
 
