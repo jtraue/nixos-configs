@@ -248,8 +248,19 @@ in
                 range 10.0.0.150 10.0.0.199;
                 next-server 10.0.0.1;
               }
+
+              # Define iPXE options that will later on be used (https://ipxe.org/howto/dhcpd)
+              option space ipxe;
+              option ipxe.no-pxedhcp code 176 = unsigned integer 8;
+
+              # Captured with tcpdump: PXEClient:Arch:00000:UNDI:002001
               class "pxeclient" {
                 match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+
+                # No ProxyDHCP server - don't wait for replies and speed up boot.
+                option ipxe.no-pxedhcp 1;
+
+                # Files below are requested via TFTP
                 if substring (option vendor-class-identifier, 15, 5) = "00000" {
                   filename "ipxe.kpxe";
                 }
@@ -282,44 +293,15 @@ in
             partOf = [ "networkboot.target" ];
             wantedBy = lib.mkForce [ "networkboot.target" ];
           };
-          tftp-permissions = {
-            enable = true;
-            before = [ "dnsmasq.service" ];
-            description = "Set permissions of TFTP folder";
-            wantedBy = [ "networkboot.target" ];
-            partOf = [ "networkboot.target" ];
-
-            # Ship files.
-            # TODO: Do this during activation only.
-            preStart = ''
-              ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
-              ${pkgs.coreutils}/bin/cp ${pkgs.ipxe}/undionly.kpxe  ${cfg.networkboot.tftpFolder}/ipxe.kpxe
-              ${pkgs.coreutils}/bin/cp ${pkgs.ipxe}/ipxe.efi  ${cfg.networkboot.tftpFolder}
-            '';
-            # Change file permissions (because we copy read only files and may want to change/replace them during experiments).
-            serviceConfig = {
-              Type = "simple";
-              ExecStart =
-                let
-                  script = pkgs.writeScript "tftp-permissions" ''
-                    ${pkgs.coreutils}/bin/chmod a+rwx ${cfg.networkboot.tftpFolder}
-                    ${pkgs.coreutils}/bin/chmod -R a+rw ${cfg.networkboot.tftpFolder}
-                  '';
-                in
-                "${pkgs.bash}/bin/bash ${script}";
-            };
-          };
         };
 
-        # Frequently restore permissions.
-        systemd.timers = {
-          tftp-permissions = {
-            timerConfig = {
-              AccuracySec = "1s";
-              OnCalendar = "*:*:0";
-            };
-          };
-        };
+        system.activationScripts.tftp-files = ''
+          ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
+          cp ${pkgs.ipxe-legacy}/undionly.kpxe  ${cfg.networkboot.tftpFolder}/ipxe.kpxe
+          cp ${pkgs.ipxe-uefi}/ipxe.efi  ${cfg.networkboot.tftpFolder}
+        '';
+
+
 
         # To share folders via sshfs with testbox.
         services.sshd.enable = true;

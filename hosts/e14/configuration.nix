@@ -14,6 +14,7 @@
     enable = true;
     networkboot.enable = true;
     enablePrinting = true;
+    networkboot.tftpFolder = "/home/jtraue/tftp";
   };
   nixos-modules.yubikey.enable = true;
 
