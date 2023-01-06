@@ -68,7 +68,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "${TFTP_ROOT}" ]]; then
-    TFTP_ROOT="/var/lib/tftp"
+    TFTP_ROOT="$HOME/tftp"
     echo "Using default TFTP_ROOT: ${TFTP_ROOT}"
 fi
 

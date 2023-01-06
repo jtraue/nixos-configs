@@ -10,6 +10,5 @@
   screenrotate = pkgs.callPackage ./screenrotate.nix { };
   theme-switch = pkgs.callPackage ./theme-switch { };
   yass = pkgs.callPackage ./yass.nix { };
-  ipxe-efi = pkgs.callPackage ./ipxe { };
-  ipxe-legacy = pkgs.callPackage ./ipxe { legacy = true; };
+  ipxe-files = pkgs.callPackage ./ipxe { };
 }

@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.nixos-modules.work;
+  serverAddress = "10.0.0.1";
 in
 {
   options.nixos-modules.work = {
@@ -216,9 +217,9 @@ in
               20633
             ];
           };
-          # networkmanager = {
-          # unmanaged = cfg.networkInterfaces;
-          # };
+          networkmanager = {
+            unmanaged = [ cfg.networkboot.networkInterface ];
+          };
         };
 
         services = {
@@ -246,7 +247,7 @@ in
             extraConfig = ''
               subnet 10.0.0.0 netmask 255.255.255.0 {
                 range 10.0.0.150 10.0.0.199;
-                next-server 10.0.0.1;
+                next-server ${serverAddress};
               }
 
               # Define iPXE options that will later on be used (https://ipxe.org/howto/dhcpd)
@@ -273,6 +274,10 @@ in
           atftpd = {
             enable = true;
             root = cfg.networkboot.tftpFolder;
+            extraOptions = [
+              "--user jtraue"
+              # "--trace"
+            ];
           };
         };
 
@@ -295,18 +300,18 @@ in
           };
         };
 
+        # atftp can't handle symlinks files so we can't point to the output
+        # of a nix derivation and have to copy files manually :/
         system.activationScripts.tftp-files = ''
           ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
-          cp ${pkgs.ipxe-legacy}/undionly.kpxe  ${cfg.networkboot.tftpFolder}/ipxe.kpxe
-          cp ${pkgs.ipxe-uefi}/ipxe.efi  ${cfg.networkboot.tftpFolder}
+          cp ${pkgs.ipxe-files}/ipxe.kpxe  ${cfg.networkboot.tftpFolder}
+          cp ${pkgs.ipxe-files}/ipxe.efi  ${cfg.networkboot.tftpFolder}
         '';
-
-
 
         # To share folders via sshfs with testbox.
         services.sshd.enable = true;
         services.openssh.listenAddresses = [{
-          addr = "10.0.0.1";
+          addr = serverAddress;
           port = 22;
         }];
         users.users.jtraue.openssh.authorizedKeys.keys = [
