@@ -19,6 +19,7 @@
     teams
     drawio
     qemu-ipxe
+    sotest-to-ipxe
     amt-control
   ];
 
