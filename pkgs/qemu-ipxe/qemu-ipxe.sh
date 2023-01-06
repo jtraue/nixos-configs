@@ -14,6 +14,7 @@ function print_usage {
     echo "    -h | --help  Print help"
     echo "    -b | --bios  Use UEFI (uefi is default)"
     echo "    -m | --mem   Specify memory  (in bytes)"
+    echo "    --ovmf       Overwrite default OVMF (for UEFI boot)"
     echo "    -v           Verbose"
     echo "    --           End of arguments. Additional arguments are passed to qemu."
     echo ""
@@ -45,6 +46,11 @@ while [[ $# -gt 0 ]]; do
         ;;
         -m|--mem)
             MEM="$2"
+            shift # past key
+            shift # past value
+        ;;
+        --ovmf)
+            OVMF_FOLDER="$2"
             shift # past key
             shift # past value
         ;;
@@ -84,7 +90,6 @@ if ((UEFI==1)) ; then
         -M q35 \
         -m ${MEM} \
         -cpu host \
-        -smp 2 \
         -boot n \
         -netdev user,id=my1,tftp="${TFTP_ROOT}",bootfile=ipxe.efi,hostfwd=tcp::2221-:22 \
         -device e1000,netdev=my1,mac="${MAC_UEFI}" \
@@ -99,7 +104,6 @@ else
         -M q35 \
         -m ${MEM} \
         -cpu host \
-        -smp 2 \
         -boot n \
         -display none \
         -netdev user,id=my1,tftp="${TFTP_ROOT}",bootfile=ipxe.kpxe,hostfwd=tcp::2221-:22 \
