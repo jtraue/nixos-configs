@@ -25,6 +25,8 @@
     sweethome3d.application
     snapmaker-luban
     freecad
+    krita
+    drawio
   ] ++ [
     pkgs.screenrotate
   ];
