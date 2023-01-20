@@ -29,6 +29,8 @@ The idea is to separate home-manager configuration from NixOS configuration so t
 - `home-manager build --flake .#jtraue@e14` and `home-manager switch --flake .#jtraue@e14`
 - `nixos-rebuild build-vm --flake .#e14` for virtual machine
     - Remember to remove `e14.qcow2` for a fresh run.
+- inspect size of configuration: `nixos-rebuild build --flake .#e14 && nix shell nixpkgs#nix-tree -c nix-tree ./result
+bck-i-search: tree`
 
 ## Network boot flow
 

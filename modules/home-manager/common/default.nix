@@ -46,15 +46,7 @@ in
       youtube-dl
     ]
     ++ (with pkgs; [
-      cantarell-fonts
-      emojione
-      fira
-      fira-code
-      fira-mono
       font-awesome
-      # input-fonts
-      iosevka
-      jetbrains-mono
       powerline-fonts
     ])
     ++ (with pkgs;

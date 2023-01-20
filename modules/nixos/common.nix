@@ -27,7 +27,6 @@ in
       exfat
       file
       git
-      haskellPackages.niv
       man-pages
       man-pages-posix
       nmap

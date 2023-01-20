@@ -17,7 +17,6 @@ in
       gdb
       minicom
       ninja
-      nodePackages.mermaid-cli
       qemu
       ttylog
     ];
