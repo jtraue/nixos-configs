@@ -233,6 +233,11 @@ in
                 ipAddress = "10.0.0.10";
               }
               {
+                hostName = "testbox_home_2";
+                ethernetAddress = "b4:2e:99:a1:59:28"; # not the amt port
+                ipAddress = "10.0.0.12";
+              }
+              {
                 hostName = "thinkstation";
                 ethernetAddress = "90:2e:16:d1:c5:25";
                 ipAddress = "10.0.0.11";
