@@ -22,7 +22,6 @@ augroup END
 augroup NoAutoformattingProjects
     " Remove all vimrc autocommands in this group (useful if vimrc is sourced twice)
     autocmd!
-    autocmd BufNewFile,BufRead ~/src/dev/supernova-core/**/* autocmd! Autoformatting
     autocmd BufNewFile,BufRead ~/src/dev/particle/**/*.py autocmd! Autoformatting
     autocmd BufNewFile,BufRead ~/src/external/**/* autocmd! Autoformatting
     autocmd BufNewFile,BufRead ~/src/doc/makedocument/**/* autocmd! Autoformatting
