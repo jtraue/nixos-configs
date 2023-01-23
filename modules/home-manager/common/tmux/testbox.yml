@@ -48,10 +48,10 @@ windows:
         - minicom
         # - ttylog -d /dev/ttyTestbox -b 115200
   - configs:
-      root: /var/lib/tftp
+      root: ~/tftp
       layout: even-vertical
       panes:
-        - vim testbox_home static/loader.cfg
+        - vim ipxe-default.cfg
   - server:
       layout: even-vertical
       panes:
