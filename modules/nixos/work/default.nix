@@ -299,6 +299,11 @@ in
             wantedBy = lib.mkForce [ "networkboot.target" ]; # covers stop/restart
             partOf = [ "networkboot.target" ]; # covers start
           };
+          sshd = {
+            after = [ "networkboot.target" ];
+            wantedBy = lib.mkForce [ "networkboot.target" ]; # covers stop/restart
+            partOf = [ "networkboot.target" ]; # covers start
+          };
           "network-addresses-${cfg.networkboot.networkInterface}" = {
             partOf = [ "networkboot.target" ];
             wantedBy = lib.mkForce [ "networkboot.target" ];
