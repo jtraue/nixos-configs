@@ -128,6 +128,34 @@ in
             };
           };
         };
+        "office" = {
+          fingerprint = {
+            HDMI-1 = office;
+            eDP-1 = e14-notebook;
+          };
+          config = {
+            HDMI-1 = {
+              enable = true;
+              mode = "2560x1440";
+              position = "1920x0";
+              rate = "59.95";
+              primary = true;
+            };
+            eDP-1 = {
+              enable = true;
+              mode = "1920x1080";
+              position = "0x0";
+              rate = "60.00";
+            };
+          };
+          hooks = {
+            postswitch = ''
+              # i3-msg '[workspace="^(1|2|3|4|5)"] move workspace to output DP-1-1-5'
+              # systemctl --user restart nextcloud-client
+              # systemctl start --user network-manager-applet.service
+            '';
+          };
+        };
       };
     };
   };
