@@ -175,6 +175,11 @@ in
             HostName 10.0.0.11
             IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
 
+          Host l14
+            User jtraue
+            HostName 10.0.0.14
+            IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
+
           Host vpn.cyberus-technology.de
             User jana
             Hostname vpn.cyberus-technology.de
@@ -246,6 +251,11 @@ in
                 hostName = "legacy_nuc";
                 ethernetAddress = "b8:ae:ed:75:58:b1";
                 ipAddress = "10.0.0.13";
+              }
+              {
+                hostName = "l14";
+                ethernetAddress = "f4:a8:0d:66:1f:d8";
+                ipAddress = "10.0.0.14";
               }
 
             ];
