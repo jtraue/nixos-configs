@@ -257,6 +257,11 @@ in
                 ethernetAddress = "f4:a8:0d:66:1f:d8";
                 ipAddress = "10.0.0.14";
               }
+              {
+                hostName = "l14-external";
+                ethernetAddress = "00:0a:cd:26:04:17";
+                ipAddress = "10.0.0.15";
+              }
 
             ];
             extraConfig = ''
