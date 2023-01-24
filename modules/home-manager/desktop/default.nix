@@ -27,7 +27,6 @@ let
 in
 {
   imports = [
-    ./autorandr.nix
     ./i3.nix
     ./kitty.nix
     ./rofi.nix
@@ -62,7 +61,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home-modules.desktop.autorandr.enable = true;
     home-modules.desktop.kitty.enable = true;
     home-modules.desktop.i3.enable = true;
     home-modules.desktop.rofi.enable = true;

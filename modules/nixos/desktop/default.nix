@@ -3,10 +3,16 @@ let
   cfg = config.nixos-modules.desktop;
 in
 {
+  imports = [
+    ./autorandr.nix
+  ];
+
   options.nixos-modules.desktop.enable = lib.mkEnableOption "Enable desktop environment.";
 
   config = lib.mkIf cfg.enable {
 
+
+    nixos-modules.desktop.autorandr.enable = true;
     hardware = {
       opengl = {
         enable = true;

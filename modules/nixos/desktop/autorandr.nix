@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.desktop.autorandr;
+  cfg = config.nixos-modules.desktop.autorandr;
   home = "00ffffffffffff0010ac2ea14c474530101e010380502178ea5aa1a9554e9c26105054a54b00714f81008180a940d1c0010101010101e77c70a0d0a0295030203a00204f3100001a000000ff0048584c343654320a2020202020000000fc0044454c4c205533343139570a20000000fd0030551e5920000a202020202020019202032df1509005040302071601141f1213454b4c5a230907078301000067030c001000384467d85dc4017880009f3d70a0d0a0155050208a00204f3100001a584d00b8a1381440942cb500204f3100001e3c41b8a060a029505020ca04204f3100001a565e00a0a0a0295030203500204f3100001a0000000000000000000066";
   x13-internal = "00ffffffffffff0010ac32a14c474530101e0104b55021783eee95a3544c99260f5054a54b00714f81008180a940d1c0010101010101e77c70a0d0a0295030203a00204f3100001a000000ff0048584c343654320a2020202020000000fc0044454c4c205533343139570a20000000fd0030551e5920010a202020202020018802031df1509005040302071601141f1213454b4c5a2309070783010000023a801871382d40582c4500204f3100001e584d00b8a1381440942cb500204f3100001e565e00a0a0a0295030203500204f3100001a3c41b8a060a029505020ca04204f3100001a0000000000000000000000000000000000000000000000000000d5";
   e14-notebook = "00ffffffffffff000dae0a1400000000291d0104a51f11780328659759548e271e505400000001010101010101010101010101010101363680a0703820403020a60035ad10000018000000fe004e3134304843412d4541450a20000000fe00434d4e0a202020202020202020000000fe004e3134304843412d4541450a200002";
@@ -11,13 +11,13 @@ let
 in
 {
 
-  options.home-modules.desktop.autorandr = {
+  options.nixos-modules.desktop.autorandr = {
     enable = lib.mkEnableOption "Enables autorandr.";
   };
 
   config = lib.mkIf cfg.enable {
 
-    programs.autorandr = {
+    services.autorandr = {
       enable = true;
 
       profiles = {
@@ -78,13 +78,6 @@ in
               rate = "60.00";
             };
           };
-          hooks = {
-            postswitch = ''
-              # i3-msg '[workspace="^(1|2|3|4|5)"] move workspace to output DP-1-1-5'
-              # systemctl --user restart nextcloud-client
-              # systemctl start --user network-manager-applet.service
-            '';
-          };
         };
         "homePbP-e14" = {
           fingerprint = {
@@ -105,13 +98,6 @@ in
               position = "0x0";
               rate = "60.00";
             };
-          };
-          hooks = {
-            postswitch = ''
-              i3-msg '[workspace="^(1|2|3|4|5)"] move workspace to output DP-2'
-              systemctl --user restart nextcloud-client
-              systemctl start --user network-manager-applet.service
-            '';
           };
         };
         "mobile-e14" = {
@@ -147,13 +133,6 @@ in
               position = "0x0";
               rate = "60.00";
             };
-          };
-          hooks = {
-            postswitch = ''
-              # i3-msg '[workspace="^(1|2|3|4|5)"] move workspace to output DP-1-1-5'
-              # systemctl --user restart nextcloud-client
-              # systemctl start --user network-manager-applet.service
-            '';
           };
         };
       };
