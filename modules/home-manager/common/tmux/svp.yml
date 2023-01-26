@@ -1,4 +1,4 @@
-name: testbox
+name: svp
 # root: /var/lib/tftp
 
 # Optional tmux socket

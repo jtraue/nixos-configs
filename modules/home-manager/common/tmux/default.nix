@@ -11,7 +11,8 @@ in
 
     xdg.configFile = {
       "tmuxinator/particle.yml".source = ./particle.yml;
-      "tmuxinator/testbox.yml".source = ./testbox.yml;
+      "tmuxinator/svp.yml".source = ./svp.yml;
+      "tmuxinator/passthrough.yml".source = ./passthrough.yml;
     };
 
     # copy mode: ctrl+b [

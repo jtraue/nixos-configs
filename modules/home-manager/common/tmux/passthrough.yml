@@ -1,0 +1,22 @@
+name: passthrough
+root: ~/src/dev/vm-test-images
+
+on_project_start: sudo sh -c 'systemctl restart network-addresses-networkboot.service && systemctl restart networkboot.target'
+
+windows:
+  - editor:
+      layout: even-vertical
+      panes:
+        - vim 
+  - local:
+      layout: even-vertical
+      panes:
+  - remote:
+      layout: even-vertical
+      panes:
+        - ssh 10.0.0.14
+  - logs:
+      layout: even-vertical
+      panes:
+        - journalctl -u dhcpd4.service -f
+        - meshcommander
