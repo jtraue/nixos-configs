@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, overlays, ... }:
 
 let
   cfg = config.home-modules.common;
@@ -22,6 +22,15 @@ in
     home-modules.common.mc.enable = lib.mkDefault true;
     home-modules.common.tmux.enable = lib.mkDefault true;
     home-modules.common.vim.enable = lib.mkDefault true;
+
+    fonts.fontconfig.enable = true;
+
+    nixpkgs = {
+      overlays = builtins.attrValues overlays;
+      config = {
+        allowUnfree = true;
+      };
+    };
 
     programs.command-not-found.enable = true;
 

@@ -70,16 +70,6 @@
           modules = [
             ./hosts/e14/configuration.nix
             ./hosts/e14/hardware-configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.jtraue = import ./hosts/e14/home-configuration.nix;
-              home-manager.extraSpecialArgs = {
-                inherit homeManagerModules nixpkgs-unstable;
-                hostname = "e14";
-              };
-            }
           ]
           ++ (builtins.attrValues nixosModules);
         };
@@ -110,9 +100,21 @@
 
       # home-manager configurations - intended for non NixOS machines
       homeConfigurations = {
+        "jtraue@e14" = home-manager.lib.homeManagerConfiguration rec {
+          # Workaround for using unfree packages with home-manager
+          # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = { inherit homeManagerModules overlays nixpkgs-unstable; };
+          modules = [
+            ./hosts/e14/home-configuration.nix
+          ];
+        };
         "jtraue@x13" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit homeManagerModules overlays; };
+          extraSpecialArgs = { inherit homeManagerModules overlays nixpkgs-unstable; };
           modules = [
             ./hosts/x13/home-configuration.nix
           ];

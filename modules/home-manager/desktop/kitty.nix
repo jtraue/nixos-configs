@@ -64,6 +64,7 @@ in
     programs.kitty = {
       enable = true;
       font = {
+	package = pkgs.dejavu_fonts;
         name = "pango:DejaVu Sans Mono";
       };
       settings = {
