@@ -52,13 +52,12 @@ in
     };
 
     home.file.".tigrc".text = ''
-      bind main ! !?git revert %(commit)
-      bind main   w !?git push origin
-      bind main   B !git rebase -i %(commit)
-
+      # commands with user prompts
+      bind main   ! !?git revert %(commit)
       bind status a !?git commit --amend
-      bind status P !?git push --force-with-lease
-      bind status w !?git push origin
+
+      bind main   R !git rebase -i %(commit)
+      bind diff   R !git rebase -i %(commit)
     '';
 
   };
