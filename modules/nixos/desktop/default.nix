@@ -78,6 +78,10 @@ in
       enableDefaultFonts = true;
       enableGhostscriptFonts = true;
       fontDir.enable = true;
+      # fontconfig = {
+      # defaultFonts = { monospace = [ "Fira Code Light" ]; };
+      # };
+
     };
     nixpkgs.config.input-fonts.acceptLicense = true;
 
