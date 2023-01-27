@@ -114,6 +114,10 @@ in
       xclip
       xournalpp
       youtube-dl
+    ] ++ [
+      pkgs.corefonts # microsoft free fonts
+      pkgs.nerdfonts
+      pkgs.roboto
     ];
 
     xdg.mimeApps = {

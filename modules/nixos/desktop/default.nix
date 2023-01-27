@@ -77,16 +77,7 @@ in
     fonts = {
       enableDefaultFonts = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [
-        corefonts # microsoft free fonts
-        nerdfonts
-        roboto
-      ];
       fontDir.enable = true;
-      fontconfig = {
-        defaultFonts = { monospace = [ "Fira Code Light" ]; };
-      };
-
     };
     nixpkgs.config.input-fonts.acceptLicense = true;
 
