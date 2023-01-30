@@ -10,7 +10,6 @@ in
   config = lib.mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      rofi-rbw
       rofi
     ];
 
@@ -288,14 +287,5 @@ in
       switch="Alt+x"
       insert_pass="Alt+n"
     '';
-
-    home.file.".config/rofi-rbw.rc".text = ''
-      action type-password
-      prompt pass
-      selector rofi
-      clipboarder wl-copy
-      typer wtype
-    '';
-
   };
 }
