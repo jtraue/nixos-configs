@@ -4,10 +4,10 @@ root: ~/src/dev/vm-test-images
 on_project_start: sudo sh -c 'systemctl restart network-addresses-networkboot.service && systemctl restart networkboot.target'
 
 windows:
-  - editor:
+  - vm-test-images:
       layout: even-vertical
       panes:
-        - vim 
+        - vim flake.nix
   - local:
       layout: even-vertical
       panes:
@@ -15,6 +15,14 @@ windows:
       layout: even-vertical
       panes:
         - ssh 10.0.0.14
+  - nix-config:
+      layout: even-vertical
+      root: ~/conf/testbox-configs/
+      panes:
+        - vim hosts/l14/configuration.nix
+  - vnc:
+      panes:
+        - nix shell nixpkgs#gnome.vinagre -c vinagre --vnc-scale 10.0.0.162:5901
   - logs:
       layout: even-vertical
       panes:
