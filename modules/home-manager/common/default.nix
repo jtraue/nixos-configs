@@ -26,7 +26,7 @@ in
     fonts.fontconfig.enable = true;
 
     nixpkgs = {
-      overlays = builtins.attrValues overlays;
+      inherit overlays;
       config = {
         allowUnfree = true;
       };
@@ -140,7 +140,7 @@ in
 
     home = {
       username = "jtraue";
-      homeDirectory = "/home/jtraue";
+      homeDirectory = lib.mkDefault "/home/jtraue";
       stateVersion = "22.11";
     };
 

@@ -44,7 +44,7 @@ in
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     nixpkgs = {
-      overlays = builtins.attrValues overlays;
+      inherit overlays;
       config = {
         allowUnfree = true;
       };
