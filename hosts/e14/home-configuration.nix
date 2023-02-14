@@ -21,6 +21,7 @@
     qemu-ipxe
     sotest-to-ipxe
     amt-control
+    maestral-gui
   ];
 
   xsession.windowManager.i3.config = {
