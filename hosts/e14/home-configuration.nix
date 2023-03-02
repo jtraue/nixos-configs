@@ -1,4 +1,7 @@
-{ lib, pkgs, homeManagerModules, hostname, ... }:
+{ lib, pkgs, homeManagerModules, hostname, pkgs-unstable, ... }:
+let
+  teams = pkgs-unstable.teams;
+in
 {
   imports = builtins.attrValues homeManagerModules;
 
@@ -16,18 +19,19 @@
   };
 
   home.packages = with pkgs; [
-    teams
     drawio
     qemu-ipxe
     sotest-to-ipxe
     amt-control
     maestral-gui
+  ] ++ [
+    teams
   ];
 
   xsession.windowManager.i3.config = {
     startup = [
       {
-        command = "${pkgs.teams}/bin/teams";
+        command = "${teams}/bin/teams";
         notification = false;
       }
     ];

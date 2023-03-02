@@ -109,20 +109,34 @@
             system = "x86_64-linux";
             config.allowUnfree = true;
           };
-          extraSpecialArgs = {
-            inherit homeManagerModules nixpkgs-unstable;
-            overlays = builtins.attrValues overlays;
-          };
+          extraSpecialArgs =
+            let
+              pkgs-unstable = import nixpkgs-unstable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            in
+            {
+              inherit homeManagerModules pkgs-unstable;
+              overlays = builtins.attrValues overlays;
+            };
           modules = [
             ./hosts/e14/home-configuration.nix
           ];
         };
         "jtraue@x13" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit homeManagerModules nixpkgs-unstable;
-            overlays = builtins.attrValues overlays;
-          };
+          extraSpecialArgs =
+            let
+              pkgs-unstable = import nixpkgs-unstable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            in
+            {
+              inherit homeManagerModules pkgs-unstable;
+              overlays = builtins.attrValues overlays;
+            };
           modules = [
             ./hosts/x13/home-configuration.nix
           ];

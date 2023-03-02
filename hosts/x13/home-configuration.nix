@@ -1,4 +1,4 @@
-{ lib, pkgs, homeManagerModules, overlays, ... }:
+{ lib, pkgs, homeManagerModules, overlays, pkgs-unstable, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
   nixpkgs.overlays = builtins.attrValues overlays;
