@@ -18,7 +18,7 @@ set list                                " turn whitespace display on
 set listchars=tab:»·,trail:•,nbsp:•,extends:»,precedes:« " display these whitespaces graphically
 set nobackup
 set noerrorbells                        " No annoying sound on errors
-set nofoldenable                        " do not fold
+set foldenable                          " Enable folds so that I get used to them
 set noswapfile
 set novisualbell                        " again: no sounds
 set nu                                  " Show line numbers
@@ -37,6 +37,10 @@ set tw=500                              " text width
 set wildmenu                            " enhanced command-line completion mode
 set wrap                                " Wrap lines
 set writebackup                         " make a backup before overwriting a file
+
+" Fold by default until I get used to folds
+set foldmethod=syntax
+set foldlevelstart=1
 
 " use project local vimrc (filename .lvimrc)
 set exrc
