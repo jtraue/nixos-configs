@@ -1,10 +1,12 @@
-{ config, lib, pkgs, overlays, ... }:
+{ config, lib, pkgs, overlays, nix-colors, ... }:
 
 let
   cfg = config.home-modules.common;
 in
 {
   imports = [
+
+    nix-colors.homeManagerModule
     ./ack.nix
     ./git.nix
     ./gpg.nix
@@ -16,6 +18,9 @@ in
   options.home-modules.common.enable = lib.mkEnableOption "Enables common options.";
 
   config = lib.mkIf cfg.enable {
+
+    colorScheme = nix-colors.colorSchemes.solarized-dark;
+
     home-modules.common.ack.enable = lib.mkDefault true;
     home-modules.common.git.enable = lib.mkDefault true;
     home-modules.common.gpg.enable = lib.mkDefault true;
@@ -125,7 +130,7 @@ in
           "pass"
           "themes"
         ];
-        theme = "agnoster";
+        theme = "gnzh";
       };
     };
 

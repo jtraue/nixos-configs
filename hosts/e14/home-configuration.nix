@@ -6,10 +6,6 @@ in
   imports = builtins.attrValues homeManagerModules;
 
   home-modules.common.enable = true;
-  home-modules.common.vim.withColorSwitch = true;
-  home-modules.common.vim.withAle = true;
-  home-modules.common.vim.withLanguageClient = true;
-  home-modules.common.vim.withWiki = true;
   home-modules.desktop.enable = true;
   home-modules.dev.enable = true;
   home-modules.usbbackup.enable = true;

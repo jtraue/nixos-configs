@@ -14,9 +14,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-colors.url = "github:misterio77/nix-colors";
+    neovim = {
+      url = "github:neovim/neovim/stable?dir=contrib";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, nixpkgs-unstable, nix-colors, neovim, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSupportedSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -31,6 +37,7 @@
           import ./pkgs
             {
               pkgs = nixpkgs.legacyPackages.${system};
+              inherit neovim;
             } // {
 
             # Demo package for netboot. Use via:
@@ -58,7 +65,7 @@
         );
 
       # Covers all packages and customizations.
-      overlays = import ./overlays;
+      overlays = import ./overlays { inherit neovim; };
 
       # NixOS configurations
       # Some of them already ship with home-manager configuration.
@@ -117,7 +124,7 @@
               };
             in
             {
-              inherit homeManagerModules pkgs-unstable;
+              inherit homeManagerModules pkgs-unstable nix-colors;
               overlays = builtins.attrValues overlays;
             };
           modules = [
