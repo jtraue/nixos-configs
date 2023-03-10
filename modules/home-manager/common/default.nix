@@ -87,27 +87,6 @@ in
         TERM = "xterm-256color";
       };
 
-      initExtra = /* zsh */ ''
-        bindkey "\e$terminfo[kcub1]" backward-word
-        bindkey "\e$terminfo[kcuf1]" forward-word
-         if [[ -n "$IN_NIX_SHELL" ]]; then
-          label="nix-shell"
-          if [[ "$name" != "$label" ]]; then
-            label="$label:$name"
-          fi
-          export PS1=$'%{$fg[green]%}'"$label$PS1"
-          unset label
-        fi
-      '';
-
-      initExtraBeforeCompInit = /* zsh */ ''
-        ZSH_TMUX_AUTOSTART=true
-        ZSH_TMUX_AUTOQUIT=true
-        ZSH_TMUX_AUTOCONNECT=false
-        # open markdown files with vim
-        alias -s md=vim
-      '';
-
       plugins = [
         {
           name = "zsh-nix-shell";
