@@ -10,6 +10,8 @@ in
   home-modules.dev.enable = true;
   home-modules.usbbackup.enable = true;
 
+  services.blueman-applet.enable = true;
+
   programs.git = {
     userEmail = "jana.traue@cyberus-technology.de";
   };

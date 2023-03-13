@@ -60,5 +60,8 @@
 
   services.udisks2.enable = true; # for udiskie
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   system.stateVersion = "22.05";
 }
