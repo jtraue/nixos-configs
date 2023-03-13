@@ -73,7 +73,10 @@
 
         e14 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit overlays nixos-hardware nixpkgs-meshcommander; };
+          specialArgs = {
+            inherit nixos-hardware nixpkgs-meshcommander;
+            overlays = builtins.attrValues overlays;
+          };
           modules = [
             ./hosts/e14/configuration.nix
             ./hosts/e14/hardware-configuration.nix
