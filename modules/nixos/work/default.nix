@@ -185,6 +185,13 @@ in
             Hostname vpn.cyberus-technology.de
             Port 8822
             IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
+
+          Host nixos-live
+            User jtraue
+            Host 10.0.0.16
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+            IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
         '';
       };
 
@@ -261,6 +268,11 @@ in
                 hostName = "l14-external";
                 ethernetAddress = "00:0a:cd:26:04:17";
                 ipAddress = "10.0.0.15";
+              }
+              {
+                hostName = "nixos-live";
+                ethernetAddress = "48:65:ee:12:c1:00";
+                ipAddress = "10.0.0.16";
               }
 
             ];
