@@ -14,6 +14,7 @@ in
     home.packages = with pkgs; [
       amtterm
       cmakeCurses
+      deadnix
       gdb
       minicom
       ninja
