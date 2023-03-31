@@ -27,6 +27,7 @@
   };
   environment.systemPackages = with pkgs; [
     steam
+    calibre
   ];
 
   system.stateVersion = "21.05";
