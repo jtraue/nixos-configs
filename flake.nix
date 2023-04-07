@@ -135,7 +135,12 @@
           ];
         };
         "jtraue@x13" = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          # Workaround for using unfree packages with home-manager
+          # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
           extraSpecialArgs =
             let
               pkgs-unstable = import nixpkgs-unstable {
@@ -144,7 +149,7 @@
               };
             in
             {
-              inherit homeManagerModules pkgs-unstable;
+              inherit homeManagerModules pkgs-unstable nix-colors;
               overlays = builtins.attrValues overlays;
             };
           modules = [

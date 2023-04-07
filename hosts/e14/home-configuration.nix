@@ -1,4 +1,4 @@
-{ lib, pkgs, homeManagerModules, hostname, pkgs-unstable, ... }:
+{ lib, pkgs, homeManagerModules, pkgs-unstable, ... }:
 let
   teams = pkgs-unstable.teams;
 in

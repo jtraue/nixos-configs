@@ -1,11 +1,6 @@
-{ lib, pkgs, homeManagerModules, overlays, pkgs-unstable, ... }:
+{ lib, pkgs, homeManagerModules, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
-  nixpkgs.overlays = builtins.attrValues overlays;
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
 
   home-modules.common.enable = true;
   home-modules.desktop.enable = true;
