@@ -36,6 +36,7 @@ in
     security.pam.services.lightdm.enableGnomeKeyring = true;
 
     services = {
+      gnome.gnome-keyring.enable = true;
       dbus.packages = with pkgs; [ dconf ];
       xserver = {
         libinput = {
