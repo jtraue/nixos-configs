@@ -74,6 +74,8 @@ in
       "video"
     ];
 
+    services.udisks2.enable = true; # for udiskie
+
     # -- fonts
     fonts = {
       enableDefaultFonts = true;

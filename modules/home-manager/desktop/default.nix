@@ -74,6 +74,11 @@ in
     # see nixos settings on how to enable automatic login
     services.nextcloud-client.enable = true;
 
+    services.udiskie = {
+      enable = true;
+      tray = "always";
+    };
+
     # To find the extension ID, check its URL on the web store:
     # https://chrome.google.com/webstore/category/extensions
     programs.chromium = {
