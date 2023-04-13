@@ -1,4 +1,4 @@
-{ config, pkgs, nixos-hardware, nixosModules, ... }:
+{ pkgs, nixos-hardware, nixosModules, ... }:
 {
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga

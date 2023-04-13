@@ -6,14 +6,14 @@ let
   sources = import ../nix/sources.nix;
   watson-python = pkgs.python3Packages.buildPythonPackage {
     pname = "watson-python";
-    version = pkgs.watson.version;
-    src = pkgs.watson.src;
-    propagatedBuildInputs = pkgs.watson.propagatedBuildInputs;
+    inherit (pkgs.watson) version;
+    inherit (pkgs.watson) src;
+    inherit (pkgs.watson) propagatedBuildInputs;
     doCheck = false;
   };
 
   runtimeInputs = [
-    (pkgs.python3.withPackages (ps: [
+    (pkgs.python3.withPackages (_ps: [
       watson-python
     ]))
   ];

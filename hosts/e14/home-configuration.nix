@@ -1,6 +1,6 @@
-{ lib, pkgs, homeManagerModules, pkgs-unstable, ... }:
+{ pkgs, homeManagerModules, pkgs-unstable, ... }:
 let
-  teams = pkgs-unstable.teams;
+  inherit (pkgs-unstable) teams;
 in
 {
   imports = builtins.attrValues homeManagerModules;

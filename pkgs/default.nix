@@ -1,5 +1,4 @@
 { pkgs
-, neovim
 }:
 {
   amt-control = pkgs.callPackage ./amt-control { };
@@ -13,6 +12,4 @@
   yass = pkgs.callPackage ./yass.nix { };
   ipxe-files = pkgs.callPackage ./ipxe { };
   sotest-to-ipxe = pkgs.callPackage ./sotest-to-ipxe { };
-
-  myneovim = pkgs.wrapNeovim neovim.packages.x86_64-linux.neovim { };
 }

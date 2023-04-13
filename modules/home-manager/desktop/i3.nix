@@ -12,20 +12,8 @@ let
 
   theme-select = "-theme $(cat ~/.rofi.theme)";
 
-  timew = pkgs.writeShellScript "timew-status" ''
-    task_active=$(${pkgs.timewarrior}/bin/timew get dom.active)
-    if [ "$task_active" -gt 0 ]
-    then
-      task=$(${pkgs.timewarrior}/bin/timew | head -n 1 | sed 's/Tracking //')
-      time=$(${pkgs.timewarrior}/bin/timew | head -n 3 | tail -n 1 | sed 's/ \+/ /g' | cut -d' ' -f3)
-      echo "{ \"state\": \"Info\", \"text\": \" $task $time\" }"
-    else
-      echo "{ \"state\": \"Idle\", \"text\": \" no time tracking \" }"
-    fi
-  '';
-
-  onboard-keyboard-control = pkgs.onboard-keyboard-control;
-  theme-switch = pkgs.theme-switch;
+  inherit (pkgs) onboard-keyboard-control;
+  inherit (pkgs) theme-switch;
 
   # XXX:
   # This should probably be an overlay but I cannot figure out how

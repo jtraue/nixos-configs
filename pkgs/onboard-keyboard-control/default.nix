@@ -1,4 +1,4 @@
-{ stdenv, lib, writeShellScriptBin, makeWrapper, onboard }:
+{ stdenv, makeWrapper, onboard }:
 stdenv.mkDerivation {
   name = "onboard-keyboard-control";
   nativeBuildInputs = [ makeWrapper ];

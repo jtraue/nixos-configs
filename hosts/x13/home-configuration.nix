@@ -1,4 +1,4 @@
-{ lib, pkgs, homeManagerModules, ... }:
+{ pkgs, homeManagerModules, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
 

@@ -1,4 +1,4 @@
-{ lib, ipxe, runCommand, writeText }:
+{ ipxe, runCommand, writeText }:
 let
   script = writeText "embed.ipxe" ''
     #!ipxe
@@ -9,7 +9,7 @@ let
     chain http://''${next-server}:8888/ipxe-default.cfg || chain tftp://''${next-server}/ipxe-default.cfg || shell
   '';
 
-  ipxe-with-extended-multiboot = ipxe.overrideAttrs (oldAttrs: rec {
+  ipxe-with-extended-multiboot = ipxe.overrideAttrs (_oldAttrs: rec {
     patches = [
       # The number of multiboot modules and the command line length are limited
       # in iPXE and it does not notify anyone if they are exceeded :/

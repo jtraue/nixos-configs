@@ -1,7 +1,4 @@
-{ writers
-, symlinkJoin
-, makeWrapper
-, writeShellApplication
+{ writeShellApplication
 , pkgs
 }:
 let

@@ -1,4 +1,4 @@
-{ stdenv, writeShellScript, writers }:
+{ writeShellScript, writers }:
 let
   script = writeShellScript "theme-switch.sh" (builtins.readFile ./theme-switch.sh);
 in

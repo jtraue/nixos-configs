@@ -16,13 +16,19 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    neovim = {
-      url = "github:neovim/neovim/stable?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixpkgs-meshcommander, nixpkgs-unstable, nix-colors, neovim, ... }@inputs:
+  outputs =
+    { nixpkgs
+    , home-manager
+    , nixos-hardware
+    , nixpkgs-meshcommander
+    , nixpkgs-unstable
+    , nix-colors
+    , pre-commit-hooks
+    , ...
+    }:
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSupportedSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -37,7 +43,6 @@
           import ./pkgs
             {
               pkgs = nixpkgs.legacyPackages.${system};
-              inherit neovim;
             } // {
 
             # Demo package for netboot. Use via:
@@ -65,7 +70,7 @@
         );
 
       # Covers all packages and customizations.
-      overlays = import ./overlays { inherit neovim; };
+      overlays = import ./overlays;
 
       # NixOS configurations
       # Some of them already ship with home-manager configuration.
@@ -127,7 +132,7 @@
               };
             in
             {
-              inherit homeManagerModules pkgs-unstable nix-colors;
+              inherit pkgs-unstable nix-colors;
               overlays = builtins.attrValues overlays;
             };
           modules = [
@@ -160,7 +165,21 @@
 
       devShells = forAllSupportedSystems
         (system: {
-          default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
+          default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix {
+            inherit system checks;
+          };
         });
+
+      checks = forAllSupportedSystems (system: {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+            deadnix.enable = true;
+            statix.enable = true;
+            shellcheck.enable = true;
+          };
+        };
+      });
     };
 }

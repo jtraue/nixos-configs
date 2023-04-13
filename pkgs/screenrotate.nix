@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
-  xrandr = pkgs.xorg.xrandr;
-  xf86_input_wacom = pkgs.xf86_input_wacom;
+  inherit (pkgs.xorg) xrandr;
+  inherit (pkgs) xf86_input_wacom;
 in
 pkgs.writeShellScriptBin "screenrotate" ''
   set -eu
