@@ -16,6 +16,27 @@
         "type": "github"
       }
     },
+    "deploy-rs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1668841484,
+        "narHash": "sha256-fiDqpfcO16bvTxkIRkTsnQLxbpZumxIHnRNFWsTU5jM=",
+        "owner": "xanderio",
+        "repo": "deploy-rs",
+        "rev": "a17d5256e0082eef75ed46147ea571c20bded8b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xanderio",
+        "repo": "deploy-rs",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -36,7 +57,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils"
+        "utils": "utils_2"
       },
       "locked": {
         "lastModified": 1679786039,
@@ -175,6 +196,7 @@
     },
     "root": {
       "inputs": {
+        "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
         "neovim": "neovim",
         "nix-colors": "nix-colors",
@@ -185,6 +207,21 @@
       }
     },
     "utils": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
       "locked": {
         "lastModified": 1676283394,
         "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
