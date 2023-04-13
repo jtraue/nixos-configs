@@ -117,7 +117,7 @@
 
       # home-manager configurations - intended for non NixOS machines
       homeConfigurations = {
-        "jtraue@e14" = home-manager.lib.homeManagerConfiguration rec {
+        "jtraue@e14" = home-manager.lib.homeManagerConfiguration {
           # Workaround for using unfree packages with home-manager
           # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
           pkgs = import nixpkgs {
@@ -132,14 +132,14 @@
               };
             in
             {
-              inherit pkgs-unstable nix-colors;
+              inherit homeManagerModules pkgs-unstable nix-colors;
               overlays = builtins.attrValues overlays;
             };
           modules = [
             ./hosts/e14/home-configuration.nix
           ];
         };
-        "jtraue@x13" = home-manager.lib.homeManagerConfiguration rec {
+        "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
           # Workaround for using unfree packages with home-manager
           # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
           pkgs = import nixpkgs {

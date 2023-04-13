@@ -9,7 +9,7 @@ in
 
     boot = {
       cleanTmpDir = true;
-      loader.systemd-boot.enable = true;
+      loader.systemd-boot.enable = lib.mkDefault true;
       loader.efi.canTouchEfiVariables = true;
     };
 
