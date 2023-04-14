@@ -122,9 +122,9 @@ in
           comment-nvim
           markdown-preview-nvim
           cheatsheet-nvim
-          neorg
         ];
       };
+
     xdg.configFile.nvim = {
       source = ./nvim;
       recursive = true;
