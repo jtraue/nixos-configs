@@ -18,9 +18,6 @@
   };
   nixos-modules.yubikey.enable = true;
 
-  services.tailscale.enable = true;
-  networking.firewall.checkReversePath = "loose"; # for tailscale
-
   # pipewire complains about missing xdg-portals (https://www.reddit.com/r/NixOS/comments/y877ou/pipewire_not_working_requires_xdgportals/)
   xdg.portal.enable = true;
 

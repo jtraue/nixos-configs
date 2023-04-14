@@ -72,7 +72,7 @@ in
     fonts.fontconfig.enable = true;
 
     # see nixos settings on how to enable automatic login
-    services.nextcloud-client.enable = true;
+    services.nextcloud-client.enable = lib.mkDefault true;
 
     services.udiskie = {
       enable = true;

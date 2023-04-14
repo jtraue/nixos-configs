@@ -60,6 +60,9 @@ in
   config = mkIf cfg.enable (
     mkMerge [{
 
+      services.tailscale.enable = true;
+      networking.firewall.checkReversePath = "loose"; # for tailscale
+
       nix = {
         settings = {
           trusted-public-keys = [
