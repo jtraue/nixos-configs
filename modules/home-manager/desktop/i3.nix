@@ -7,7 +7,7 @@
 # Insert in vim via: Ctrl+v U1f50b (+space)
 let
   cfg = config.home-modules.desktop.i3;
-  solarizedColors = config.home-modules.desktop.solarized;
+  inherit (config.colorscheme) colors;
   inherit (pkgs.stdenv) mkDerivation;
 
   theme-select = "-theme $(cat ~/.rofi.theme)";
@@ -63,26 +63,26 @@ in
 
             geometry = "300x50-12+30";
             transparency = 5;
-            frame_color = "${solarizedColors.base00}";
+            frame_color = "#${colors.base00}";
             frame_width = 3;
             fonts = [ "pango:Cantarell 12" ];
           };
 
           urgency_low = {
-            background = "${solarizedColors.base03}";
-            foreground = "${solarizedColors.base00}";
+            background = "#${colors.base00}";
+            foreground = "#${colors.base05}";
             timeout = 5;
           };
           urgency_normal = {
-            background = "${solarizedColors.base03}";
-            foreground = "${solarizedColors.yellow}";
-            frame_color = "${solarizedColors.yellow}";
+            background = "#${colors.base00}";
+            foreground = "#${colors.base09}";
+            frame_color = "#${colors.base09}";
             timeout = 10;
           };
           urgency_critical = {
-            background = "${solarizedColors.base03}";
-            foreground = "${solarizedColors.orange}";
-            frame_color = "${solarizedColors.orange}";
+            background = "#${colors.base00}";
+            foreground = "#${colors.base08}";
+            frame_color = "#${colors.base08}";
             timeout = 20;
           };
         };
@@ -91,7 +91,6 @@ in
     home.packages = with pkgs;[
       xautolock
       betterlockscreen
-      i3status-rust
       i3
       siji
       xautolock
@@ -106,37 +105,40 @@ in
           {
             position = "top";
             colors = {
-              background = "${solarizedColors.base03}";
-              statusline = "${solarizedColors.base0}";
+              background = "#${colors.base00}";
+              statusline = "#${colors.base04}";
+              separator = "#${colors.base01}";
               activeWorkspace = {
-                background = "${solarizedColors.base02}";
-                border = "${solarizedColors.base02}";
-                text = "${solarizedColors.base00}";
+                background = "#${colors.base03}";
+                border = "#${colors.base05}";
+                text = "#${colors.base00}";
               };
               bindingMode = {
-                background = "${solarizedColors.base3}";
-                border = "${solarizedColors.base00}";
-                text = "${solarizedColors.base00}";
+                background = "#${colors.base0A}";
+                border = "#${colors.base00}";
+                text = "#${colors.base00}";
               };
               focusedWorkspace = {
-                background = "${solarizedColors.base0}";
-                border = "${solarizedColors.base0}";
-                text = "${solarizedColors.base03}";
+                background = "#${colors.base0D}";
+                border = "#${colors.base05}";
+                text = "#${colors.base00}";
               };
               inactiveWorkspace = {
-                background = "${solarizedColors.base02}";
-                border = "${solarizedColors.base02}";
-                text = "${solarizedColors.base00}";
+                background = "#${colors.base01}";
+                border = "#${colors.base03}";
+                text = "#${colors.base05}";
               };
               urgentWorkspace = {
-                background = "${solarizedColors.orange}";
-                border = "${solarizedColors.orange}";
-                text = "${solarizedColors.dark}";
+                background = "#${colors.base08}";
+                border = "#${colors.base08}";
+                text = "#${colors.base00}";
               };
             };
-            statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs";
+            statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-top.toml";
             fonts = {
-              names = [ "pango:DejaVu Sans Mono" ];
+              names = [
+                " pango:DejaVu Sans Mono "
+              ];
               size = 10.0;
             };
           }
@@ -144,32 +146,32 @@ in
 
         colors = {
           focused = {
-            background = "${solarizedColors.base03}";
-            border = "${solarizedColors.base1}";
-            childBorder = "${solarizedColors.base1}";
-            indicator = "${solarizedColors.base03}";
-            text = "${solarizedColors.base1}";
+            border = "#${colors.base05}";
+            background = "#${colors.base0D}";
+            text = "#${colors.base00}";
+            indicator = "#${colors.base0D}";
+            childBorder = "#${colors.base0C}";
           };
           unfocused = {
-            background = "${solarizedColors.magenta}";
-            border = "${solarizedColors.base01}";
-            childBorder = "${solarizedColors.base02}";
-            indicator = "${solarizedColors.base03}";
-            text = "${solarizedColors.green}";
+            border = "#${colors.base01}";
+            background = "#${colors.base08}";
+            text = "#${colors.base05}";
+            indicator = "#${colors.base01}";
+            childBorder = "#${colors.base01}";
           };
           focusedInactive = {
-            background = "${solarizedColors.base00}";
-            border = "${solarizedColors.base00}";
-            childBorder = "${solarizedColors.base00}";
-            indicator = "${solarizedColors.base03}";
-            text = "${solarizedColors.base1}";
+            border = "#${colors.base01}";
+            background = "#${colors.base01}";
+            text = "#${colors.base05}";
+            indicator = "#${colors.base03}";
+            childBorder = "#${colors.base01}";
           };
           urgent = {
-            background = "${solarizedColors.base03}";
-            border = "${solarizedColors.orange}";
-            childBorder = "${solarizedColors.orange}";
-            indicator = "${solarizedColors.base03}";
-            text = "${solarizedColors.orange}";
+            border = "#${colors.base08}";
+            background = "#${colors.base08}";
+            text = "#${colors.base00}";
+            indicator = "#${colors.base08}";
+            childBorder = "#${colors.base08}";
           };
         };
 
@@ -260,7 +262,7 @@ in
             notification = false;
           }
           {
-            command = "${pkgs.hsetroot}/bin/hsetroot -solid \"${solarizedColors.base02}\"";
+            command = "${pkgs.hsetroot}/bin/hsetroot -solid \"#${colors.base00}\"";
             notification = false;
           }
           {
@@ -331,82 +333,93 @@ in
       '';
     };
 
-    home.file.".config/i3status-rust/config.toml".text = ''
-      [theme]
-      file = "/home/jtraue/.i3status-color.toml"
-      [icons]
-      name = "awesome5"
+    programs.i3status-rust = {
+      enable = true;
+      bars = {
+        top = {
+          blocks = [
+            {
+              block = "custom";
+              on_click = "${onboard-keyboard-control}/bin/onboard-keyboard-control";
+              command = "if test -f /tmp/onboard.pid; then echo 'hide onboard keyboard'; else echo 'show onboard keyboard'; fi";
+              interval = 3;
+            }
+            {
+              block = "custom";
+              on_click = "${theme-switch}/bin/theme-switch";
+              command = "cat ~/.color";
+              interval = 3;
+            }
+            {
+              block = "watson";
+              show_time = true;
+            }
+            {
+              block = "taskwarrior";
+              interval = 30;
+              format = "{count} open tasks ({filter_name})";
+              format_singular = "{count} open task ({filter_name})";
+              format_everything_done = "nothing to do!";
+              warning_threshold = 1;
+              critical_threshold = 5;
+              filters = [
+                {
+                  name = "week";
+                  filter = "+PENDING +WEEK";
+                }
+              ];
+            }
+            {
+              block = "disk_space";
+              path = "/";
+              alias = "root:";
+              info_type = "available";
+              unit = "GB";
+              interval = 20;
+              warning = 20.0;
+              alert = 10.0;
 
-      [[block]]
-      block = "custom"
-      on_click = "${onboard-keyboard-control}/bin/onboard-keyboard-control"
-      command = "if test -f /tmp/onboard.pid; then echo 'hide onboard keyboard'; else echo 'show onboard keyboard'; fi"
-      interval = 3
+            }
+            {
+              block = "memory";
+              display_type = "memory";
+              format_mem = "mem: {mem_used_percents}";
+              format_swap = "{swap_used_percents}";
 
-      [[block]]
-      block = "custom"
-      on_click = "${theme-switch}/bin/theme-switch"
-      command = "cat ~/.color"
-      interval = 3
-
-      [[block]]
-      block = "watson"
-      show_time = true
-
-      [[block]]
-      block = "taskwarrior"
-      interval = 30
-      format = "{count} open tasks ({filter_name})"
-      format_singular = "{count} open task ({filter_name})"
-      format_everything_done = "nothing to do!"
-      warning_threshold = 1
-      critical_threshold = 5
-      [[block.filters]]
-      name = "week"
-      filter = "+PENDING +WEEK"
-
-      [[block]]
-      block = "disk_space"
-      path = "/"
-      alias = "root:"
-      info_type = "available"
-      unit = "GB"
-      interval = 20
-      warning = 20.0
-      alert = 10.0
-
-      [[block]]
-      block = "memory"
-      display_type = "memory"
-      format_mem = "mem: {mem_used_percents}"
-      format_swap = "{swap_used_percents}"
-
-      [[block]]
-      block = "cpu"
-      interval = 1
-      format = "{utilization}"
-
-      [[block]]
-      block = "networkmanager"
-      on_click = "kitty nmtui"
-      interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+"]
-      interface_name_include = []
-      ap_format = "{ssid^10}"
-
-
-      [[block]]
-      block = "battery"
-      interval = 10
-      format = "{percentage} {time}"
-
-      [[block]]
-      block = "sound"
-
-      [[block]]
-      block = "time"
-      interval = 60
-      format = "%d.%m.%y %R"
-    '';
-
+            }
+            {
+              block = "cpu";
+              interval = 1;
+              format = "{utilization}";
+            }
+            {
+              block = "networkmanager";
+              on_click = "kitty nmtui";
+              interface_name_include = [ ];
+              interface_name_exclude = [
+                "br\\-[0-9a-f]{12}"
+                "docker\\d+"
+              ];
+              ap_format = "{ssid^10}";
+            }
+            {
+              block = "battery";
+              interval = 10;
+              format = "{percentage} {time}";
+            }
+            {
+              block = "sound";
+            }
+            {
+              block = "time";
+              interval = 60;
+              format = "%d.%m.%y %R";
+            }
+          ];
+          icons = "awesome5";
+          theme = "gruvbox-dark";
+        };
+      };
+    };
   };
 }
