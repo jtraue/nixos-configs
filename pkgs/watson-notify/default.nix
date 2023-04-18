@@ -3,7 +3,7 @@
 , lib ? pkgs.lib
 }:
 let
-  script = ../modules/common/watson/watson-notify.sh;
+  script = ./watson-notify.sh;
 
   watson-python = pkgs.python3Packages.buildPythonPackage {
     pname = "watson-python";

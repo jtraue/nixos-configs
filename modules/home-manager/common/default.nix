@@ -13,6 +13,7 @@ in
     ./mc.nix
     ./tmux
     ./vim
+    ./watson
   ];
 
   options.home-modules.common.enable = lib.mkEnableOption "Enables common options.";
@@ -27,6 +28,7 @@ in
     home-modules.common.mc.enable = lib.mkDefault true;
     home-modules.common.tmux.enable = lib.mkDefault true;
     home-modules.common.vim.enable = lib.mkDefault true;
+    home-modules.common.watson.enable = lib.mkDefault false;
 
     fonts.fontconfig.enable = true;
 

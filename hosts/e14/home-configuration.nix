@@ -9,6 +9,7 @@ in
   home-modules.desktop.enable = true;
   home-modules.dev.enable = true;
   home-modules.usbbackup.enable = true;
+  home-modules.common.watson.enable = true;
 
   services.blueman-applet.enable = true;
 

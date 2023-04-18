@@ -350,6 +350,10 @@ in
       interval = 3
 
       [[block]]
+      block = "watson"
+      show_time = true
+
+      [[block]]
       block = "taskwarrior"
       interval = 30
       format = "{count} open tasks ({filter_name})"
