@@ -74,6 +74,7 @@ null_ls.setup({
         -- Markdown
         null_ls.builtins.code_actions.proselint,
         null_ls.builtins.diagnostics.mdl,
+        null_ls.builtins.formatting.prettier,
 
         -- Cmake
         null_ls.builtins.diagnostics.cmake_lint,

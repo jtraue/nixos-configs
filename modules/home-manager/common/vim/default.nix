@@ -55,6 +55,7 @@ in
       deadnix
       proselint
       mdl
+      nodePackages.prettier
       cmake-format
       yamllint
 

@@ -193,8 +193,8 @@ in
         keybindings = lib.mkOptionDefault {
           "${modifier}+Return" = "exec kitty";
           "${modifier}+p" = "exec --no-startup-id ${pkgs.rofi-pass}/bin/rofi-pass";
-          "${modifier}+d" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi drun#run#ssh -combi-modi drun#run -show combi -show-icons -display-combi run ${theme-select}";
-          "${modifier}+x" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi window -show window -auto-select ${theme-select}";
+          "${modifier}+d" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi drun#run#ssh -combi-modi drun#run -show combi -show-icons -display-combi run";
+          "${modifier}+x" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi window -show window -auto-select";
           "XF86MonBrightnessUp" = "exec light -s sysfs/backlight/intel_backlight -A 10";
           "XF86MonBrightnessDown" = "exec light -s sysfs/backlight/intel_backlight -U 10";
           "${modifier}+h" = "focus left";
