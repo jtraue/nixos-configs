@@ -33,9 +33,9 @@
         hostname = "igor";
         user = "root";
       };
-      "kirby" = {
-        hostname = "kirby";
-        user = "jana";
+      "mini" = {
+        hostname = "mini.home";
+        user = "kodi";
       };
     };
   };
