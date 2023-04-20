@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nix-colors, ... }:
 
 let
   cfg = config.home-modules.desktop;
@@ -22,6 +22,8 @@ let
     "application/x-extension-xhtml" = browser;
     "application/x-extension-xht" = browser;
   };
+
+  inherit (nix-colors.lib-contrib { inherit pkgs; }) gtkThemeFromScheme;
 
 
 in
@@ -59,11 +61,25 @@ in
       };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable rec {
 
     home-modules.desktop.kitty.enable = true;
     home-modules.desktop.i3.enable = true;
     home-modules.desktop.rofi.enable = true;
+
+    gtk = {
+      enable = true;
+      theme = {
+        name = "${config.colorscheme.slug}";
+        package = gtkThemeFromScheme { scheme = config.colorscheme; };
+      };
+    };
+    services.xsettingsd = {
+      enable = true;
+      settings = {
+        "Net/ThemeName" = "${gtk.theme.name}";
+      };
+    };
 
     nixpkgs.config.input-fonts.acceptLicense = true;
     services.network-manager-applet.enable = true;

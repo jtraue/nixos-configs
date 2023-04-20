@@ -10,10 +10,7 @@ let
   inherit (config.colorscheme) colors;
   inherit (pkgs.stdenv) mkDerivation;
 
-  theme-select = "-theme $(cat ~/.rofi.theme)";
-
   inherit (pkgs) onboard-keyboard-control;
-  inherit (pkgs) theme-switch;
 
   # XXX:
   # This should probably be an overlay but I cannot figure out how
@@ -344,16 +341,12 @@ in
               command = "if test -f /tmp/onboard.pid; then echo 'hide onboard keyboard'; else echo 'show onboard keyboard'; fi";
               interval = 3;
             }
-            {
-              block = "custom";
-              on_click = "${theme-switch}/bin/theme-switch";
-              command = "cat ~/.color";
-              interval = 3;
-            }
-            {
-              block = "watson";
-              show_time = true;
-            }
+            (lib.mkIf
+              config.programs.watson.enable
+              {
+                block = "watson";
+                show_time = true;
+              })
             {
               block = "taskwarrior";
               interval = 30;
