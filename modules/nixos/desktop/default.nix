@@ -5,14 +5,15 @@ in
 {
   imports = [
     ./autorandr.nix
+    ./x11.nix
   ];
 
   options.nixos-modules.desktop.enable = lib.mkEnableOption "Enable desktop environment.";
 
   config = lib.mkIf cfg.enable {
 
-
     nixos-modules.desktop.autorandr.enable = true;
+    nixos-modules.desktop.x11.enable = true;
     hardware = {
       opengl = {
         enable = true;
@@ -38,31 +39,6 @@ in
     services = {
       gnome.gnome-keyring.enable = true;
       dbus.packages = with pkgs; [ dconf ];
-      xserver = {
-        libinput = {
-          enable = true;
-        };
-        enable = true;
-        displayManager = {
-          defaultSession = "none+i3";
-          autoLogin =
-            {
-              enable = true;
-              user = "jtraue";
-            };
-        };
-        layout = "us";
-        xkbVariant = "intl";
-        xkbOptions = "caps:escape";
-        windowManager.i3 = {
-          enable = true;
-          extraPackages = with pkgs; [
-            dmenu
-            i3status
-            i3lock
-          ];
-        };
-      };
     };
     systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 

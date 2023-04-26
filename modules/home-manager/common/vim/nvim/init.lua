@@ -81,6 +81,8 @@ require("indent_blankline").setup {
     show_current_context_start = false,
 }
 
+require('gitsigns').setup()
+
 require("config/telescope")
 require("config/treesitter")
 require("config/nvim-tree")

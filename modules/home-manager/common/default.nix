@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    colorScheme = nix-colors.colorSchemes.gruvbox-dark-soft;
+    colorScheme = nix-colors.colorSchemes.gruvbox-dark-pale;
 
     home-modules.common.ack.enable = lib.mkDefault true;
     home-modules.common.git.enable = lib.mkDefault true;
