@@ -72,8 +72,10 @@ null_ls.setup({
         null_ls.builtins.diagnostics.deadnix,
 
         -- Markdown
-        null_ls.builtins.code_actions.proselint,
+        -- null_ls.builtins.code_actions.proselint,
+        -- null_ls.builtins.diagnostics.proselint,
         null_ls.builtins.diagnostics.mdl,
+        null_ls.builtins.diagnostics.vale,
         null_ls.builtins.formatting.prettier,
 
         -- Cmake

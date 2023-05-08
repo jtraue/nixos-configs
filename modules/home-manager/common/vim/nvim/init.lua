@@ -95,3 +95,26 @@ require("config/lualine")
 require("config/vimwiki")
 require("config/comment")
 require("config/cheatsheet")
+
+vim.cmd [[
+function! s:goyo_enter()
+  lua require('lualine').hide()
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+  Gitsigns detach
+endfunction
+
+function! s:goyo_leave()
+  lua require('lualine').hide({ unhide = true })
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight
+  Gitsigns attach
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+]]

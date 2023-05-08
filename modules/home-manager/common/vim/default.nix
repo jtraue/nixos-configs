@@ -58,6 +58,7 @@ in
       nodePackages.prettier
       cmake-format
       yamllint
+      vale
 
       nil
       nodePackages.bash-language-server
@@ -124,6 +125,10 @@ in
           markdown-preview-nvim
           cheatsheet-nvim
           gitsigns-nvim
+          vim-table-mode
+
+          goyo-vim
+          limelight-vim
         ];
       };
 
@@ -135,5 +140,23 @@ in
       style "${config.home.homeDirectory}/.mdl_style.rb"
     '';
     home.file.".mdl_style.rb".source = ./mdl_style.rb;
+
+    # TODO: needs `vale sync` for styles to become available
+    home.file.".vale.ini".text = ''
+      StylesPath = styles
+
+      MinAlertLevel = suggestion
+      Vocab = Base
+
+      Packages = proselint, write-good, alex, Google
+
+      [*]
+      BasedOnStyles = Vale, proselint, write-good, Google
+
+      write-good.E-Prime = NO
+      write-good.Weasel = NO
+      Vale.Spelling = NO
+      Google.Acronyms = NO
+    '';
   };
 }
