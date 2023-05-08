@@ -7,7 +7,7 @@ let
 
   associations = {
     "application/pdf" = [ "org.kde.okular.desktop" ];
-    "inode/directory" = [ "pcmanfm.desktop" ];
+    # "inode/directory" = [ "pcmanfm.desktop" ];
     "text/html" = browser;
     "x-scheme-handler/http" = browser;
     "x-scheme-handler/https" = browser;
@@ -92,6 +92,8 @@ in
       filezilla
       gimp
       gnome3.simple-scan
+      gnome3.file-roller
+      gnome3.nautilus
       hunspell
       hunspellDicts.en-us-large
       imagemagick
@@ -100,7 +102,6 @@ in
       nextcloud-client
       okular
       pavucontrol
-      pcmanfm
       pulseaudio
       scrot # used for screenshot in xournalpp
       signal-desktop
