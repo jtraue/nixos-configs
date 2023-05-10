@@ -129,6 +129,8 @@ in
 
           goyo-vim
           limelight-vim
+
+          vim-floaterm
         ];
       };
 

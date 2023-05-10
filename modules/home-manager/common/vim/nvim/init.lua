@@ -61,8 +61,8 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
 
 -- Set clipboard to use system clipboard
 vim.opt.clipboard = "unnamedplus"
@@ -118,3 +118,6 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 ]]
+
+vim.keymap.set("n", "<A-t>", "<cmd>FloatermToggle<CR>", { desc = "Floatterm Toggle" })
+vim.keymap.set("t", "<A-t>", "<C-\\><C-n><cmd>FloatermToggle<CR>", { desc = "Floatterm Toggle" })
