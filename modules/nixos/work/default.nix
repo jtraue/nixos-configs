@@ -66,11 +66,9 @@ in
       nix = {
         settings = {
           trusted-public-keys = [
-            "binary-cache.vpn.cyberus-technology.de:qhg25lVqyCT4sDOqxY6GJx8NF3F86eAJFCQjZK/db7Y="
             "cyberus-1:0jjMD2b+guloGW27ZToxDQApCoWj+4ONW9v8VH/Bv0Q="
           ];
           trusted-substituters = [
-            "https://binary-cache.vpn.cyberus-technology.de"
             "http://binary-cache-v2.vpn.cyberus-technology.de"
           ];
         };
@@ -78,7 +76,7 @@ in
         extraOptions = ''
           builders-use-substitutes = true
           # See https://discourse.nixos.org/t/precedence-with-multiple-substituters/1191 for a discussion about priorities.
-          extra-substituters = http://binary-cache-v2.vpn.cyberus-technology.de https://binary-cache.vpn.cyberus-technology.de
+          extra-substituters = http://binary-cache-v2.vpn.cyberus-technology.de
         '';
         buildMachines = [
           {
