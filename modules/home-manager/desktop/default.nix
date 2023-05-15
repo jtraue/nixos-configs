@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nix-colors, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.home-modules.desktop;
@@ -23,9 +23,6 @@ let
     "application/x-extension-xht" = browser;
   };
 
-  inherit (nix-colors.lib-contrib { inherit pkgs; }) gtkThemeFromScheme;
-
-
 in
 {
   imports = [
@@ -36,25 +33,11 @@ in
 
   options.home-modules.desktop.enable = lib.mkEnableOption "Enables desktop environment.";
 
-  config = lib.mkIf cfg.enable rec {
+  config = lib.mkIf cfg.enable {
 
     home-modules.desktop.kitty.enable = true;
     home-modules.desktop.i3.enable = true;
     home-modules.desktop.rofi.enable = true;
-
-    gtk = {
-      enable = true;
-      theme = {
-        name = "${config.colorscheme.slug}";
-        package = gtkThemeFromScheme { scheme = config.colorscheme; };
-      };
-    };
-    services.xsettingsd = {
-      enable = true;
-      settings = {
-        "Net/ThemeName" = "${gtk.theme.name}";
-      };
-    };
 
     nixpkgs.config.input-fonts.acceptLicense = true;
     services.network-manager-applet.enable = true;
