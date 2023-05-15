@@ -47,6 +47,7 @@ in
 
     # see nixos settings on how to enable automatic login
     services.nextcloud-client.enable = lib.mkDefault true;
+    services.dropbox.enable = lib.mkDefault true;
 
     services.udiskie = {
       enable = true;
