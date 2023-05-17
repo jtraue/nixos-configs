@@ -26,18 +26,17 @@ let
 in
 {
   imports = [
-    ./i3.nix
     ./kitty.nix
-    ./rofi.nix
+    ./x11
+    ./sway
   ];
 
   options.home-modules.desktop.enable = lib.mkEnableOption "Enables desktop environment.";
 
   config = lib.mkIf cfg.enable {
 
+    home-modules.desktop.x11.enable = lib.mkDefault true;
     home-modules.desktop.kitty.enable = true;
-    home-modules.desktop.i3.enable = true;
-    home-modules.desktop.rofi.enable = true;
 
     nixpkgs.config.input-fonts.acceptLicense = true;
     services.network-manager-applet.enable = true;

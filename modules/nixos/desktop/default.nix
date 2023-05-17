@@ -6,6 +6,7 @@ in
   imports = [
     ./autorandr.nix
     ./x11.nix
+    ./sway.nix
   ];
 
   options.nixos-modules.desktop.enable = lib.mkEnableOption "Enable desktop environment.";
@@ -13,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
 
     nixos-modules.desktop.autorandr.enable = true;
-    nixos-modules.desktop.x11.enable = true;
+    nixos-modules.desktop.x11.enable = lib.mkDefault true;
     hardware = {
       opengl = {
         enable = true;

@@ -9,6 +9,8 @@
 
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
+  nixos-modules.desktop.x11.enable = true;
+  nixos-modules.desktop.sway.enable = false;
   nixos-modules.notebook.enable = true;
   nixos-modules.work = {
     enable = true;
