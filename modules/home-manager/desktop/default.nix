@@ -47,7 +47,10 @@ in
 
     # see nixos settings on how to enable automatic login
     services.nextcloud-client.enable = lib.mkDefault true;
-    services.dropbox.enable = lib.mkDefault true;
+    services.dropbox = {
+      enable = lib.mkDefault true;
+      path = "${config.home.homeDirectory}/cloud/Dropbox";
+    };
 
     services.udiskie = {
       enable = true;
@@ -95,6 +98,7 @@ in
       xclip
       xournalpp
       youtube-dl
+      supernote-tool
     ] ++ [
       pkgs.corefonts # microsoft free fonts
       pkgs.nerdfonts
