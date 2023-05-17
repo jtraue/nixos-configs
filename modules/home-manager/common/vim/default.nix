@@ -144,8 +144,9 @@ in
     home.file.".mdl_style.rb".source = ./mdl_style.rb;
 
     # TODO: needs `vale sync` for styles to become available
+    # let's include an activation script 
     home.file.".vale.ini".text = ''
-      StylesPath = styles
+      StylesPath = .config/vale/styles
 
       MinAlertLevel = suggestion
       Vocab = Base
