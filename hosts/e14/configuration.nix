@@ -1,11 +1,9 @@
-{ pkgs, nixos-hardware, ... }:
+{ nixos-hardware, ... }:
 {
 
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel
   ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
