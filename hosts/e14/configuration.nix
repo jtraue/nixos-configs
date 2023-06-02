@@ -1,4 +1,4 @@
-{ nixos-hardware, ... }:
+{ nixos-hardware, pkgs, ... }:
 {
 
   imports = [
@@ -23,6 +23,10 @@
 
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "jtraue" ];
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
+  environment.systemPackages = with pkgs; [ virt-manager gnome.gnome-boxes ];
 
   boot.extraModprobeConfig = "options kvm_intel nested=1";
   boot.kernelParams = [ "intel_iommu=off" ];
