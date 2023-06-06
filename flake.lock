@@ -153,22 +153,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-meshcommander": {
-      "locked": {
-        "lastModified": 1664383307,
-        "narHash": "sha256-jNG3fXTxNMjZ9H+yPK+7kXPOAueTmTZesqQtE8QvuZ8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "7030b3d11c05cbaa31429e1a6dc9eed156591c47",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "7030b3d11c05cbaa31429e1a6dc9eed156591c47",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1678872516,
@@ -245,7 +229,6 @@
         "nix-colors": "nix-colors",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-meshcommander": "nixpkgs-meshcommander",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pre-commit-hooks": "pre-commit-hooks"
       }

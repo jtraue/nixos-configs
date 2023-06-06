@@ -5,10 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
 
-    # Meshcommander is broken since commit 07b207c5e9a47b640fe30861c9eedf419c38dce0
-    # Did not yet debug further - something in the nodejs build changed.
-    nixpkgs-meshcommander.url = "github:nixos/nixpkgs?rev=7030b3d11c05cbaa31429e1a6dc9eed156591c47";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
@@ -23,7 +19,6 @@
     { nixpkgs
     , home-manager
     , nixos-hardware
-    , nixpkgs-meshcommander
     , nixpkgs-unstable
     , nix-colors
     , pre-commit-hooks
@@ -79,7 +74,7 @@
         e14 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit nixos-hardware nixpkgs-meshcommander;
+            inherit nixos-hardware;
             overlays = builtins.attrValues overlays;
           };
           modules = [
@@ -117,7 +112,7 @@
         vm = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit nixos-hardware nixpkgs-meshcommander;
+            inherit nixos-hardware;
             overlays = builtins.attrValues overlays;
           };
           modules = [
