@@ -53,6 +53,7 @@ in
       inherit overlays;
       config = {
         allowUnfree = true;
+        allowUnfreePredicate = _: true;
       };
     };
 
