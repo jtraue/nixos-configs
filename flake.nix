@@ -117,6 +117,7 @@
           };
           modules = [
             ./hosts/vm/configuration.nix
+            ./hosts/x13/hardware-configuration.nix # placeholder
             home-manager.nixosModules.home-manager
             {
               # home-manager.useGlobalPkgs = true;
