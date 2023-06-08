@@ -5,6 +5,8 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel
   ];
 
+  services.onedrive.enable = true;
+
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
   nixos-modules.desktop.x11.enable = true;
