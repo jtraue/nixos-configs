@@ -17,7 +17,7 @@ in
           autoLogin =
             {
               enable = true;
-              user = "jtraue";
+              user = "${config.nixos-modules.common.user}";
             };
         };
         layout = "us";

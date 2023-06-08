@@ -3,7 +3,13 @@ let
   cfg = config.nixos-modules.common;
 in
 {
-  options.nixos-modules.common.enable = lib.mkEnableOption "Enable common options.";
+  options.nixos-modules.common = {
+    enable = lib.mkEnableOption "Enable common options.";
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "jtraue";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -66,7 +72,7 @@ in
 
     users = {
       extraGroups.plugdev = { gid = 500; };
-      users.jtraue = {
+      users."${cfg.user}" = {
         createHome = true;
         isNormalUser = true;
         extraGroups =
@@ -85,3 +91,4 @@ in
     };
   };
 }
+

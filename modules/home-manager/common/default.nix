@@ -16,7 +16,13 @@ in
     ./watson
   ];
 
-  options.home-modules.common.enable = lib.mkEnableOption "Enables common options.";
+  options.home-modules.common = {
+    enable = lib.mkEnableOption "Enables common options.";
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "jtraue";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -126,8 +132,8 @@ in
     };
 
     home = {
-      username = "jtraue";
-      homeDirectory = lib.mkDefault "/home/jtraue";
+      username = cfg.user;
+      homeDirectory = lib.mkDefault "/home/${cfg.user}";
       stateVersion = "22.11";
     };
 
