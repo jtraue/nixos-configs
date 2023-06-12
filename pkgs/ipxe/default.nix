@@ -1,4 +1,4 @@
-{ ipxe, runCommand, writeText }:
+{ ipxe, runCommand, writeText, fetchFromGitHub }:
 let
   script = writeText "embed.ipxe" ''
     #!ipxe
@@ -9,7 +9,24 @@ let
     chain http://''${next-server}:8888/ipxe-default.cfg || chain tftp://''${next-server}/ipxe-default.cfg || shell
   '';
 
-  ipxe-with-extended-multiboot = ipxe.overrideAttrs (_oldAttrs: rec {
+  # see https://gitlab.vpn.cyberus-technology.de/supernova-core/supernova-core/-/issues/1111
+  ipxe-uefi-loader-compatible = ipxe.overrideAttrs (_: {
+    version = "unstable-2023-02-15";
+    src = fetchFromGitHub {
+      owner = "ipxe";
+      repo = "ipxe";
+      rev = "cf9ad00afcd6d8873fbefbbaf1f0813948a796ba";
+      sha256 = "sha256-xSt+Q9P3rW+eB4ZZkE7d2H/vxV0VTmency75PlysswI=";
+    };
+
+    # Make the modified package recognizable:
+    postPatch = ''
+      substituteInPlace src/config/branding.h --replace "Open Source Network Boot Firmware" "Booting with regressions"
+    '';
+  });
+
+
+  ipxe-with-extended-multiboot = ipxe-uefi-loader-compatible.overrideAttrs (_oldAttrs: rec {
     patches = [
       # The number of multiboot modules and the command line length are limited
       # in iPXE and it does not notify anyone if they are exceeded :/
