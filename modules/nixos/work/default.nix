@@ -14,6 +14,9 @@ in
       enable = mkEnableOption (mdDoc "Enable network boot server.") // {
         default = false;
       };
+      autostart = mkEnableOption (mdDoc "Start network boot services during boot.") // {
+        default = false;
+      };
       networkInterface = mkOption {
         type = types.str;
         description = mdDoc ''
@@ -54,6 +57,7 @@ in
 
     enablePrinting = mkEnableOption "Enable Office Printer Supprt" // {
       description = "Install Printer drivers";
+      default = false;
     };
   };
 
@@ -61,7 +65,12 @@ in
     mkMerge [{
 
       services.tailscale.enable = true;
-      networking.firewall.checkReversePath = "loose"; # for tailscale
+      networking.firewall = {
+        checkReversePath = "loose"; # for tailscale
+        trustedInterfaces = [ "tailscale0" ];
+        allowedUDPPorts = [ config.services.tailscale.port ];
+      };
+      systemd.network.wait-online.extraArgs = [ "--ignore=tailscale0" ];
 
       nix = {
         settings = {
@@ -326,6 +335,27 @@ in
           };
         };
 
+        # atftp can't handle symlinks files so we can't point to the output
+        # of a nix derivation and have to copy files manually :/
+        system.activationScripts.tftp-files = ''
+          ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
+          cp ${pkgs.ipxe-files}/ipxe.kpxe  ${cfg.networkboot.tftpFolder}
+          cp ${pkgs.ipxe-files}/ipxe.efi  ${cfg.networkboot.tftpFolder}
+        '';
+
+        # To share folders via sshfs with testbox.
+        services.sshd.enable = true;
+        services.openssh.listenAddresses = [{
+          addr = serverAddress;
+          port = 22;
+        }];
+        users.users."${config.nixos-modules.common.user}".openssh.authorizedKeys.keys = [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfjY3PNFC991Td5GdY+JCCfgocj7W6Siq9L6U+Uz8C9NfOMWMT3ipsx9Ai0X+cKOdpqPwOiBE7B9xGeVkdrj3CJPGDiJxhsqBb+EjgyeSYwx49gGLwidQm8Vckx5Kw9AclNW6wSn1vCLUWp+UJ8Ml8ZDQXYnBuAFj0LgGKJwbY9AJO0KlAdhQbO4K/TvDfYUz/GQp0coFQy2Iu4P6oZHv3AOxUPTJJesJKEIAKvkG9TEyU36QYF+o2DdzRwYslnSMNXLgFccRXy1prlDjYJxVY/bBdsH4O/Yg/unbRzh71Z0ww9nIx0P3rn1wMvL4/4yIC5kdLI9RRtV5IHgS7XMmx6VcCP5Jt0ZJf9w7Iy42/bZcmkhT94UD3gPzVaeOaPqaaXjjeDoxJ20cy/v1tUEbWzHOKomTQ0a7ymAomSD62U/mp8Sti10XM82gisk9US07y6DXB1eX1Shogj5X7KELmWTI4gqvEin9dIiVQ/OotGoPEcJl1sEfa/LWQoMcvwQM= jtraue@testbox"
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3h4FW/3dU+rr0tCgBwvIDxpi2AsicGxswoBa5InmZHo9LFelOCE01Be/Py2VaWv3+DJHKQnQEZX3jV1zUtZiiKimH/8rXGBDZR8oGrm05Nm9OOEeyN3GzFaOHPWqw1fHEI2JMwX9WL6mEqJAcUdMAOEi0o8QAO5hSeQZyEmsuuGA5vOfdhUxSX3G3dwWEvHBNtUTe+v2x5koDcTSJZAPs2417hIyGMd1imCtDmr6pxByHT8NgSvuC+S4I5pv6zMpBfhHfNdjw8/oCxfTdsTSzSgl5rvhCQNB5UXbBEnRPb1Zu/Wyyjc6O9pa6SytJKOIO7rMmdxASftvpXEcHwWsDcVq73ZDycJdbW6V5pLHHNRQr7DdqJ04LSXPvhctyolKyAkjSTshdjnboED5x9XdD561YCseP7mVEHiDz0XJTnikayson+UAVYlN9GIMkk3QKGsGi85/CXXO+h/uSQ9rtFikM3aJz7zKDmhIblemlzwKw4JoF+3Hh2EaSs7sRkRU= jtraue@thinkstation"
+        ];
+      })
+
+      (mkIf (! cfg.networkboot.autostart) {
         # We are going to start this server via `systemctl start networkboot` manually
         # to speed up boot time and enable traveling.
         systemd.targets.networkboot = {
@@ -349,25 +379,6 @@ in
             wantedBy = lib.mkForce [ "networkboot.target" ];
           };
         };
-
-        # atftp can't handle symlinks files so we can't point to the output
-        # of a nix derivation and have to copy files manually :/
-        system.activationScripts.tftp-files = ''
-          ${pkgs.coreutils}/bin/mkdir -p ${cfg.networkboot.tftpFolder}
-          cp ${pkgs.ipxe-files}/ipxe.kpxe  ${cfg.networkboot.tftpFolder}
-          cp ${pkgs.ipxe-files}/ipxe.efi  ${cfg.networkboot.tftpFolder}
-        '';
-
-        # To share folders via sshfs with testbox.
-        services.sshd.enable = true;
-        services.openssh.listenAddresses = [{
-          addr = serverAddress;
-          port = 22;
-        }];
-        users.users."${config.nixos-modules.common.user}".openssh.authorizedKeys.keys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfjY3PNFC991Td5GdY+JCCfgocj7W6Siq9L6U+Uz8C9NfOMWMT3ipsx9Ai0X+cKOdpqPwOiBE7B9xGeVkdrj3CJPGDiJxhsqBb+EjgyeSYwx49gGLwidQm8Vckx5Kw9AclNW6wSn1vCLUWp+UJ8Ml8ZDQXYnBuAFj0LgGKJwbY9AJO0KlAdhQbO4K/TvDfYUz/GQp0coFQy2Iu4P6oZHv3AOxUPTJJesJKEIAKvkG9TEyU36QYF+o2DdzRwYslnSMNXLgFccRXy1prlDjYJxVY/bBdsH4O/Yg/unbRzh71Z0ww9nIx0P3rn1wMvL4/4yIC5kdLI9RRtV5IHgS7XMmx6VcCP5Jt0ZJf9w7Iy42/bZcmkhT94UD3gPzVaeOaPqaaXjjeDoxJ20cy/v1tUEbWzHOKomTQ0a7ymAomSD62U/mp8Sti10XM82gisk9US07y6DXB1eX1Shogj5X7KELmWTI4gqvEin9dIiVQ/OotGoPEcJl1sEfa/LWQoMcvwQM= jtraue@testbox"
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3h4FW/3dU+rr0tCgBwvIDxpi2AsicGxswoBa5InmZHo9LFelOCE01Be/Py2VaWv3+DJHKQnQEZX3jV1zUtZiiKimH/8rXGBDZR8oGrm05Nm9OOEeyN3GzFaOHPWqw1fHEI2JMwX9WL6mEqJAcUdMAOEi0o8QAO5hSeQZyEmsuuGA5vOfdhUxSX3G3dwWEvHBNtUTe+v2x5koDcTSJZAPs2417hIyGMd1imCtDmr6pxByHT8NgSvuC+S4I5pv6zMpBfhHfNdjw8/oCxfTdsTSzSgl5rvhCQNB5UXbBEnRPb1Zu/Wyyjc6O9pa6SytJKOIO7rMmdxASftvpXEcHwWsDcVq73ZDycJdbW6V5pLHHNRQr7DdqJ04LSXPvhctyolKyAkjSTshdjnboED5x9XdD561YCseP7mVEHiDz0XJTnikayson+UAVYlN9GIMkk3QKGsGi85/CXXO+h/uSQ9rtFikM3aJz7zKDmhIblemlzwKw4JoF+3Hh2EaSs7sRkRU= jtraue@thinkstation"
-        ];
       })
 
       (mkIf cfg.enablePrinting {
