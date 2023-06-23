@@ -193,6 +193,13 @@ in
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
             IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
+
+          Host localrun-demo-host
+            User jtraue
+            Host 10.0.0.17
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+            IdentityAgent /run/user/1001/gnupg/S.gpg-agent.ssh
         '';
       };
 
@@ -274,6 +281,11 @@ in
                 hostName = "nixos-live";
                 ethernetAddress = "48:65:ee:12:c1:00";
                 ipAddress = "10.0.0.16";
+              }
+              {
+                hostName = "localrun-demo-host";
+                ethernetAddress = "54:e1:ad:cf:47:5d";
+                ipAddress = "10.0.0.17";
               }
 
             ];
