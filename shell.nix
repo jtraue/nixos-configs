@@ -8,5 +8,6 @@
     nix
     home-manager
     git
+    cachix
   ];
 }
