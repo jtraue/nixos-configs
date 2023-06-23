@@ -8,7 +8,7 @@ in
   config = lib.mkIf cfg.enable {
 
     boot = {
-      cleanTmpDir = true;
+      tmp.cleanOnBoot = true;
       loader.systemd-boot.enable = lib.mkDefault true;
       loader.efi.canTouchEfiVariables = true;
     };

@@ -10,8 +10,6 @@ let
   inherit (config.colorscheme) colors;
   inherit (pkgs.stdenv) mkDerivation;
 
-  inherit (pkgs) onboard-keyboard-control;
-
   # XXX:
   # This should probably be an overlay but I cannot figure out how
   # to use overlays in home-manager.
@@ -335,12 +333,6 @@ in
       bars = {
         top = {
           blocks = [
-            {
-              block = "custom";
-              on_click = "${onboard-keyboard-control}/bin/onboard-keyboard-control";
-              command = "if test -f /tmp/onboard.pid; then echo 'hide onboard keyboard'; else echo 'show onboard keyboard'; fi";
-              interval = 3;
-            }
             (lib.mkIf
               config.programs.watson.enable
               {
@@ -350,8 +342,8 @@ in
             {
               block = "taskwarrior";
               interval = 30;
-              format = "{count} open tasks ({filter_name})";
-              format_singular = "{count} open task ({filter_name})";
+              format = "$count open tasks ($filter_name)";
+              format_singular = "$count open task ($filter_name)";
               format_everything_done = "nothing to do!";
               warning_threshold = 1;
               critical_threshold = 5;
@@ -365,48 +357,37 @@ in
             {
               block = "disk_space";
               path = "/";
-              alias = "root:";
-              info_type = "available";
-              unit = "GB";
+              format = "root: $available";
+              alert_unit = "GB";
               interval = 20;
               warning = 20.0;
               alert = 10.0;
-
             }
             {
               block = "memory";
-              display_type = "memory";
-              format_mem = "mem: {mem_used_percents}";
-              format_swap = "{swap_used_percents}";
-
+              format = "$icon $mem_used_percents $icon_swap $swap_used_percents";
             }
             {
               block = "cpu";
               interval = 1;
-              format = "{utilization}";
+              format = "$icon $utilization";
             }
             {
-              block = "networkmanager";
-              on_click = "kitty nmtui";
-              interface_name_include = [ ];
-              interface_name_exclude = [
-                "br\\-[0-9a-f]{12}"
-                "docker\\d+"
-              ];
-              ap_format = "{ssid^10}";
+              block = "net";
+              format = " $icon {$signal_strength $ssid $frequency|Wired connection} via $device ";
             }
             {
               block = "battery";
               interval = 10;
-              format = "{percentage} {time}";
+              format = "$percentage $time";
             }
             {
               block = "sound";
             }
             {
               block = "time";
+              format = "$timestamp.datetime(f:'%d.%m.%y %R')";
               interval = 60;
-              format = "%d.%m.%y %R";
             }
           ];
           icons = "awesome5";
