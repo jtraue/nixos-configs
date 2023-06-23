@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
 
@@ -61,6 +61,7 @@ in
       vale
 
       nil
+      nixd
       nodePackages.bash-language-server
       sumneko-lua-language-server
       clang-tools
@@ -78,7 +79,10 @@ in
         enable = true;
         viAlias = true;
         vimAlias = true;
-        plugins = with pkgs.vimPlugins; [
+        plugins = (with pkgs-unstable.vimPlugins; [
+          nvim-lspconfig
+
+        ]) ++ (with pkgs.vimPlugins; [
           # Telescope
           telescope-nvim
           telescope-fzf-native-nvim
@@ -96,7 +100,6 @@ in
           lualine-nvim
 
           # Lsp
-          nvim-lspconfig
           lsp_extensions-nvim
           nvim-code-action-menu
           trouble-nvim
@@ -131,7 +134,7 @@ in
           limelight-vim
 
           vim-floaterm
-        ];
+        ]);
       };
 
     xdg.configFile.nvim = {

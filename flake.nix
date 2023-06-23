@@ -13,6 +13,8 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+
+    nixd.url = "github:nix-community/nixd";
   };
 
   outputs =
@@ -22,6 +24,7 @@
     , nixpkgs-unstable
     , nix-colors
     , pre-commit-hooks
+    , nixd
     , ...
     }:
     let
@@ -65,7 +68,7 @@
         );
 
       # Covers all packages and customizations.
-      overlays = import ./overlays;
+      overlays = (import ./overlays) // { nixd = nixd.overlays.default; };
 
       # NixOS configurations
       # Some of them already ship with home-manager configuration.

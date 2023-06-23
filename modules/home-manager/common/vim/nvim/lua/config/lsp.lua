@@ -1,15 +1,15 @@
 local lsp_mappings = {
-    { 'gD', vim.lsp.buf.declaration },
-    { 'gd', vim.lsp.buf.definition },
-    { 'gi', vim.lsp.buf.implementation },
-    { 'gr', vim.lsp.buf.references },
-    { '[d', vim.diagnostic.goto_prev },
-    { ']d', vim.diagnostic.goto_next },
-    { 'K', vim.lsp.buf.hover },
-    { 'F', vim.lsp.buf.format },
-    { ' s', vim.lsp.buf.signature_help },
-    { ' d', vim.diagnostic.open_float },
-    { ' q', vim.diagnostic.setloclist },
+    { 'gD',  vim.lsp.buf.declaration },
+    { 'gd',  vim.lsp.buf.definition },
+    { 'gi',  vim.lsp.buf.implementation },
+    { 'gr',  vim.lsp.buf.references },
+    { '[d',  vim.diagnostic.goto_prev },
+    { ']d',  vim.diagnostic.goto_next },
+    { 'K',   vim.lsp.buf.hover },
+    { 'F',   vim.lsp.buf.format },
+    { ' s',  vim.lsp.buf.signature_help },
+    { ' d',  vim.diagnostic.open_float },
+    { ' q',  vim.diagnostic.setloclist },
     { '\\r', vim.lsp.buf.rename },
     { '\\a', vim.lsp.buf.code_action },
 }
@@ -44,16 +44,38 @@ require('lspconfig').sumneko_lua.setup {
     },
 }
 
-require('lspconfig').nil_ls.setup {
+-- require('lspconfig').nil_ls.setup {
+--     autostart = true,
+--     capabilities = caps,
+--     settings = {
+--         ['nil'] = {
+--             formatting = {
+--                 command = { "nixpkgs-fmt" },
+--             },
+--         },
+--     },
+-- }
+local on_attach = function(bufnr)
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                border = "rounded",
+                source = "always",
+                prefix = " ",
+                scope = "line",
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end,
+    })
+end
+
+require('lspconfig').nixd.setup {
     autostart = true,
+    on_attach = on_attach(),
     capabilities = caps,
-    settings = {
-        ['nil'] = {
-            formatting = {
-                command = { "nixpkgs-fmt" },
-            },
-        },
-    },
 }
 
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
