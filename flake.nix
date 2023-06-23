@@ -113,6 +113,36 @@
               ./hosts/netboot.nix
             ];
           };
+
+        vm = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit nixos-hardware nixpkgs-meshcommander;
+            overlays = builtins.attrValues overlays;
+          };
+          modules = [
+            ./hosts/vm/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              # home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.jtraue = import ./hosts/vm/home-configuration.nix;
+              home-manager.extraSpecialArgs =
+                let
+                  pkgs-unstable = import nixpkgs-unstable {
+                    system = "x86_64-linux";
+                    config.allowUnfree = true;
+                  };
+                in
+                {
+                  inherit homeManagerModules pkgs-unstable nix-colors;
+                  overlays = builtins.attrValues overlays;
+                  hostname = "vm";
+                };
+            }
+          ]
+          ++ (builtins.attrValues nixosModules);
+        };
       };
 
       # home-manager configurations - intended for non NixOS machines
