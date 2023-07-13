@@ -68,7 +68,14 @@
         );
 
       # Covers all packages and customizations.
-      overlays = (import ./overlays) // { nixd = nixd.overlays.default; };
+      overlays =
+        let
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        in
+        (import ./overlays { inherit pkgs-unstable; }) // { nixd = nixd.overlays.default; };
 
       # NixOS configurations
       # Some of them already ship with home-manager configuration.
