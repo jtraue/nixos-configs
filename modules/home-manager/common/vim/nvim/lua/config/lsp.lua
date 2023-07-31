@@ -113,3 +113,13 @@ require('nvim-lightbulb').setup({ autocmd = { enabled = true } })
 require 'lspconfig'.clangd.setup {
     capabilities = caps,
 }
+require 'lspconfig'.pylsp.setup {
+    capabilities = caps,
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = { enabled = true },
+            }
+        }
+    },
+}

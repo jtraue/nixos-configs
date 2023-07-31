@@ -70,7 +70,11 @@ in
 
       diaryHelper
       meetingHelper
-    ];
+
+    ] ++ (with pkgs.python3Packages; [
+      python-lsp-server
+      pycodestyle
+    ]);
     # If fonts don't seem to work, try nvim in a new terminal.
     fonts.fontconfig.enable = true;
 
