@@ -20,10 +20,13 @@
     hostName = "x13";
   };
 
-  hardware.opengl = {
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      libva
-    ];
+  hardware = {
+    trackpoint.device = "TPPS/2 ALPS TrackPoint";
+    opengl = {
+      extraPackages32 = with pkgs.pkgsi686Linux; [
+        libva
+      ];
+    };
   };
   environment.systemPackages = with pkgs; [
     steam
