@@ -33,6 +33,9 @@
   boot.extraModprobeConfig = "options kvm_intel nested=1";
   boot.kernelParams = [ "intel_iommu=off" ];
 
+  # GPU driver segfaults when connecting HDMI cable and switching to fullscreen. Let's see whether this is gone with the newest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # -- network
   # Note for future me: nmtui can be used for network config on terminal
   networking = {
