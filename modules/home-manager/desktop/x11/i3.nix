@@ -89,6 +89,8 @@ in
       i3
       siji
       xautolock
+      font-awesome
+      font-awesome_5
     ];
 
     xsession.enable = true;
@@ -131,9 +133,7 @@ in
             };
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-top.toml";
             fonts = {
-              names = [
-                " pango:DejaVu Sans Mono "
-              ];
+              names = [ "FontAwesome" ];
               size = 10.0;
             };
           }

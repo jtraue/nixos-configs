@@ -68,7 +68,6 @@ in
       youtube-dl
     ]
     ++ (with pkgs; [
-      font-awesome
       powerline-fonts
     ])
     ++ (with pkgs;
