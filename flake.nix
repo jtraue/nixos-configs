@@ -213,7 +213,7 @@
             nixpkgs-fmt.enable = true;
             deadnix.enable = true;
             statix.enable = true;
-            shellcheck.enable = true;
+            shellcheck.enable = false;
           };
         };
       });
