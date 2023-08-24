@@ -215,6 +215,10 @@
             statix.enable = true;
             shellcheck.enable = false;
           };
+          settings.deadnix = {
+            noLambdaPatternNames = true;
+            noLambdaArg = true;
+          };
         };
       });
     };
