@@ -15,16 +15,19 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     nixd.url = "github:nix-community/nixd";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs =
-    { nixpkgs
+    { self
+    , nixpkgs
     , home-manager
     , nixos-hardware
     , nixpkgs-unstable
     , nix-colors
     , pre-commit-hooks
     , nixd
+    , deploy-rs
     , ...
     }:
     let
@@ -149,6 +152,34 @@
           ]
           ++ (builtins.attrValues nixosModules);
         };
+
+        book = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/book/configuration.nix
+            ./hosts/book/hardware-configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              # home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.jtraue = import ./hosts/book/home-configuration.nix;
+              home-manager.extraSpecialArgs =
+                let
+                  pkgs-unstable = import nixpkgs-unstable {
+                    system = "x86_64-linux";
+                    config.allowUnfree = true;
+                  };
+                in
+                {
+                  inherit homeManagerModules pkgs-unstable nix-colors;
+                  overlays = builtins.attrValues overlays;
+                  hostname = "book";
+                };
+            }
+          ]
+          ++ (builtins.attrValues nixosModules);
+        };
+
       };
 
       # home-manager configurations - intended for non NixOS machines
@@ -221,5 +252,15 @@
           };
         };
       });
+      deploy.nodes = {
+        book = {
+          hostname = "192.168.44.103";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.book;
+          };
+        };
+      };
     };
 }
