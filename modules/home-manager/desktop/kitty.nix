@@ -16,6 +16,11 @@ in
         package = pkgs.dejavu_fonts;
         name = "pango:DejaVu Sans Mono";
       };
+      # enable theme switch via:
+      # kitty +kitten themes --config-file-name themes.conf --reload-in all
+      extraConfig = ''
+        include theme.conf
+      '';
       settings = {
         allow_remote_control = "yes";
         bold_font = "auto";
