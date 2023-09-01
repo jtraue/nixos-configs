@@ -187,7 +187,6 @@ in
 
         keybindings = lib.mkOptionDefault {
           "${modifier}+Return" = "exec kitty";
-          "${modifier}+p" = "exec --no-startup-id ${pkgs.rofi-pass}/bin/rofi-pass";
           "${modifier}+d" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi drun#run#ssh -combi-modi drun#run -show combi -show-icons -display-combi run";
           "${modifier}+x" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modi window -show window -auto-select";
           "XF86MonBrightnessUp" = "exec light -s sysfs/backlight/intel_backlight -A 10";
@@ -282,6 +281,10 @@ in
           }
           {
             command = "${pkgs.autorandr}/bin/autorandr -c";
+            notification = false;
+          }
+          {
+            command = "${pkgs._1password-gui}/bin/1password --silent";
             notification = false;
           }
           # {
