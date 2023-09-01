@@ -263,18 +263,6 @@ in
             command = "nm-applet";
             notification = false;
           }
-          # {
-          # command = "${pkgs.conky}/bin/conky -c .config/conky_khal";
-          # notification = false;
-          # }
-          # {
-          # command = "${pkgs.conky}/bin/conky -c .config/conky_shortcuts";
-          # notification = false;
-          # }
-          {
-            command = "xinput set-prop 13 --type=int --format=8 276 1";
-            notification = false;
-          }
           {
             command = "backintime-qt";
             notification = false;
@@ -287,9 +275,6 @@ in
             command = "${pkgs._1password-gui}/bin/1password --silent";
             notification = false;
           }
-          # {
-          # command = "${pkgs.i3wsr}/bin/i3wsr";
-          # }
         ];
 
         window.titlebar = false;
