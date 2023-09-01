@@ -23,7 +23,6 @@ in
     sotest-to-ipxe
     amt-control
     maestral-gui
-  ] ++ [
     teams
   ];
 
