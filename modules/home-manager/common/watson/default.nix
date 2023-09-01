@@ -10,6 +10,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home.packages = [
+      watson-notify
+    ];
+
     programs.watson = {
       enable = true;
       enableZshIntegration = true;
@@ -25,26 +29,15 @@ in
       };
     };
 
-    systemd.user.services = {
-      watson-notify = {
-        Unit = {
-          Description = "Watson check";
-        };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
-        Service = {
-          Type = "simple";
-          ExecStart =
-            let
-              script = pkgs.writeScript "watson-notify" ''
-                echo "watson check is running"
-                ${watson-notify}/bin/watson-notify
-              '';
-            in
-            "${pkgs.bash}/bin/bash ${script}";
-        };
+    systemd.user.services.watson-notify = {
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${watson-notify}/bin/watson-notify";
       };
+    };
+    systemd.user.timers.watson-notify = {
+      Install = { WantedBy = [ "timers.target" ]; };
+      Timer = { OnBootSec = "5min"; OnUnitActiveSec = "5min"; };
     };
   };
 

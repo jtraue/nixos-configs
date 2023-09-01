@@ -22,7 +22,7 @@ SNOOZE_FILE="$RUNTIME/snooze"
 
 # Alert parameters: can be redefined in $WATSON_DIR/alert.
 ALERT_TIME=7200 # 2 hours
-ALERT_MESSAGE="Still working on %s?\nTime for a break."
+ALERT_MESSAGE="Still working on %s?\nTime for a break or to run\n 'watson-notify --snooze'"
 ALERT_NOTIF="-u low -t 5000"
 QUESTION_MESSAGE="What are you doing?"
 QUESTION_NOTIF="-u critical -t 10000"
