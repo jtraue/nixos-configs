@@ -155,6 +155,10 @@
 
         book = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = {
+            inherit nixos-hardware;
+            overlays = builtins.attrValues overlays;
+          };
           modules = [
             ./hosts/book/configuration.nix
             ./hosts/book/hardware-configuration.nix
