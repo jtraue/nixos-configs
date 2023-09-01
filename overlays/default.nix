@@ -10,6 +10,12 @@
 
     # Shared folders are available with 2.4.25 which is not yet stable
     # (https://github.com/abraunegg/onedrive/blob/master/docs/BusinessSharedFolders.md)
-    inherit (pkgs-unstable) onedrive;
+    inherit (pkgs-unstable)
+      # Shared folders are available with 2.4.25 which is not yet stable
+      # (https://github.com/abraunegg/onedrive/blob/master/docs/BusinessSharedFolders.md)
+      onedrive
+
+      # Bugfix: https://github.com/NixOS/nixpkgs/pull/246095
+      backintime;
   };
 }
