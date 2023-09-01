@@ -83,6 +83,7 @@ in
           [
             "dialout"
             "docker"
+            "libvirtd"
             "lp"
             "scanner"
             "sound"
