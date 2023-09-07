@@ -33,6 +33,10 @@ in
         notification = false;
       }
       {
+        command = "${pkgs.signal-desktop}/bin/signal-desktop";
+        notification = false;
+      }
+      {
         # Unlock gnome-keyrings (see <https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)>)
         command = "dbus-update-activation-environment --all";
         notification = false;
