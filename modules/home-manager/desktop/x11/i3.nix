@@ -295,15 +295,15 @@ in
       extraConfig = ''
         # Set shut down, restart and locking features
         bindsym ${modifier}+q mode "$mode_system"
-        set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (d)isable screenlock
+        set $mode_system (l)ock, (e)xit, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (d)isable screenlock, (e)nable screenlock
         mode "$mode_system" {
-        bindsym l exec --no-startup-id xautolock -locknow, mode "default"
         bindsym s exec --no-startup-id ${i3exit}/bin/i3exit suspend, mode "default"
-        bindsym u exec --no-startup-id ${i3exit}/bin/i3exit switch_user, mode "default"
         bindsym e exec --no-startup-id ${i3exit}/bin/i3exit logout, mode "default"
         bindsym h exec --no-startup-id ${i3exit}/bin/i3exit hibernate, mode "default"
         bindsym r exec --no-startup-id ${i3exit}/bin/i3exit reboot, mode "default"
+        bindsym l exec --no-startup-id ${pkgs.xautolock}/bin/xautolock -locknow, mode "default"
         bindsym d exec --no-startup-id ${pkgs.xautolock}/bin/xautolock -disable, mode "default"
+        bindsym d exec --no-startup-id ${pkgs.xautolock}/bin/xautolock -enable, mode "default"
         bindsym Shift+s exec --no-startup-id ${i3exit}/bin/i3exit shutdown, mode "default"
 
         # exit system mode: "Enter" or "Escape"
