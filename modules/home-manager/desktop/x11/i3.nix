@@ -345,7 +345,7 @@ in
             {
               block = "disk_space";
               path = "/";
-              format = "root: $available";
+              format = "root: $available/$total";
               alert_unit = "GB";
               interval = 20;
               warning = 20.0;
@@ -353,7 +353,7 @@ in
             }
             {
               block = "memory";
-              format = "$icon $mem_used_percents $icon_swap $swap_used_percents";
+              format = "$icon $mem_used/$mem_total ($mem_used_percents)";
             }
             {
               block = "cpu";
@@ -378,7 +378,7 @@ in
               interval = 60;
             }
           ];
-          icons = "awesome5";
+          icons = "awesome6";
           theme = "gruvbox-dark";
         };
       };
