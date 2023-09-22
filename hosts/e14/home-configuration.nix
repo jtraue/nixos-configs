@@ -24,6 +24,7 @@ in
     amt-control
     maestral-gui
     teams
+    gita
   ];
 
   xsession.windowManager.i3.config = {
