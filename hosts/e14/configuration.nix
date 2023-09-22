@@ -14,9 +14,9 @@
   nixos-modules.notebook.enable = true;
   nixos-modules.work = {
     enable = true;
-    networkboot.enable = true;
     enablePrinting = true;
-    networkboot.tftpFolder = "/home/jtraue/tftp";
+    # networkboot.enable = true;
+    # networkboot.tftpFolder = "/home/jtraue/tftp";
   };
   nixos-modules.yubikey.enable = true;
 
