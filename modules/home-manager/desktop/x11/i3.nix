@@ -94,10 +94,10 @@ in
     services.screen-locker = {
       enable = true;
       lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock";
-      inactiveInterval = 1;
+      inactiveInterval = 5;
       xautolock = {
         extraOptions = [
-          "-notify 10"
+          "-notify 20"
           "-notifier '${pkgs.libnotify}/bin/notify-send -t 10000 \" Screen lock coming \"'"
         ];
       };

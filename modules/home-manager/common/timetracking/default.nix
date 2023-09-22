@@ -56,6 +56,16 @@ in
       {
         block = "watson";
         show_time = true;
+        click = [
+          {
+            button = "right";
+            cmd = "${pkgs.watson-notify}/bin/watson-notify $(echo -e '--snooze\n--activate' | dmenu)";
+          }
+          {
+            button = "left";
+            cmd = "${pkgs.watson}/bin/watson $(echo -e 'stop\nrestart' | dmenu)";
+          }
+        ];
       }
       {
         block = "taskwarrior";

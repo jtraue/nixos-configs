@@ -1,0 +1,15 @@
+diff --git a/src/blocks/watson.rs b/src/blocks/watson.rs
+index 8fa9b4f8..2151ab01 100644
+--- a/src/blocks/watson.rs
++++ b/src/blocks/watson.rs
+@@ -116,7 +116,9 @@ pub async fn run(config: &Config, api: &CommonApi) -> Result<()> {
+                     // and the previous state wasn't time tracking neither so we reset the
+                     // contents.
+                     widget.state = State::Idle;
+-                    widget.set_values(Values::default());
++                    widget.set_values(map!(
++                        "text" => Value::text(String::from("Time tracker inactive"))
++                    ));
+                 }
+                 prev_state = Some(state);
+             }
