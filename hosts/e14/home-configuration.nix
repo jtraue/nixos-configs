@@ -33,7 +33,7 @@ in
         notification = false;
       }
       {
-        command = "${pkgs.signal-desktop}/bin/signal-desktop";
+        command = "${pkgs.signal-desktop}/bin/signal-desktop --use-tray-icon --start-in-tray";
         notification = false;
       }
       {
