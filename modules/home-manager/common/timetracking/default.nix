@@ -71,6 +71,12 @@ in
             filter = "+PENDING +WEEK";
           }
         ];
+        click = [
+          {
+            button = "left";
+            cmd = "${pkgs.kitty}/bin/kitty ${pkgs.taskwarrior-tui}/bin/taskwarrior-tui";
+          }
+        ];
       }
     ];
   };
