@@ -84,14 +84,24 @@ in
     };
 
     home.packages = with pkgs;[
-      xautolock
-      betterlockscreen
       i3
-      siji
       xautolock
+      siji
       font-awesome
       font-awesome_5
     ];
+
+    services.screen-locker = {
+      enable = true;
+      lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock";
+      inactiveInterval = 1;
+      xautolock = {
+        extraOptions = [
+          "-notify 10"
+          "-notifier '${pkgs.libnotify}/bin/notify-send -t 10000 \" Screen lock coming \"'"
+        ];
+      };
+    };
 
     xsession.enable = true;
     xsession.windowManager.i3 = {
@@ -245,10 +255,6 @@ in
         startup = [
           {
             command = "${pkgs.pulseaudio}/bin/pulseaudio";
-            notification = false;
-          }
-          {
-            command = "${pkgs.xautolock}/bin/xautolock -detectsleep -time 5 -locker 'betterlockscreen --lock' -notify 10 -notifier '${pkgs.libnotify}/bin/notify-send -t 10000 \" Screen lock coming \"'";
             notification = false;
           }
           {
