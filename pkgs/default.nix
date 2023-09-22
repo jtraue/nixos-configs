@@ -14,4 +14,5 @@
   sotest-to-ipxe = pkgs.callPackage ./sotest-to-ipxe { };
   watson-notify = pkgs.callPackage ./watson-notify { };
   supernote-tool = pkgs.callPackage ./supernote-tool { };
+  wsr = pkgs.callPackage ./wsr.nix { };
 }

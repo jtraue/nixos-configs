@@ -12,6 +12,7 @@ in
     home.packages = with pkgs;[
       watson-notify
       taskwarrior-tui
+      wsr
     ];
 
     programs.taskwarrior = {
