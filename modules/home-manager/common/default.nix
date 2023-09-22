@@ -13,7 +13,7 @@ in
     ./mc.nix
     ./tmux
     ./vim
-    ./watson
+    ./timetracking
   ];
 
   options.home-modules.common = {
@@ -34,7 +34,7 @@ in
     home-modules.common.mc.enable = lib.mkDefault true;
     home-modules.common.tmux.enable = lib.mkDefault true;
     home-modules.common.vim.enable = lib.mkDefault true;
-    home-modules.common.watson.enable = lib.mkDefault false;
+    home-modules.common.timetracking.enable = lib.mkDefault false;
 
     fonts.fontconfig.enable = true;
 
@@ -73,7 +73,6 @@ in
     ++ (with pkgs;
       [
         theme-switch
-        taskwarrior-tui
       ]);
 
     programs.zsh = {
@@ -119,15 +118,6 @@ in
         ];
         theme = "gnzh";
       };
-    };
-
-    programs.taskwarrior = {
-      enable = true;
-      dataLocation = "~/.task";
-      colorTheme = "solarized-dark-256";
-      extraConfig = ''
-        weekstart = monday
-      '';
     };
 
     home = {

@@ -321,27 +321,6 @@ in
       bars = {
         top = {
           blocks = [
-            (lib.mkIf
-              config.programs.watson.enable
-              {
-                block = "watson";
-                show_time = true;
-              })
-            {
-              block = "taskwarrior";
-              interval = 30;
-              format = "$count open tasks ($filter_name)";
-              format_singular = "$count open task ($filter_name)";
-              format_everything_done = "nothing to do!";
-              warning_threshold = 1;
-              critical_threshold = 5;
-              filters = [
-                {
-                  name = "week";
-                  filter = "+PENDING +WEEK";
-                }
-              ];
-            }
             {
               block = "disk_space";
               path = "/";
