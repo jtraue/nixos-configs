@@ -390,6 +390,7 @@ in
             brlaser
             brgenml1lpr
             brgenml1cupswrapper
+            mfcl8690cdwcupswrapper
           ];
         };
         services.avahi = {
