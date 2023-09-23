@@ -249,6 +249,9 @@ in
           networkmanager = {
             unmanaged = [ cfg.networkboot.networkInterface ];
           };
+          interfaces.networkboot.ipv4 = {
+            addresses = [{ address = "10.0.0.1"; prefixLength = 24; }];
+          };
         };
 
         services = {

@@ -30,17 +30,7 @@
   boot.extraModprobeConfig = "options kvm_intel nested=1";
   boot.kernelParams = [ "intel_iommu=off" ];
 
-  # -- network
-  # Note for future me: nmtui can be used for network config on terminal
-  networking = {
-    hostName = "e14";
-    networkmanager = {
-      unmanaged = [ "networkboot" ];
-    };
-    interfaces.networkboot.ipv4 = {
-      addresses = [{ address = "10.0.0.1"; prefixLength = 24; }];
-    };
-  };
+  networking.hostName = "e14";
 
   services.udev.extraRules =
     # Rename USB network adapter to something more useful than enp0s30p10
