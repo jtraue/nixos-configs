@@ -287,7 +287,6 @@ in
 
         # See https://i3wm.org/docs/userguide.html#assign_workspace
         assigns = {
-          "7: teams" = [{ class = "Microsoft Teams - Preview"; }];
           "8: chats" = [{ class = "Element"; } { class = "Mattermost"; }];
         };
       };
