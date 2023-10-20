@@ -105,6 +105,10 @@ null_ls.setup({
 
         -- yaml
         null_ls.builtins.diagnostics.yamllint,
+
+        -- HTML and Django
+        null_ls.builtins.formatting.djlint,
+        null_ls.builtins.formatting.djhtml,
     }
 })
 

@@ -66,6 +66,10 @@ in
       sumneko-lua-language-server
       clang-tools
 
+      djhtml
+
+      nodePackages.vscode-langservers-extracted
+
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
 
       diaryHelper
@@ -74,6 +78,8 @@ in
     ] ++ (with pkgs.python3Packages; [
       python-lsp-server
       pycodestyle
+    ]) ++ (with pkgs-unstable; [
+      djlint
     ]);
     # If fonts don't seem to work, try nvim in a new terminal.
     fonts.fontconfig.enable = true;
