@@ -286,9 +286,9 @@ in
         window.titlebar = false;
 
         # See https://i3wm.org/docs/userguide.html#assign_workspace
+        # Use `xprop` on the same workspace for information.
         assigns = {
-          "7: teams" = [{ class = "Microsoft Teams - Preview"; }];
-          "8: chats" = [{ class = "Element"; } { class = "Mattermost"; }];
+          "7: teams" = [{ class = "teams-for-linux"; }];
         };
       };
 
