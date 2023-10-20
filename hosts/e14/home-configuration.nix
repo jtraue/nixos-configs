@@ -1,4 +1,7 @@
 { pkgs, homeManagerModules, pkgs-unstable, ... }:
+let
+  inherit (pkgs-unstable) teams;
+in
 {
   imports = builtins.attrValues homeManagerModules;
 
@@ -20,11 +23,16 @@
     sotest-to-ipxe
     amt-control
     maestral-gui
+    teams
     gita
   ];
 
   xsession.windowManager.i3.config = {
     startup = [
+      {
+        command = "${teams}/bin/teams";
+        notification = false;
+      }
       {
         command = "${pkgs.signal-desktop}/bin/signal-desktop --use-tray-icon --start-in-tray";
         notification = false;
