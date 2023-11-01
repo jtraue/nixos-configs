@@ -86,6 +86,7 @@ in
         conf = "cd ~/conf";
         notes = "cd ~/org/notes";
         git-pull-all = "find . -maxdepth 3 -name .git -type d | rev | cut -c 6- | rev | xargs -I {} git -C {} pull";
+        today = "date -u +%Y-%m-%d";
       };
 
       # TODO: since we have this in xsession it should be removed here?
