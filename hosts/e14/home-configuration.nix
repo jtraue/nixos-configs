@@ -1,4 +1,7 @@
 { pkgs, homeManagerModules, pkgs-unstable, ... }:
+let
+  inherit (pkgs-unstable) teams-for-linux;
+in
 {
   imports = builtins.attrValues homeManagerModules;
 
@@ -20,14 +23,13 @@
     sotest-to-ipxe
     amt-control
     maestral-gui
-    teams-for-linux
     gita
-  ];
+  ] ++ [ teams-for-linux ];
 
   xsession.windowManager.i3.config = {
     startup = [
       {
-        command = "${pkgs.teams-for-linux}/bin/teams-for-linux";
+        command = "${teams-for-linux}/bin/teams-for-linux";
         notification = false;
       }
       {
