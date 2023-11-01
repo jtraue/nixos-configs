@@ -144,6 +144,8 @@ in
           limelight-vim
 
           vim-floaterm
+
+          editorconfig-nvim
         ]);
       };
 
