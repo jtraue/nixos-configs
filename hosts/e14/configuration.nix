@@ -5,6 +5,10 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel
   ];
 
+  services.opensnitch = {
+    enable = true;
+  };
+
   services.onedrive.enable = true;
 
   nixos-modules.common.enable = true;
@@ -25,7 +29,7 @@
 
   virtualisation.libvirtd.enable = true;
   programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ virt-manager gnome.gnome-boxes ];
+  environment.systemPackages = with pkgs; [ opensnitch-ui virt-manager gnome.gnome-boxes ];
 
   boot.extraModprobeConfig = "options kvm_intel nested=1";
   boot.kernelParams = [ "intel_iommu=off" ];
