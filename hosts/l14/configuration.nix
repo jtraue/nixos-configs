@@ -1,143 +1,74 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
+{ nixos-hardware, pkgs, ... }:
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "nixos-demo"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    useXkbConfig = true; # use xkbOptions in tty.
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e";
-  services.xserver.xkbVariant = "intl";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.demo = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      vim
-    ];
-  };
-
-  virtualisation.libvirtd.enable = true;
-  services.opensnitch.enable = true;
-  services.openssh = {
-    enable = true;
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    virt-manager
-    opensnitch-ui
-    gnome3.gnome-boxes
-    gnome3.gnome-tweaks
-    google-chrome
+  imports = [
+    nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
   ];
 
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh = {
+  # for installation only
+  users.users.demo = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+  services.openssh.enable = true;
+
+  services.opensnitch = {
     enable = true;
-    shellAliases = {
-      ll = "ls -l";
-    };
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" "sudo" ];
-    };
-    promptInit = ''
-      eval "$(${pkgs.starship}/bin/starship init zsh)"
-    '';
   };
 
-  programs.tmux = {
+  services.onedrive.enable = true;
+
+  nixos-modules.common.enable = true;
+  nixos-modules.desktop.enable = true;
+  nixos-modules.desktop.x11.enable = true;
+  nixos-modules.desktop.sway.enable = false;
+  nixos-modules.notebook.enable = true;
+  nixos-modules.work = {
     enable = true;
-    clock24 = true;
-    extraConfig = ''
-      set -g @tmux_power_theme 'snow'
-      run-shell "${pkgs.tmuxPlugins.power-theme}/share/tmux-plugins/power/tmux-power.tmux"
+    enablePrinting = true;
+    # networkboot.enable = true;
+    # networkboot.tftpFolder = "/home/jtraue/tftp";
+  };
+  nixos-modules.yubikey.enable = true;
+
+  services.dbus.packages = with pkgs; [ miraclecast ];
+
+  # pipewire complains about missing xdg-portals (https://www.reddit.com/r/NixOS/comments/y877ou/pipewire_not_working_requires_xdgportals/)
+  xdg.portal.enable = true;
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
+  environment.systemPackages = with pkgs; [
+    opensnitch-ui
+    virt-manager
+    gnome.gnome-boxes
+    miraclecast
+  ];
+
+  boot.extraModprobeConfig = "options kvm_intel nested=1";
+  boot.kernelParams = [ "intel_iommu=off" ];
+
+  networking.hostName = "l14";
+
+  services.udev.extraRules =
+    # Rename USB network adapter to something more useful than enp0s30p10
+    # Use `lsusb` to find vendor and model
+    # The external (white) USB network adapter (way faster than the one in the USB hub)
+    ''
+      KERNEL=="eth*", ENV{ID_VENDOR_ID}=="0b95", ENV{ID_MODEL_ID}=="1790", NAME="networkboot"
+    '' +
+    # Symlink serial adapters to /dev/ttyTestbox
+    ''
+      SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", SYMLINK+="ttyTestbox"
     '';
+
+  hardware.opentabletdriver = {
+    enable = true;
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
-  # List services that you want to enable:
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
-
+  system.stateVersion = "22.05";
 }
-
