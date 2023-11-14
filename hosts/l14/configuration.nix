@@ -12,10 +12,6 @@
   };
   services.openssh.enable = true;
 
-  services.opensnitch = {
-    enable = true;
-  };
-
   services.onedrive.enable = true;
 
   nixos-modules.common.enable = true;
@@ -46,7 +42,8 @@
   ];
 
   boot.extraModprobeConfig = "options kvm_intel nested=1";
-  boot.kernelParams = [ "intel_iommu=off" ];
+  # boot.kernelParams = [ "i915.force_probe=a720" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "l14";
 
