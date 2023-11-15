@@ -7,10 +7,6 @@
 #
 set -e
 VERSION=0.2
-CONFIG_DIR=$HOME/.config/watson
-if [ ! -z $XDG_CONFIG_HOME ] ; then
-    CONFIG_DIR=$XDG_CONFIG_HOME/watson
-fi
 if [ ! -z $WATSON_DIR ] ; then
     CONFIG_DIR=$WATSON_DIR
 fi

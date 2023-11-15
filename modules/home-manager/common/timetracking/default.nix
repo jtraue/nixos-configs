@@ -17,13 +17,17 @@ in
 
     programs.taskwarrior = {
       enable = true;
-      dataLocation = "~/.task";
       colorTheme = "solarized-dark-256";
       extraConfig = ''
         weekstart = monday
       '';
+      dataLocation = "/home/jtraue/cloud/cyberus/storage/task";
     };
 
+    home.sessionVariables = {
+      WATSON_DIR = "/home/jtraue/cloud/cyberus/storage/watson";
+    };
+    # keep in mind to copy watson s config file to the cloud storage
     programs.watson = {
       enable = true;
       enableZshIntegration = true;
@@ -57,6 +61,7 @@ in
       {
         block = "watson";
         show_time = true;
+        state_path = "~/cloud/cyberus/storage/watson/state";
         click = [
           {
             button = "right";
