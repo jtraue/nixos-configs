@@ -77,6 +77,9 @@ in
           trusted-public-keys = [
             "cyberus-1:0jjMD2b+guloGW27ZToxDQApCoWj+4ONW9v8VH/Bv0Q="
           ];
+          substituters = [
+            "http://binary-cache-v2.vpn.cyberus-technology.de"
+          ];
           trusted-substituters = [
             "http://binary-cache-v2.vpn.cyberus-technology.de"
           ];
