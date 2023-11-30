@@ -11,6 +11,10 @@
 
   services.onedrive.enable = true;
 
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  users.extraGroups.vboxusers.members = [ "jtraue" ];
+
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
   nixos-modules.desktop.x11.enable = true;
