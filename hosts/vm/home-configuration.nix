@@ -8,7 +8,7 @@
   home-modules.desktop.sway.enable = true;
   home-modules.dev.enable = false;
   home-modules.usbbackup.enable = false;
-  home-modules.common.watson.enable = false;
+  home-modules.common.timetracking.enable = false;
 
   programs.git = {
     userEmail = "jana.traue@cyberus-technology.de";
