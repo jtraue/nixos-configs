@@ -15,7 +15,6 @@
 
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    devshell.url = "github:numtide/devshell";
   };
 
   outputs =
@@ -152,7 +151,6 @@
         systems = [ "x86_64-linux" ];
         imports = [
           inputs.pre-commit-hooks.flakeModule
-          inputs.devshell.flakeModule
         ];
         perSystem = { pkgs, config, system, ... }: {
           # Custom packages that are not yet packaged elsewhere.
