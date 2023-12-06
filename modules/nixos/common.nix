@@ -37,6 +37,7 @@ in
       man-pages-posix
       nmap
       pciutils
+      powertop
       tmux
       unzip
       usbutils
@@ -45,11 +46,20 @@ in
       zip
     ];
 
+    hardware = {
+      trackpoint = {
+        emulateWheel = true;
+        fakeButtons = true;
+      };
+    };
+
     i18n.defaultLocale = "en_US.UTF-8";
+
+    networking.networkmanager.enable = true;
 
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "jtraue" ];
+      trusted-users = [ "root" cfg.user ];
     };
 
     nixpkgs = {
@@ -60,12 +70,16 @@ in
       };
     };
 
+    powerManagement.enable = true;
+
     programs = {
+      command-not-found.enable = true;
       vim.defaultEditor = true;
       zsh.enable = true;
     };
 
     services = {
+      acpid.enable = true;
       fwupd.enable = true;
       cron.enable = true;
     };
@@ -94,6 +108,7 @@ in
         initialPassword = "1234";
       };
     };
+
   };
 }
 

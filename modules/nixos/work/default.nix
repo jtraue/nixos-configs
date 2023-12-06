@@ -165,5 +165,7 @@ in
     };
     users.extraGroups.vboxusers.members = [ config.nixos-modules.common.user ];
 
+    services.onedrive.enable = true;
+
   };
 }

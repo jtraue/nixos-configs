@@ -45,7 +45,7 @@
             e14 = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
-                inherit nixos-hardware;
+                inherit inputs nixos-hardware;
                 overlays = builtins.attrValues overlays;
               };
               modules = [

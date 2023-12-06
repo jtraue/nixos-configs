@@ -15,6 +15,7 @@ in
 
     nixos-modules.desktop.autorandr.enable = true;
     nixos-modules.desktop.x11.enable = lib.mkDefault true;
+
     hardware = {
       opengl = {
         enable = true;
@@ -22,10 +23,7 @@ in
       };
     };
 
-    networking.networkmanager.enable = true;
-
     programs = {
-      command-not-found.enable = true;
       dconf.enable = true; # Gtk3 apps seem to require dconf :/
       seahorse.enable = true; # gnome keyring manager
       evolution = {
@@ -96,6 +94,14 @@ in
     #   - select net printer  - it should be auto discovered
     # - go to cups website and modify printer (duplex, a4, 2 sided)
     services.printing.drivers = [ pkgs.hplipWithPlugin ];
+
+    hardware.opentabletdriver = {
+      enable = true;
+    };
+
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+
   };
 
 }
