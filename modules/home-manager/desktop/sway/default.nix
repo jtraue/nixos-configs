@@ -14,7 +14,7 @@ in
     wayland.windowManager.sway = {
       enable = true;
       package = null;
-      systemdIntegration = true;
+      systemd.enable = true;
       config = {
         modifier = "Mod4";
         terminal = "${pkgs.foot}/bin/foot";

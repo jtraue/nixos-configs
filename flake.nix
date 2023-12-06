@@ -2,19 +2,17 @@
   description = "My NixOS configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    nixd.url = "github:nix-community/nixd";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     devshell.url = "github:numtide/devshell";
@@ -25,10 +23,8 @@
     , nixpkgs
     , home-manager
     , nixos-hardware
-    , nixpkgs-unstable
     , nix-colors
     , pre-commit-hooks
-    , nixd
     , flake-parts
     , ...
     }:
@@ -39,18 +35,8 @@
           nixosModules = import ./modules/nixos;
           homeManagerModules = import ./modules/home-manager;
 
-
           # Covers all packages and customizations.
-          overlays =
-            let
-              pkgs-unstable = import nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            in
-            (import ./overlays { inherit pkgs-unstable; }) // {
-              nixd = nixd.overlays.default;
-            };
+          overlays = import ./overlays { };
 
           # NixOS configurations
           # Some of them already ship with home-manager configuration.
@@ -121,18 +107,11 @@
                   # home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.users.jtraue = import ./hosts/vm/home-configuration.nix;
-                  home-manager.extraSpecialArgs =
-                    let
-                      pkgs-unstable = import nixpkgs-unstable {
-                        system = "x86_64-linux";
-                        config.allowUnfree = true;
-                      };
-                    in
-                    {
-                      inherit homeManagerModules pkgs-unstable nix-colors;
-                      overlays = builtins.attrValues overlays;
-                      hostname = "vm";
-                    };
+                  home-manager.extraSpecialArgs = {
+                    inherit homeManagerModules nix-colors;
+                    overlays = builtins.attrValues overlays;
+                    hostname = "vm";
+                  };
                 }
               ]
               ++ (builtins.attrValues nixosModules);
@@ -148,17 +127,10 @@
                 system = "x86_64-linux";
                 config.allowUnfree = true;
               };
-              extraSpecialArgs =
-                let
-                  pkgs-unstable = import nixpkgs-unstable {
-                    system = "x86_64-linux";
-                    config.allowUnfree = true;
-                  };
-                in
-                {
-                  inherit homeManagerModules pkgs-unstable nix-colors;
-                  overlays = builtins.attrValues overlays;
-                };
+              extraSpecialArgs = {
+                inherit homeManagerModules nix-colors;
+                overlays = builtins.attrValues overlays;
+              };
               modules = [
                 ./hosts/l14/home-configuration.nix
               ];
@@ -170,17 +142,10 @@
                 system = "x86_64-linux";
                 config.allowUnfree = true;
               };
-              extraSpecialArgs =
-                let
-                  pkgs-unstable = import nixpkgs-unstable {
-                    system = "x86_64-linux";
-                    config.allowUnfree = true;
-                  };
-                in
-                {
-                  inherit homeManagerModules pkgs-unstable nix-colors;
-                  overlays = builtins.attrValues overlays;
-                };
+              extraSpecialArgs = {
+                inherit homeManagerModules nix-colors;
+                overlays = builtins.attrValues overlays;
+              };
               modules = [
                 ./hosts/e14/home-configuration.nix
               ];
@@ -192,17 +157,10 @@
                 system = "x86_64-linux";
                 config.allowUnfree = true;
               };
-              extraSpecialArgs =
-                let
-                  pkgs-unstable = import nixpkgs-unstable {
-                    system = "x86_64-linux";
-                    config.allowUnfree = true;
-                  };
-                in
-                {
-                  inherit homeManagerModules pkgs-unstable nix-colors;
-                  overlays = builtins.attrValues overlays;
-                };
+              extraSpecialArgs = {
+                inherit homeManagerModules nix-colors;
+                overlays = builtins.attrValues overlays;
+              };
               modules = [
                 ./hosts/x13/home-configuration.nix
               ];

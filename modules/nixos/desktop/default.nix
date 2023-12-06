@@ -55,7 +55,7 @@ in
 
     # -- fonts
     fonts = {
-      enableDefaultFonts = true;
+      enableDefaultPackages = true;
       enableGhostscriptFonts = true;
       fontDir.enable = true;
       # fontconfig = {

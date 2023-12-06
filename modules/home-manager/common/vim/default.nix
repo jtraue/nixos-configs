@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 
@@ -26,18 +26,6 @@ let
 
     EOF
   '';
-
-  vimwiki-dev = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "vimwiki-dev";
-    version = "2023-04-05";
-    src = pkgs.fetchFromGitHub {
-      owner = "vimwiki";
-      repo = "vimwiki";
-      rev = "71edcf6802eeb724ca679547d5cb7a8eadf0cfcb";
-      sha256 = "sha256-Z5XMtVszorh+gnjT5HxdmjOdV9gUVL2m/wKeEIlgCDA=";
-    };
-  };
-
 in
 {
 
@@ -78,7 +66,7 @@ in
     ] ++ (with pkgs.python3Packages; [
       python-lsp-server
       pycodestyle
-    ]) ++ (with pkgs-unstable; [
+
       djlint
     ]);
     # If fonts don't seem to work, try nvim in a new terminal.
@@ -89,10 +77,9 @@ in
         enable = true;
         viAlias = true;
         vimAlias = true;
-        plugins = (with pkgs-unstable.vimPlugins; [
+        plugins = with pkgs.vimPlugins; [
           nvim-lspconfig
 
-        ]) ++ (with pkgs.vimPlugins; [
           # Telescope
           telescope-nvim
           telescope-fzf-native-nvim
@@ -133,7 +120,7 @@ in
           # File browser
           nvim-tree-lua
 
-          vimwiki-dev
+          vimwiki
           comment-nvim
           markdown-preview-nvim
           cheatsheet-nvim
@@ -146,7 +133,7 @@ in
           vim-floaterm
 
           editorconfig-nvim
-        ]);
+        ];
       };
 
     xdg.configFile.nvim = {
