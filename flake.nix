@@ -13,7 +13,6 @@
     nix-colors.url = "github:misterio77/nix-colors";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -39,19 +38,6 @@
           # NixOS configurations
           # Some of them already ship with home-manager configuration.
           nixosConfigurations = {
-
-            e14 = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs;
-                overlays = builtins.attrValues overlays;
-              };
-              modules = [
-                ./hosts/e14/configuration.nix
-                ./hosts/e14/hardware-configuration.nix
-              ]
-              ++ (builtins.attrValues nixosModules);
-            };
 
             x13 = nixpkgs.lib.nixosSystem
               {
@@ -114,21 +100,6 @@
               };
               modules = [
                 ./hosts/l14/home-configuration.nix
-              ];
-            };
-            "jtraue@e14" = home-manager.lib.homeManagerConfiguration {
-              # Workaround for using unfree packages with home-manager
-              # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
-              pkgs = import nixpkgs {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-              extraSpecialArgs = {
-                inherit homeManagerModules nix-colors;
-                overlays = builtins.attrValues overlays;
-              };
-              modules = [
-                ./hosts/e14/home-configuration.nix
               ];
             };
             "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
