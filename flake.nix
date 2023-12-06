@@ -55,19 +55,6 @@
               ++ (builtins.attrValues nixosModules);
             };
 
-            l14 = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit nixos-hardware;
-                overlays = builtins.attrValues overlays;
-              };
-              modules = [
-                ./hosts/l14/configuration.nix
-                ./hosts/l14/hardware-configuration.nix
-              ]
-              ++ (builtins.attrValues nixosModules);
-            };
-
             x13 = nixpkgs.lib.nixosSystem
               {
                 system = "x86_64-linux";
