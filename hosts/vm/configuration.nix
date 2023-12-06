@@ -11,7 +11,6 @@
     desktop.enable = true;
     desktop.x11.enable = false;
     desktop.sway.enable = true;
-    notebook.enable = false;
     work.enable = false;
     yubikey.enable = false;
   };

@@ -22,7 +22,6 @@
     inputs@{ self
     , nixpkgs
     , home-manager
-    , nixos-hardware
     , nix-colors
     , pre-commit-hooks
     , flake-parts
@@ -45,7 +44,7 @@
             e14 = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
-                inherit inputs nixos-hardware;
+                inherit inputs;
                 overlays = builtins.attrValues overlays;
               };
               modules = [
@@ -59,7 +58,7 @@
               {
                 system = "x86_64-linux";
                 specialArgs = {
-                  inherit nixosModules nixos-hardware;
+                  inherit inputs nixosModules;
                   overlays = builtins.attrValues overlays;
                 };
                 modules = [
@@ -71,10 +70,6 @@
             netboot = nixpkgs.lib.nixosSystem
               {
                 system = "x86_64-linux";
-                specialArgs = {
-                  inherit nixosModules nixos-hardware;
-                  overlays = builtins.attrValues overlays;
-                };
                 modules = [
                   ./hosts/netboot.nix
                 ];
@@ -83,7 +78,7 @@
             vm = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
-                inherit nixos-hardware;
+                inherit inputs;
                 overlays = builtins.attrValues overlays;
               };
               modules = [

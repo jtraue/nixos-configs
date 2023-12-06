@@ -1,7 +1,7 @@
-{ pkgs, nixos-hardware, nixosModules, ... }:
+{ pkgs, inputs, nixosModules, ... }:
 {
   imports = [
-    nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga
   ]
   ++ builtins.attrValues nixosModules;
 
