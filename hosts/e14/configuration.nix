@@ -11,21 +11,12 @@
 
   services.onedrive.enable = true;
 
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
-  users.extraGroups.vboxusers.members = [ "jtraue" ];
-
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
   nixos-modules.desktop.x11.enable = true;
   nixos-modules.desktop.sway.enable = false;
   nixos-modules.notebook.enable = true;
-  nixos-modules.work = {
-    enable = true;
-    enablePrinting = true;
-    # networkboot.enable = true;
-    # networkboot.tftpFolder = "/home/jtraue/tftp";
-  };
+  nixos-modules.work.enable = true;
   nixos-modules.yubikey.enable = true;
 
   virtualisation.libvirtd.enable = true;
