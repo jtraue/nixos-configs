@@ -356,7 +356,7 @@ in
             }
             {
               block = "sound";
-              format = " $icon $output_name{ $volume|}";
+              format = "$icon Vol: {$volume|}";
             }
             {
               block = "time";
