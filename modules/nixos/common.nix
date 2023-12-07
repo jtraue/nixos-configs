@@ -60,6 +60,14 @@ in
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" cfg.user ];
+      substituters = [
+        "https://cache.nixos.org"
+        "https://jtraue.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "jtraue.cachix.org-1:su05S1o/u2/LDKEIz6Y6wGNkRriF95LeD5T5pYJJOso="
+      ];
     };
 
     nixpkgs = {
