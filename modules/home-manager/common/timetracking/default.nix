@@ -54,8 +54,10 @@ in
       Timer = { OnBootSec = "5min"; OnUnitActiveSec = "5min"; };
     };
 
-    # home.file."${config.programs.taskwarrior.dataLocation}/hooks/on-modify.watson.sh".text = ''
-    # '';
+    home.file."${config.programs.taskwarrior.dataLocation}/hooks/on-modify-watson.py" = {
+      text = builtins.readFile pkgs.watson-timewarrior-hook;
+      executable = true;
+    };
 
     programs.i3status-rust.bars.top.blocks = lib.mkIf config.programs.i3status-rust.enable [
       {
