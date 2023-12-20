@@ -13,7 +13,6 @@
   ipxe-files = pkgs.callPackage ./ipxe { };
   sotest-to-ipxe = pkgs.callPackage ./sotest-to-ipxe { };
   watson-notify = pkgs.callPackage ./watson-notify { };
-  watson-timewarrior-hook = pkgs.callPackage ./watson-timewarrior-hook.nix { };
   supernote-tool = pkgs.callPackage ./supernote-tool { };
   wsr = pkgs.callPackage ./wsr.nix { };
 }
