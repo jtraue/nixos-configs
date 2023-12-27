@@ -62,8 +62,8 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<C-k>", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<C-j>", ":bprevious<CR>", { desc = "Previous buffer" })
 
 -- Set clipboard to use system clipboard
 vim.opt.clipboard = "unnamedplus"
