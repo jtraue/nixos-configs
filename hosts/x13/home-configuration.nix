@@ -39,4 +39,13 @@
       };
     };
   };
+
+  xsession.windowManager.i3.config = {
+    startup = [
+      {
+        command = "${pkgs.signal-desktop}/bin/signal-desktop --use-tray-icon --start-in-tray";
+        notification = false;
+      }
+    ];
+  };
 }
