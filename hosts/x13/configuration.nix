@@ -21,7 +21,8 @@
 
   services = {
     tailscale.enable = true;
-    libinput.mouse.accelSpeed = "0.0";
+    xserver.libinput.mouse.accelSpeed = "0.0";
+    printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin ];
   };
   networking.firewall.checkReversePath = "loose"; # for tailscale
 
