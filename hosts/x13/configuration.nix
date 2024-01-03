@@ -2,9 +2,10 @@
 {
   imports = [
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga
-  ]
-  ++ builtins.attrValues nixosModules;
-
+    nixosModules.common
+    nixosModules.desktop
+    nixosModules.yubikey
+  ];
 
   programs.adb.enable = true;
   users.users.jtraue.extraGroups = [ "adbusers" ];
