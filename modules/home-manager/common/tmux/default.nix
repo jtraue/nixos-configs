@@ -9,12 +9,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    xdg.configFile = {
-      "tmuxinator/particle.yml".source = ./particle.yml;
-      "tmuxinator/svp.yml".source = ./svp.yml;
-      "tmuxinator/passthrough.yml".source = ./passthrough.yml;
-    };
-
     # copy mode: ctrl+b [
     #            - select via vi keybindings
     #            - hit enter to confirm
@@ -24,8 +18,6 @@ in
       clock24 = true;
       keyMode = "vi";
       baseIndex = 1;
-
-      tmuxinator.enable = true;
 
       # select-layout even-vertical
       # or ctrl+b <space> to cycle through layouts
