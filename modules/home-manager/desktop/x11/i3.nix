@@ -281,6 +281,11 @@ in
             command = "${pkgs._1password-gui}/bin/1password --silent";
             notification = false;
           }
+          {
+            # Unlock gnome-keyrings (see <https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)>)
+            command = "dbus-update-activation-environment --all";
+            notification = false;
+          }
         ];
 
         window.titlebar = false;
