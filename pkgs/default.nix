@@ -15,4 +15,5 @@
   watson-notify = pkgs.callPackage ./watson-notify { };
   supernote-tool = pkgs.callPackage ./supernote-tool { };
   wsr = pkgs.callPackage ./wsr.nix { };
+  nixos-rebuild-time = pkgs.callPackage ./nixos-rebuild-time { };
 }

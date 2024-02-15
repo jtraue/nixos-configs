@@ -332,6 +332,12 @@ in
         top = {
           blocks = [
             {
+              block = "custom";
+              command = "${pkgs.nixos-rebuild-time}/bin/nixos-rebuild-time";
+              interval = 300;
+              format = "Last nixos-rebuild $text.pango-str() ago";
+            }
+            {
               block = "disk_space";
               path = "/";
               format = "$icon $available/$total";
