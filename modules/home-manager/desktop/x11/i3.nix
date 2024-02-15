@@ -87,7 +87,6 @@ in
       i3
       xautolock
       siji
-      font-awesome
       font-awesome_5
     ];
 
@@ -143,7 +142,7 @@ in
             };
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-top.toml";
             fonts = {
-              names = [ "FontAwesome" ];
+              names = [ "Font Awesome Free 5" ];
               size = 10.0;
             };
           }
@@ -335,7 +334,7 @@ in
             {
               block = "disk_space";
               path = "/";
-              format = "root: $available/$total";
+              format = "$icon $available/$total";
               alert_unit = "GB";
               interval = 20;
               warning = 20.0;
@@ -343,7 +342,7 @@ in
             }
             {
               block = "memory";
-              format = "$icon $mem_used/$mem_total ($mem_used_percents)";
+              format = "$icon ($mem_used_percents)";
             }
             {
               block = "cpu";
@@ -352,24 +351,23 @@ in
             }
             {
               block = "net";
-              format = " $icon {$signal_strength $ssid $frequency|Wired connection} via $device ";
+              format = " $icon {$signal_strength $ssid.str(max_w:10) $frequency|Wired} via $device ";
             }
             {
               block = "battery";
-              interval = 10;
-              format = "$percentage $time";
+              format = "$icon $percentage";
+              full_format = "$icon $percentage";
             }
             {
               block = "sound";
-              format = "$icon Vol: {$volume|}";
             }
             {
               block = "time";
-              format = "$timestamp.datetime(f:'%d.%m.%y %R')";
+              format = "$timestamp.datetime(f:'KW%W %d.%m.%y %R')";
               interval = 60;
             }
           ];
-          icons = "awesome6";
+          icons = "material-nf";
           theme = "gruvbox-dark";
         };
       };
