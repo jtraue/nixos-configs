@@ -8,10 +8,16 @@
   ];
 
   programs.adb.enable = true;
-  users.users.jtraue.extraGroups = [ "adbusers" ];
+  users.users.jtraue.extraGroups = [
+    "adbusers"
+    "libvirtd"
+  ];
 
   virtualisation.docker.enable = true;
 
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
 
   # Let's see whether this fixes random audio outages
@@ -45,6 +51,7 @@
   environment.systemPackages = with pkgs; [
     steam
     calibre
+    gnome.gnome-boxes
   ];
 
   system.stateVersion = "21.05";
