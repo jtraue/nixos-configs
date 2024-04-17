@@ -269,10 +269,6 @@ in
             notification = false;
           }
           {
-            command = "backintime-qt";
-            notification = false;
-          }
-          {
             command = "${pkgs.autorandr}/bin/autorandr -c";
             notification = false;
           }

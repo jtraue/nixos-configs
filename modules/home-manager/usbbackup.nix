@@ -25,7 +25,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-
     services.udiskie = {
       enable = true;
       tray = "always";
@@ -41,8 +40,7 @@ in
     };
 
     home.packages = with pkgs; [
-      backintime
+      vorta
     ];
-
   };
 }
