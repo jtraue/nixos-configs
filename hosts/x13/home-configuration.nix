@@ -6,6 +6,13 @@
   home-modules.desktop.enable = true;
   home-modules.dev.enable = true;
 
+  dconf.settings = {
+    # ...
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+    };
+  };
+
 
   home.file.".abcde.conf".text = ''
     PADTRACKS=y
@@ -13,6 +20,10 @@
     OUTPUTTYPE=mp3
     EJECTCD=y
   '';
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "snapmaker-luban-4.9.1"
+  ];
 
   home.packages = with pkgs; [
     abcde

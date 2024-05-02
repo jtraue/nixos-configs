@@ -7,6 +7,13 @@
     nixosModules.yubikey
   ];
 
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   programs.adb.enable = true;
   users.users.jtraue.extraGroups = [
     "adbusers"
@@ -25,9 +32,9 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  services.xserver.libinput.mouse.accelSpeed = "0.0";
   services = {
     tailscale.enable = true;
-    xserver.libinput.mouse.accelSpeed = "0.0";
     printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin ];
   };
   networking.firewall.checkReversePath = "loose"; # for tailscale
@@ -48,11 +55,28 @@
       ];
     };
   };
+
+  # Automatic screen rotation
+  hardware.sensor.iio.enable = true;
+
   environment.systemPackages = with pkgs; [
     steam
     calibre
     gnome.gnome-boxes
-  ];
+    gnome.gnome-tweaks
+  ] ++ (with
+    pkgs.gnomeExtensions; [
+    battery-time
+    tray-icons-reloaded
+    touch-x
+    improved-osk
+    tailscale-status
+    caffeine
+    user-themes
+    move-clock
+    vitals
+    forge
+  ]);
 
   system.stateVersion = "21.05";
 }

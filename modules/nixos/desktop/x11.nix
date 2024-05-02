@@ -11,7 +11,7 @@ in
         enable = true;
       };
       displayManager = {
-        defaultSession = "none+i3";
+        #defaultSession = "none+i3";
         autoLogin =
           {
             enable = true;
