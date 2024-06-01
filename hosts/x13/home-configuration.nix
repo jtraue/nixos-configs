@@ -25,6 +25,20 @@
     "snapmaker-luban-4.9.1"
   ];
 
+
+  services.udiskie = {
+    settings = {
+      device_config = [
+        {
+          id_uuid = [ "032600a9-a94f-4f03-b16a-75b922250b39" ]; # work backup
+          ignore = true;
+          automount = false;
+        }
+      ];
+    };
+  };
+
+
   home.packages = with pkgs; [
     abcde
     digikam
