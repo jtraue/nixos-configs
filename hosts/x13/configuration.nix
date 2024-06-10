@@ -21,7 +21,7 @@
 
   services = {
     tailscale.enable = true;
-    xserver.libinput.mouse.accelSpeed = "0.0";
+    libinput.mouse.accelSpeed = "0.0";
   };
   networking.firewall.checkReversePath = "loose"; # for tailscale
 

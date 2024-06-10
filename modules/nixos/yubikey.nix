@@ -27,7 +27,6 @@ in
         agent = {
           enable = true;
           enableSSHSupport = true;
-          pinentryFlavor = "gtk2";
         };
       };
     };

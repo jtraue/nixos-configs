@@ -7,22 +7,24 @@ in
 
   config = lib.mkIf cfg.enable {
     services = {
-      xserver = {
-        libinput = {
-          enable = true;
-        };
+      libinput = {
         enable = true;
-        displayManager = {
-          defaultSession = "none+i3";
-          autoLogin =
-            {
-              enable = true;
-              user = "${config.nixos-modules.common.user}";
-            };
+      };
+      displayManager = {
+        defaultSession = "none+i3";
+        autoLogin =
+          {
+            enable = true;
+            user = "${config.nixos-modules.common.user}";
+          };
+      };
+      xserver = {
+        enable = true;
+        xkb = {
+          layout = "us";
+          variant = "intl";
+          options = "caps:escape";
         };
-        layout = "us";
-        xkbVariant = "intl";
-        xkbOptions = "caps:escape";
         windowManager.i3 = {
           enable = true;
         };
