@@ -2,6 +2,7 @@
   description = "My NixOS configurations";
 
   inputs = {
+    nixvim.url = "git+file:///home/jtraue/conf/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -110,7 +111,7 @@
                 config.allowUnfree = true;
               };
               extraSpecialArgs = {
-                inherit homeManagerModules nix-colors;
+                inherit homeManagerModules nix-colors inputs;
                 overlays = builtins.attrValues overlays;
               };
               modules = [
