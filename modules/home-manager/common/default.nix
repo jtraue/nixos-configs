@@ -118,6 +118,9 @@ in
           "themes"
         ];
         theme = "gnzh";
+        extraConfig = ''
+          ZSH_TMUX_AUTOSTART=true
+        '';
       };
     };
 
