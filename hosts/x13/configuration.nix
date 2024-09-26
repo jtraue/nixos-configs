@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, nixosModules, ... }:
+{ config, pkgs, inputs, nixosModules, lib, ... }:
 {
   imports = [
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga
@@ -77,6 +77,23 @@
     vitals
     forge
   ]);
+
+  powerManagement = {
+    powertop.enable = true;
+  };
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "powersave";
+        turbo = "never";
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
+  };
 
   system.stateVersion = "21.05";
 }
