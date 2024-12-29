@@ -17,9 +17,9 @@ in
     nixos-modules.desktop.x11.enable = lib.mkDefault true;
 
     hardware = {
-      opengl = {
+      graphics = {
         enable = true;
-        driSupport32Bit = true;
+        enable32Bit = true;
       };
     };
 

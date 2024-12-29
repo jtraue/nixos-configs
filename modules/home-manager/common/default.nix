@@ -65,7 +65,6 @@ in
       ranger
       tldr
       pass
-      youtube-dl
     ]
     ++ (with pkgs; [
       powerline-fonts

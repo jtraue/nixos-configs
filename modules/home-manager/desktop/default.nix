@@ -73,9 +73,9 @@ in
       ffmpeg
       filezilla
       gimp
-      gnome3.simple-scan
-      gnome3.file-roller
-      gnome3.nautilus
+      simple-scan
+      file-roller
+      nautilus
       hunspell
       hunspellDicts.en-us-large
       imagemagick
@@ -92,7 +92,6 @@ in
       wireshark
       xclip
       xournalpp
-      youtube-dl
       supernote-tool
     ] ++ [
       pkgs.corefonts # microsoft free fonts

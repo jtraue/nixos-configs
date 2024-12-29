@@ -32,7 +32,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  services.xserver.libinput.mouse.accelSpeed = "0.0";
+  services.libinput.mouse.accelSpeed = "0.0";
   services = {
     tailscale.enable = true;
     printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin ];
@@ -49,7 +49,7 @@
 
   hardware = {
     trackpoint.device = "TPPS/2 ALPS TrackPoint";
-    opengl = {
+    graphics = {
       extraPackages32 = with pkgs.pkgsi686Linux; [
         libva
       ];
@@ -62,14 +62,13 @@
   environment.systemPackages = with pkgs; [
     steam
     calibre
-    gnome.gnome-boxes
-    gnome.gnome-tweaks
+    gnome-boxes
+    gnome-tweaks
   ] ++ (with
     pkgs.gnomeExtensions; [
     battery-time
     tray-icons-reloaded
     touch-x
-    improved-osk
     tailscale-status
     caffeine
     user-themes
@@ -82,7 +81,7 @@
     powertop.enable = true;
   };
   services.auto-cpufreq = {
-    enable = true;
+    enable = false;
     settings = {
       battery = {
         governor = "powersave";
