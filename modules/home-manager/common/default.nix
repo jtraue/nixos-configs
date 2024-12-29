@@ -117,10 +117,9 @@ in
           "themes"
         ];
         theme = "gnzh";
-        extraConfig = ''
-          ZSH_TMUX_AUTOSTART=true
-        '';
       };
+
+      localVariables = { ZSH_TMUX_AUTOSTART = "true"; };
     };
 
     home = {
