@@ -49,10 +49,10 @@ in
         ExecStart = "${pkgs.watson-notify}/bin/watson-notify";
       };
     };
-    systemd.user.timers.watson-notify = {
-      Install = { WantedBy = [ "timers.target" ]; };
-      Timer = { OnBootSec = "5min"; OnUnitActiveSec = "5min"; };
-    };
+    # systemd.user.timers.watson-notify = {
+    #   Install = { WantedBy = [ "timers.target" ]; };
+    #   Timer = { OnBootSec = "5min"; OnUnitActiveSec = "5min"; };
+    # };
 
     programs.i3status-rust.bars.top.blocks = lib.mkIf config.programs.i3status-rust.enable [
       {

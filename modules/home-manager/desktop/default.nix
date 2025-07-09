@@ -82,7 +82,7 @@ in
       inkscape
       libreoffice
       nextcloud-client
-      okular
+      kdePackages.okular
       pavucontrol
       pulseaudio
       scrot # used for screenshot in xournalpp
@@ -95,7 +95,6 @@ in
       supernote-tool
     ] ++ [
       pkgs.corefonts # microsoft free fonts
-      pkgs.nerdfonts
       pkgs.roboto
     ];
 

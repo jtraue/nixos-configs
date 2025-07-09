@@ -56,7 +56,6 @@ in
       cht-sh
       dos2unix
       dosfstools
-      dstat
       file
       htop
       nmap
