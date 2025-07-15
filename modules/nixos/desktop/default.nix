@@ -95,10 +95,6 @@ in
     # - go to cups website and modify printer (duplex, a4, 2 sided)
     services.printing.drivers = [ pkgs.hplipWithPlugin ];
 
-    hardware.opentabletdriver = {
-      enable = true;
-    };
-
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
