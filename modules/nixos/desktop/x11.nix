@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.nixos-modules.desktop.x11;
 in
@@ -11,7 +11,6 @@ in
         enable = true;
       };
       displayManager = {
-        #defaultSession = "none+i3";
         autoLogin =
           {
             enable = true;
@@ -20,15 +19,28 @@ in
       };
       xserver = {
         enable = true;
+        displayManager.gdm.enable = true;
+        desktopManager.gnome.enable = true;
         xkb = {
           layout = "us";
           variant = "intl";
           options = "caps:escape";
         };
-        windowManager.i3 = {
-          enable = true;
-        };
       };
     };
+    environment.systemPackages = [
+      pkgs.gnome-tweaks
+    ] ++
+    (with
+    pkgs.gnomeExtensions; [
+      battery-time
+      tray-icons-reloaded
+      tailscale-status
+      caffeine
+      user-themes
+      move-clock
+      vitals
+      top-bar-organizer
+    ]);
   };
 }

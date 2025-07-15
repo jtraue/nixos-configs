@@ -7,9 +7,6 @@
     nixosModules.yubikey
   ];
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
   # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
@@ -63,18 +60,9 @@
     steam
     calibre
     gnome-boxes
-    gnome-tweaks
   ] ++ (with
     pkgs.gnomeExtensions; [
-    battery-time
-    tray-icons-reloaded
     touch-x
-    tailscale-status
-    caffeine
-    user-themes
-    move-clock
-    vitals
-    forge
   ]);
 
   powerManagement = {
