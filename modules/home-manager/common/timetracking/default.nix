@@ -17,6 +17,7 @@ in
 
     programs.taskwarrior = {
       enable = true;
+      package = pkgs.taskwarrior3;
       colorTheme = "solarized-dark-256";
       extraConfig = ''
         weekstart = monday
