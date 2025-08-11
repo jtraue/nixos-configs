@@ -57,12 +57,10 @@ in
     programs.chromium = {
       enable = true;
       extensions = [
-        "gcbommkclmclpchllfjekcdonpmejbdp" # https-everywhere
-        "ihlenndgcmojhcghmfjfneahoeklbjjh" # cvim
-        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
         "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # onepassword
         "niloccemoadcdkdjlinkgdfekeahmflj" # pocket
         "dmghijelimhndkbmpgbldicpogfkceaj" # dark mode
+        "oldceeleldhonbafppcapldpdifcinji" # language tool
       ];
     };
 
