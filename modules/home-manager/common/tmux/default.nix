@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.home-modules.common.tmux;
@@ -19,11 +19,22 @@ in
       keyMode = "vi";
       baseIndex = 1;
 
+      plugins = with pkgs.tmuxPlugins;
+        [
+          power-theme
+        ];
+
       # select-layout even-vertical
       # or ctrl+b <space> to cycle through layouts
       extraConfig = ''
         # reload configuration
-        bind r source-file ~/.tmux.conf \; display '~/.tmux.conf sourced'
+        bind r source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
+
+        set -g @tmux_power_theme 'gold'
+        set -g @tmux_power_show_user    false
+        set -g @tmux_power_show_host    false
+        set -g @tmux_power_show_session    true
+        run-shell "${pkgs.tmuxPlugins.power-theme}/share/tmux-plugins/power/tmux-power.tmux"
 
         bind q kill-session
 
@@ -48,38 +59,6 @@ in
 
         # Disable esc delay when switching modes in vim
         set -sg escape-time 0
-
-        ##########
-        # Design #
-        ##########
-
-        # --- colors (solarized dark)
-        # default statusbar colors
-        set -g status-style bg=black,fg=yellow
-
-        # default window title colors
-        setw -g window-status-style fg=brightblue,bg=default
-
-        # active window title colors
-        setw -g window-status-current-style fg=yellow,bg=default,dim
-
-        # pane border
-        set -g pane-border-style fg=black,bg=default
-
-        # command line/message text
-        set -g message-style fg=yellow,bg=black
-
-        # pane number display
-        set -g display-panes-active-colour yellow
-        set -g display-panes-colour brightblue
-
-        # clock
-        setw -g clock-mode-colour yellow
-
-        tmux_conf_theme_left_separator_main='\uE0B0'
-        tmux_conf_theme_left_separator_sub='\uE0B1'
-        tmux_conf_theme_right_separator_main='\uE0B2'
-        tmux_conf_theme_right_separator_sub='\uE0B3'
 
         bind h select-pane -L
         bind j select-pane -D
