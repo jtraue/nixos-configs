@@ -53,13 +53,6 @@
                 ];
               };
 
-            netboot = nixpkgs.lib.nixosSystem
-              {
-                system = "x86_64-linux";
-                modules = [
-                  ./hosts/netboot.nix
-                ];
-              };
 
           };
 
@@ -105,30 +98,7 @@
           # Custom packages that are not yet packaged elsewhere.
           packages =
             import ./pkgs { inherit pkgs; } //
-            {
-
-              # Demo package for netboot. Use via:
-              # * nix build .\#netboot-experiment && nix-shell -p python3Packages.python --run 'python3 -m http.server --directory result 8888'
-              # * qemu-ipxe -m 4096 -b
-              netboot-experiment =
-                let
-                  bootSystem = self.nixosConfigurations.netboot;
-                  inherit (bootSystem.config.system) build;
-                  # Pass `cmdline` variable to NixOS ipxe script.
-                  ipxe-script = nixpkgs.legacyPackages.x86_64-linux.writeText "ipxe-default.cfg" ''
-                    #!ipxe
-                    set cmdline earlyprintk=serial,ttyS0,115200n8,keep console=ttyS0 loglevel=7
-                    chain http://''${next-server}:8888/netboot.ipxe
-                  '';
-                in
-                nixpkgs.legacyPackages.x86_64-linux.runCommand "netboot-files" { } ''
-                  mkdir -p $out
-                  ln -s ${build.netbootRamdisk}/initrd $out/initrd
-                  ln -s ${build.kernel}/bzImage $out/bzImage
-                  ln -s ${ipxe-script} $out/ipxe-default.cfg
-                  ln -s ${build.netbootIpxeScript}/netboot.ipxe $out/netboot.ipxe
-                '';
-            };
+            { };
 
           devShells.default = pkgs.mkShellNoCC {
 
