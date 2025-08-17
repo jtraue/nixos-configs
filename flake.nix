@@ -54,7 +54,6 @@
         };
 
         homeConfigurations = {
-          "jtraue@l14" = mkHomeConfig "l14" { };
           "jtraue@x13" = mkHomeConfig "x13" {
             inherit inputs;
             pkgs-unstable = mkPkgs inputs.nixpkgs-unstable;
