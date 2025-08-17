@@ -4,6 +4,7 @@
   inputs = {
     nixvim.url = "git+file:///home/jtraue/conf/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
@@ -24,6 +25,7 @@
     , nix-colors
     , pre-commit-hooks
     , flake-parts
+    , nixpkgs-unstable
     , ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; }
@@ -83,6 +85,11 @@
               extraSpecialArgs = {
                 inherit homeManagerModules nix-colors inputs;
                 overlays = builtins.attrValues overlays;
+                pkgs-unstable = import nixpkgs-unstable {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
+
               };
               modules = [
                 ./hosts/x13/home-configuration.nix

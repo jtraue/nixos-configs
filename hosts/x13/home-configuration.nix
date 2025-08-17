@@ -1,4 +1,4 @@
-{ pkgs, homeManagerModules, ... }:
+{ pkgs, homeManagerModules, pkgs-unstable, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
 
@@ -40,7 +40,7 @@
   };
 
 
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     abcde
     digikam
     sweethome3d.application
@@ -48,9 +48,10 @@
     freecad
     krita
     drawio
-  ] ++ [
-    pkgs.screenrotate
-  ];
+    screenrotate
+  ]) ++ (with pkgs-unstable; [
+    claude-code
+  ]);
 
   programs.ssh = {
     enable = true;
