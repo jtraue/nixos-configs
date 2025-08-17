@@ -61,29 +61,6 @@
                 ];
               };
 
-            vm = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs;
-                overlays = builtins.attrValues overlays;
-              };
-              modules = [
-                ./hosts/vm/configuration.nix
-                ./hosts/x13/hardware-configuration.nix # placeholder
-                home-manager.nixosModules.home-manager
-                {
-                  # home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.jtraue = import ./hosts/vm/home-configuration.nix;
-                  home-manager.extraSpecialArgs = {
-                    inherit homeManagerModules nix-colors;
-                    overlays = builtins.attrValues overlays;
-                    hostname = "vm";
-                  };
-                }
-              ]
-              ++ (builtins.attrValues nixosModules);
-            };
           };
 
           homeConfigurations = {
