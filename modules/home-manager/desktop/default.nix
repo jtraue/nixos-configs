@@ -65,7 +65,6 @@ in
     };
 
     home.packages = with pkgs; [
-      _1password-gui
       arandr
       aspellDicts.de
       ffmpeg
