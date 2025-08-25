@@ -18,7 +18,7 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
-      userName = "Jana Traue";
+      userName = "Jana Förster";
       userEmail = lib.mkDefault "jtraue@disturbed.systems";
 
       aliases = {
