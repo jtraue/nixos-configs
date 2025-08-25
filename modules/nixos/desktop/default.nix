@@ -4,17 +4,14 @@ let
 in
 {
   imports = [
-    ./autorandr.nix
-    ./x11.nix
-    ./sway.nix
+    ./gnome.nix
   ];
 
   options.nixos-modules.desktop.enable = lib.mkEnableOption "Enable desktop environment.";
 
   config = lib.mkIf cfg.enable {
 
-    nixos-modules.desktop.autorandr.enable = true;
-    nixos-modules.desktop.x11.enable = lib.mkDefault true;
+    nixos-modules.desktop.gnome.enable = lib.mkDefault true;
 
     hardware = {
       graphics = {
