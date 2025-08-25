@@ -64,6 +64,9 @@ in
       polkitPolicyOwners = [ "jtraue" ];
     };
 
+    services.xserver.wacom.enable = true;
+    hardware.opentabletdriver.enable = true;
+
     # -- fonts
     fonts = {
       enableDefaultPackages = true;
