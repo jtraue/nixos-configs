@@ -5,95 +5,140 @@
     nixvim.url = "git+file:///home/jtraue/conf/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-colors.url = "github:misterio77/nix-colors";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs:
-    let
-      system = "x86_64-linux";
-      overlays = import ./overlays { };
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+  outputs =
+    inputs@{ self
+    , nixpkgs
+    , home-manager
+    , nix-colors
+    , pre-commit-hooks
+    , flake-parts
+    , nixpkgs-unstable
+    , ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; }
+      {
 
-      mkPkgs = nixpkgs: import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
+        flake = rec {
+          nixosModules = import ./modules/nixos;
+          homeManagerModules = import ./modules/home-manager;
 
-      mkHomeConfig = host: extraArgs: inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = mkPkgs inputs.nixpkgs;
-        extraSpecialArgs = {
-          inherit homeManagerModules;
-          inherit (inputs) nix-colors;
-          overlays = builtins.attrValues overlays;
-        } // extraArgs;
-        modules = [ ./hosts/${host}/home-configuration.nix ];
-      };
-    in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = {
-        inherit nixosModules homeManagerModules overlays;
+          # Covers all packages and customizations.
+          overlays = import ./overlays { };
 
-        nixosConfigurations.x13 = inputs.nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs nixosModules;
-            overlays = builtins.attrValues overlays;
+          # NixOS configurations
+          # Some of them already ship with home-manager configuration.
+          nixosConfigurations = {
+
+            x13 = nixpkgs.lib.nixosSystem
+              {
+                system = "x86_64-linux";
+                specialArgs = {
+                  inherit inputs nixosModules;
+                  overlays = builtins.attrValues overlays;
+                };
+                modules = [
+                  ./hosts/x13/configuration.nix
+                  ./hosts/x13/hardware-configuration.nix
+                ];
+              };
+
+
           };
-          modules = [
-            ./hosts/x13/configuration.nix
-            ./hosts/x13/hardware-configuration.nix
-          ];
-        };
 
-        homeConfigurations = {
-          "jtraue@x13" = mkHomeConfig "x13" {
-            inherit inputs;
-            pkgs-unstable = mkPkgs inputs.nixpkgs-unstable;
+          homeConfigurations = {
+            # home-manager configurations - intended for non NixOS machines
+            "jtraue@l14" = home-manager.lib.homeManagerConfiguration {
+              # Workaround for using unfree packages with home-manager
+              # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
+              pkgs = import nixpkgs {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+              extraSpecialArgs = {
+                inherit homeManagerModules nix-colors;
+                overlays = builtins.attrValues overlays;
+              };
+              modules = [
+                ./hosts/l14/home-configuration.nix
+              ];
+            };
+            "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
+              # Workaround for using unfree packages with home-manager
+              # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
+              pkgs = import nixpkgs {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+              extraSpecialArgs = {
+                inherit homeManagerModules nix-colors inputs;
+                overlays = builtins.attrValues overlays;
+                pkgs-unstable = import nixpkgs-unstable {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
+
+              };
+              modules = [
+                ./hosts/x13/home-configuration.nix
+              ];
+            };
           };
         };
-      };
+        systems = [ "x86_64-linux" ];
+        imports = [
+          inputs.pre-commit-hooks.flakeModule
+        ];
+        perSystem = { pkgs, config, system, ... }: {
+          # Custom packages that are not yet packaged elsewhere.
+          packages =
+            import ./pkgs { inherit pkgs; } //
+            { };
 
-      systems = [ "x86_64-linux" ];
-      imports = [ inputs.pre-commit-hooks.flakeModule ];
+          devShells.default = pkgs.mkShellNoCC {
 
-      perSystem = { pkgs, config, system, ... }: {
-        packages = import ./pkgs { inherit pkgs; };
+            # For onboarding a system that doesn't use flakes yet.
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
 
-        devShells.default = pkgs.mkShellNoCC {
-          NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
-          inputsFrom = [ config.pre-commit.settings.run ];
-          buildInputs = with pkgs; [
-            nix
-            inputs.home-manager.packages.${system}.default
-            git
-            cachix
-          ];
-          shellHook = config.pre-commit.installationScript;
-        };
+            inputsFrom = [ config.pre-commit.settings.run ];
+            buildInputs = with pkgs; [
+              nix
+              home-manager.packages."${system}".default
+              git
+              cachix
+            ];
+            shellHook = config.pre-commit.installationScript;
+          };
 
-        pre-commit = {
-          check.enable = true;
-          settings.hooks = {
-            nixpkgs-fmt.enable = true;
-            deadnix = {
-              enable = true;
-              settings = {
-                noLambdaPatternNames = true;
-                noLambdaArg = true;
+          pre-commit = {
+            check.enable = true;
+            settings = {
+              hooks = {
+                nixpkgs-fmt.enable = true;
+                deadnix = {
+                  enable = true;
+                  settings = {
+                    noLambdaPatternNames = true;
+                    noLambdaArg = true;
+                  };
+                };
+                statix.enable = true;
+                shellcheck.enable = false;
               };
             };
-            statix.enable = true;
-            shellcheck.enable = false;
           };
         };
       };
-    };
 }
