@@ -29,6 +29,7 @@ in
     ./kitty.nix
     ./x11
     ./sway
+    ./gnome.nix
   ];
 
   options.home-modules.desktop.enable = lib.mkEnableOption "Enables desktop environment.";
