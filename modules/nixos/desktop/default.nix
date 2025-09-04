@@ -21,8 +21,6 @@ in
     };
 
     programs = {
-      dconf.enable = true; # Gtk3 apps seem to require dconf :/
-      seahorse.enable = true; # gnome keyring manager
       evolution = {
         enable = true;
         plugins = [ pkgs.evolution-ews ];
@@ -30,10 +28,7 @@ in
       light.enable = true; # backlight
     };
 
-    security.pam.services.lightdm.enableGnomeKeyring = true;
-
     services = {
-      gnome.gnome-keyring.enable = true;
       dbus.packages = with pkgs; [ dconf ];
     };
     systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
@@ -63,9 +58,6 @@ in
       # require enabling PolKit integration on some desktop environments (e.g. Plasma).
       polkitPolicyOwners = [ "jtraue" ];
     };
-
-    services.xserver.wacom.enable = true;
-    hardware.opentabletdriver.enable = true;
 
     # -- fonts
     fonts = {

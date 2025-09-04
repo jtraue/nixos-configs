@@ -7,7 +7,11 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.sway.enable = true;
+
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
     security.polkit.enable = true;
+
 
     # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
     systemd.services."getty@tty1".enable = false;
