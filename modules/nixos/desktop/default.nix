@@ -67,6 +67,7 @@ in
       # fontconfig = {
       # defaultFonts = { monospace = [ "Fira Code Light" ]; };
       # };
+      packages = builtins.filter lib.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     };
     nixpkgs.config.input-fonts.acceptLicense = true;
