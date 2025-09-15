@@ -11,6 +11,17 @@
     "org/gnome/shell" = {
       disable-user-extensions = false;
     };
+    "org/gnome/desktop/interface" = {
+      accent-color = "blue";
+    };
+    "org/gnome/desktop/input-sources" = {
+      xkb-options = [ "ctrl:nocaps" ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>Return";
+      name = "terminal";
+      command = "kgx -- tmux";
+    };
   };
 
 
