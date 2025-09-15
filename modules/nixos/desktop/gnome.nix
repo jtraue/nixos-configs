@@ -37,6 +37,7 @@ in
     };
     environment.systemPackages = [
       pkgs.gnome-tweaks
+      pkgs.gnomeExtensions.appindicator
     ] ++
     (with
     pkgs.gnomeExtensions; [
@@ -49,6 +50,8 @@ in
       vitals
       top-bar-organizer
     ]);
+
+    services.udev.packages = [ pkgs.gnome-settings-daemon ];
 
   };
 }
