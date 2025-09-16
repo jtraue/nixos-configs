@@ -2,7 +2,7 @@
   description = "My NixOS configurations";
 
   inputs = {
-    nixvim.url = "git+file:///home/jtraue/conf/nixvim";
+    nixvim.url = "github:jtraue/nixvim/main";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
