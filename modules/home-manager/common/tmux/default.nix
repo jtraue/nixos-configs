@@ -22,13 +22,14 @@ in
       plugins = with pkgs.tmuxPlugins;
         [
           power-theme
+          resurrect
         ];
 
       # select-layout even-vertical
       # or ctrl+b <space> to cycle through layouts
       extraConfig = ''
         # reload configuration
-        bind r source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
+        bind R source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
 
         set -g @tmux_power_theme 'gold'
         set -g @tmux_power_show_user    false
