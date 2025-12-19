@@ -8,7 +8,6 @@
   qemu-ipxe = pkgs.callPackage ./qemu-ipxe { };
   qemu-svp = pkgs.callPackage ./qemu-svp { };
   screenrotate = pkgs.callPackage ./screenrotate.nix { };
-  theme-switch = pkgs.callPackage ./theme-switch { };
   yass = pkgs.callPackage ./yass.nix { };
   ipxe-files = pkgs.callPackage ./ipxe { };
   sotest-to-ipxe = pkgs.callPackage ./sotest-to-ipxe { };

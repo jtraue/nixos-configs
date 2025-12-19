@@ -27,7 +27,6 @@ in
 {
   imports = [
     ./kitty.nix
-    ./x11
     ./sway
     ./gnome.nix
   ];
@@ -36,7 +35,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home-modules.desktop.x11.enable = lib.mkDefault true;
     home-modules.desktop.kitty.enable = true;
 
     nixpkgs.config.input-fonts.acceptLicense = true;
