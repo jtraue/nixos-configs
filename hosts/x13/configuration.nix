@@ -4,7 +4,6 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-yoga
     nixosModules.common
     nixosModules.desktop
-    nixosModules.yubikey
   ];
 
   # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
@@ -38,7 +37,6 @@
 
   nixos-modules.common.enable = true;
   nixos-modules.desktop.enable = true;
-  nixos-modules.yubikey.enable = true;
 
   networking = {
     hostName = "x13";
