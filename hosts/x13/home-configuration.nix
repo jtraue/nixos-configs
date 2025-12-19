@@ -4,9 +4,6 @@
 
   home-modules.common.enable = true;
   home-modules.desktop.enable = true;
-  home-modules.dev.enable = true;
-
-
 
   home.file.".abcde.conf".text = ''
     PADTRACKS=y
