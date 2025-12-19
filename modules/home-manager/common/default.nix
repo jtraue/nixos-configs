@@ -13,7 +13,6 @@ in
     ./mc.nix
     ./tmux
     ./vim
-    ./timetracking
   ];
 
   options.home-modules.common = {
@@ -34,7 +33,6 @@ in
     home-modules.common.mc.enable = lib.mkDefault true;
     home-modules.common.tmux.enable = lib.mkDefault true;
     home-modules.common.vim.enable = lib.mkDefault true;
-    home-modules.common.timetracking.enable = lib.mkDefault false;
 
     fonts.fontconfig.enable = true;
 
