@@ -60,21 +60,6 @@
 
           homeConfigurations = {
             # home-manager configurations - intended for non NixOS machines
-            "jtraue@l14" = home-manager.lib.homeManagerConfiguration {
-              # Workaround for using unfree packages with home-manager
-              # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
-              pkgs = import nixpkgs {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-              extraSpecialArgs = {
-                inherit homeManagerModules nix-colors;
-                overlays = builtins.attrValues overlays;
-              };
-              modules = [
-                ./hosts/l14/home-configuration.nix
-              ];
-            };
             "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
               # Workaround for using unfree packages with home-manager
               # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
