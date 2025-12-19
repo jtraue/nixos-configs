@@ -19,7 +19,6 @@ I am generally following:
   - nixos: NixOS modules
   - home-manager: home-manager modules
 - pkgs: contains custom packages that are not yet managed elsewhere
-- overlays: NixOS overlays (includes custom `pkgs` and further modifications of existing packages)
 
 ## Usage
 

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, overlays, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.nixos-modules.common;
 in
@@ -71,7 +71,6 @@ in
     };
 
     nixpkgs = {
-      inherit overlays;
       config = {
         allowUnfree = true;
         allowUnfreePredicate = _: true;
@@ -119,4 +118,3 @@ in
 
   };
 }
-

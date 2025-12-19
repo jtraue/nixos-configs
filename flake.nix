@@ -35,9 +35,6 @@
           nixosModules = import ./modules/nixos;
           homeManagerModules = import ./modules/home-manager;
 
-          # Covers all packages and customizations.
-          overlays = import ./overlays { };
-
           # NixOS configurations
           # Some of them already ship with home-manager configuration.
           nixosConfigurations = {
@@ -47,7 +44,6 @@
                 system = "x86_64-linux";
                 specialArgs = {
                   inherit inputs nixosModules;
-                  overlays = builtins.attrValues overlays;
                 };
                 modules = [
                   ./hosts/x13/configuration.nix
@@ -69,7 +65,6 @@
               };
               extraSpecialArgs = {
                 inherit homeManagerModules nix-colors inputs;
-                overlays = builtins.attrValues overlays;
                 pkgs-unstable = import nixpkgs-unstable {
                   system = "x86_64-linux";
                   config.allowUnfree = true;

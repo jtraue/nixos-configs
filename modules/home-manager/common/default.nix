@@ -1,4 +1,4 @@
-{ config, lib, pkgs, overlays, nix-colors, ... }:
+{ config, lib, pkgs, nix-colors, ... }:
 
 let
   cfg = config.home-modules.common;
@@ -37,7 +37,6 @@ in
     fonts.fontconfig.enable = true;
 
     nixpkgs = {
-      inherit overlays;
       config = {
         allowUnfree = true;
       };
