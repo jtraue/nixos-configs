@@ -81,7 +81,10 @@ in
 
     programs = {
       command-not-found.enable = true;
-      vim.defaultEditor = true;
+      vim = {
+        enable = true;
+        defaultEditor = true;
+      };
       zsh.enable = true;
     };
 

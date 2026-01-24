@@ -13,8 +13,7 @@
   '';
 
   nixpkgs.config.permittedInsecurePackages = [
-    "snapmaker-luban-4.10.12"
-    "snapmaker-luban-4.10.2"
+    "snapmaker-luban-4.15.0"
   ];
 
 
@@ -39,7 +38,6 @@
     freecad
     krita
     drawio
-    screenrotate
   ]) ++ (with pkgs-unstable; [
     claude-code
   ]);

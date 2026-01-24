@@ -60,10 +60,7 @@
     steam
     calibre
     gnome-boxes
-  ] ++ (with
-    pkgs.gnomeExtensions; [
-    touch-x
-  ]);
+  ];
 
   powerManagement = {
     powertop.enable = true;

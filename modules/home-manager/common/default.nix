@@ -64,11 +64,7 @@ in
     ]
     ++ (with pkgs; [
       powerline-fonts
-    ])
-    ++ (with pkgs;
-      [
-        theme-switch
-      ]);
+    ]);
 
     programs.zsh = {
       enable = true;

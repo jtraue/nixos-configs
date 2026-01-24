@@ -88,7 +88,6 @@ in
       wireshark
       xclip
       xournalpp
-      supernote-tool
     ] ++ [
       pkgs.corefonts # microsoft free fonts
       pkgs.roboto

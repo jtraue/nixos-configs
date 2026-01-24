@@ -82,7 +82,7 @@ in
     # -- sound
     # rtkit is optional but recommended
     security.rtkit.enable = true;
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
     services.pipewire = {
       enable = true;
       pulse.enable = true;
