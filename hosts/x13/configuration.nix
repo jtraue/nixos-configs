@@ -6,6 +6,8 @@
     nixosModules.desktop
   ];
 
+  services.fprintd.enable = true;
+
   # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
