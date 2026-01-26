@@ -44,15 +44,5 @@
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "igor" = {
-        hostname = "igor";
-        user = "root";
-      };
-      "mini" = {
-        hostname = "mini.home";
-        user = "kodi";
-      };
-    };
   };
 }
