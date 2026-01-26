@@ -18,23 +18,22 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
-      userName = "Jana Förster";
-      userEmail = lib.mkDefault "jtraue@disturbed.systems";
 
-      aliases = {
-        lg = "log --oneline";
-        st = "status -sb";
-        sed = "! git grep -z --full-name -l '.' | xargs -0 sed -i -e";
-        style = "!f() { branch=\${1-upstream/master}; echo $branch; git diff -z $branch --name-only | xargs -0 -n 1 style.sh; }; f";
-        standup = "log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday --author jana.traue@cyberus-technology.de --all";
-        wsr = "log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since 'last Monday' --author jana.traue@cyberus-technology.de --all";
-        when = "for-each-ref --sort=committerdate --format='%(refname:short) * %(authorname) * %(committerdate:relative)' refs/remotes/";
-      };
-
-      extraConfig = {
-        core = {
-          editor = "vim";
+      settings = {
+        user = {
+          name = "Jana Förster";
+          email = lib.mkDefault "jtraue@disturbed.systems";
         };
+        alias = {
+          lg = "log --oneline";
+          st = "status -sb";
+          sed = "! git grep -z --full-name -l '.' | xargs -0 sed -i -e";
+          style = "!f() { branch=\${1-upstream/master}; echo $branch; git diff -z $branch --name-only | xargs -0 -n 1 style.sh; }; f";
+          standup = "log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday --author jana.traue@cyberus-technology.de --all";
+          wsr = "log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since 'last Monday' --author jana.traue@cyberus-technology.de --all";
+          when = "for-each-ref --sort=committerdate --format='%(refname:short) * %(authorname) * %(committerdate:relative)' refs/remotes/";
+        };
+        core.editor = "vim";
         diff.tool = "vimdiff";
         merge.tool = "vimdiff";
         rebase.autoSquash = true;
