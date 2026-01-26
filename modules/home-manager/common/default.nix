@@ -112,7 +112,6 @@ in
     home = {
       username = cfg.user;
       homeDirectory = lib.mkDefault "/home/${cfg.user}";
-      stateVersion = "22.11";
     };
 
   };
