@@ -26,7 +26,6 @@ let
 in
 {
   imports = [
-    ./kitty.nix
     ./sway
     ./gnome.nix
   ];
@@ -34,9 +33,6 @@ in
   options.home-modules.desktop.enable = lib.mkEnableOption "Enables desktop environment.";
 
   config = lib.mkIf cfg.enable {
-
-    home-modules.desktop.kitty.enable = true;
-
     nixpkgs.config.input-fonts.acceptLicense = true;
     services.network-manager-applet.enable = true;
 
