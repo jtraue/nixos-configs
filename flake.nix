@@ -2,8 +2,8 @@
   description = "My NixOS configurations";
 
   inputs = {
-    my-nixvim.url = "/home/jtraue/conf/nixvim";
-    # my-nixvim.url = "github:jtraue/nixvim/main";
+    #my-nixvim.url = "/home/jtraue/conf/nixvim";
+    my-nixvim.url = "github:jtraue/nixvim/main";
     # my-nixvim.url = "git+ssh://gitea@git.vpn.disturbed.systems/jana/nixvim?ref=modular";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";

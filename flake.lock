@@ -123,14 +123,18 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1769438506,
-        "narHash": "sha256-au2RmPSK+nqqYfhoQmhx6hiH/NMqUZxXeeVM+Fwwjvg=",
-        "path": "/home/jtraue/conf/nixvim",
-        "type": "path"
+        "lastModified": 1769438404,
+        "narHash": "sha256-2jkWh33n2A3Bd5lQ0ou/R58FEA3d6S6Agl0aAKuuTrI=",
+        "owner": "jtraue",
+        "repo": "nixvim",
+        "rev": "baf56a16482904e05f5308190bb7a05e2df88718",
+        "type": "github"
       },
       "original": {
-        "path": "/home/jtraue/conf/nixvim",
-        "type": "path"
+        "owner": "jtraue",
+        "ref": "main",
+        "repo": "nixvim",
+        "type": "github"
       }
     },
     "nixos-hardware": {
