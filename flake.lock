@@ -139,14 +139,18 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1769417305,
-        "narHash": "sha256-ZRrRfdg9D5z8J7zA6SUsW39k7YGRGtsc+OC1AHIPh9A=",
-        "path": "/home/jtraue/conf/nixvim",
-        "type": "path"
+        "lastModified": 1769418129,
+        "narHash": "sha256-Q9mgc4B22c71UXGvpig7voJrrGe4ImdfoYmI+sIIXFE=",
+        "ref": "modular",
+        "rev": "e6ef617fcd2863058c24ca255017499aa634b56d",
+        "revCount": 19,
+        "type": "git",
+        "url": "ssh://gitea@git.vpn.disturbed.systems/jana/nixvim"
       },
       "original": {
-        "path": "/home/jtraue/conf/nixvim",
-        "type": "path"
+        "ref": "modular",
+        "type": "git",
+        "url": "ssh://gitea@git.vpn.disturbed.systems/jana/nixvim"
       }
     },
     "nix-colors": {
