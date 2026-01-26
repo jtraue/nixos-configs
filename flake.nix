@@ -76,6 +76,18 @@
                 ./hosts/x13/home-configuration.nix
               ];
             };
+
+            "jtraue@igor2" = home-manager.lib.homeManagerConfiguration {
+              pkgs = import nixpkgs {
+                system = "x86_64-linux";
+              };
+              extraSpecialArgs = {
+                inherit homeManagerModules inputs;
+              };
+              modules = [
+                ./hosts/igor2/home-configuration.nix
+              ];
+            };
           };
         };
         systems = [ "x86_64-linux" ];
