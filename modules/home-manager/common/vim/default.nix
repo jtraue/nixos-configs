@@ -16,7 +16,7 @@ in
     home.packages = [
       (inputs.my-nixvim.lib.nixvimConfiguration {
         userConfig = {
-          myNixvim.enableSpellcheck = true;
+          myNixvim.features.writing.enable = true;
         };
       })
     ];
@@ -25,28 +25,5 @@ in
       vim = "nvim";
     };
 
-    home.file.".mdlrc".text = ''
-      style "${config.home.homeDirectory}/.mdl_style.rb"
-    '';
-    home.file.".mdl_style.rb".source = ./mdl_style.rb;
-
-    # TODO: needs `vale sync` for styles to become available
-    # let's include an activation script 
-    home.file.".vale.ini".text = ''
-      StylesPath = .config/vale/styles
-
-      MinAlertLevel = suggestion
-      Vocab = Base
-
-      Packages = proselint, write-good, alex, Google
-
-      [*]
-      BasedOnStyles = Vale, proselint, write-good, Google
-
-      write-good.E-Prime = NO
-      write-good.Weasel = NO
-      Vale.Spelling = NO
-      Google.Acronyms = NO
-    '';
   };
 }
