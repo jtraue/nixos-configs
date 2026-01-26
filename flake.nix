@@ -2,7 +2,9 @@
   description = "My NixOS configurations";
 
   inputs = {
-    nixvim.url = "github:jtraue/nixvim/main";
+    my-nixvim.url = "/home/jtraue/conf/nixvim";
+    # my-nixvim.url = "github:jtraue/nixvim/main";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -82,10 +84,16 @@
           inputs.pre-commit-hooks.flakeModule
         ];
         perSystem = { pkgs, config, system, ... }: {
-          # Custom packages that are not yet packaged elsewhere.
-          packages =
-            import ./pkgs { inherit pkgs; } //
-            { };
+
+
+          # Shortcut while making my nixvim modular.
+          # Will be removed once the home configuration is final.
+          packages.nvim = inputs.my-nixvim.lib.nixvimConfiguration {
+            userConfig = {
+              myNixvim.enableSpellcheck = false; # Disable spellchecking
+            };
+          };
+
 
           devShells.default = pkgs.mkShellNoCC {
 

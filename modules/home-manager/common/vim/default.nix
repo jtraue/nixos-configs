@@ -14,7 +14,11 @@ in
   config = lib.mkIf cfg.enable {
 
     home.packages = [
-      inputs.nixvim.packages."x86_64-linux".default
+      (inputs.my-nixvim.lib.nixvimConfiguration {
+        userConfig = {
+          myNixvim.enableSpellcheck = true;
+        };
+      })
     ];
 
     home.shellAliases = {
