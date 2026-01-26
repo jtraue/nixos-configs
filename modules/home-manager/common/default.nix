@@ -1,12 +1,10 @@
-{ config, lib, pkgs, nix-colors, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.home-modules.common;
 in
 {
   imports = [
-
-    nix-colors.homeManagerModule
     ./ack.nix
     ./git.nix
     ./gpg.nix
@@ -24,9 +22,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
-    colorScheme = nix-colors.colorSchemes.gruvbox-dark-pale;
-
     home-modules.common.ack.enable = lib.mkDefault true;
     home-modules.common.git.enable = lib.mkDefault true;
     home-modules.common.gpg.enable = lib.mkDefault true;

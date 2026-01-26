@@ -2,10 +2,9 @@
   description = "My NixOS configurations";
 
   inputs = {
-    # my-nixvim.url = "/home/jtraue/conf/nixvim";
+    my-nixvim.url = "/home/jtraue/conf/nixvim";
     # my-nixvim.url = "github:jtraue/nixvim/main";
-
-    my-nixvim.url = "git+ssh://gitea@git.vpn.disturbed.systems/jana/nixvim?ref=modular";
+    # my-nixvim.url = "git+ssh://gitea@git.vpn.disturbed.systems/jana/nixvim?ref=modular";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,7 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-colors.url = "github:misterio77/nix-colors";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -26,7 +24,6 @@
     inputs@{ self
     , nixpkgs
     , home-manager
-    , nix-colors
     , pre-commit-hooks
     , flake-parts
     , nixpkgs-unstable
@@ -68,7 +65,7 @@
                 config.allowUnfree = true;
               };
               extraSpecialArgs = {
-                inherit homeManagerModules nix-colors inputs;
+                inherit homeManagerModules inputs;
                 pkgs-unstable = import nixpkgs-unstable {
                   system = "x86_64-linux";
                   config.allowUnfree = true;
@@ -87,12 +84,15 @@
         ];
         perSystem = { pkgs, config, system, ... }: {
 
+          checks = {
+            home-jtraue-x13 = self.homeConfigurations."jtraue@x13".activationPackage;
+          };
 
           # Shortcut while making my nixvim modular.
           # Will be removed once the home configuration is final.
           packages.nvim = inputs.my-nixvim.lib.nixvimConfiguration {
             userConfig = {
-              myNixvim.enableSpellcheck = false; # Disable spellchecking
+              myNixvim.features.writing.enable = true; # Disable spellchecking
             };
           };
 
@@ -100,7 +100,7 @@
           devShells.default = pkgs.mkShellNoCC {
 
             # For onboarding a system that doesn't use flakes yet.
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
             inputsFrom = [ config.pre-commit.settings.run ];
             buildInputs = with pkgs; [
