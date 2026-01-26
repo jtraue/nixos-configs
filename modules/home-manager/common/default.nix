@@ -10,7 +10,7 @@ in
     ./gpg.nix
     ./mc.nix
     ./tmux
-    ./vim
+    ./vim.nix
   ];
 
   options.home-modules.common = {
