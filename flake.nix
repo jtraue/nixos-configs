@@ -100,15 +100,6 @@
             home-jtraue-x13 = self.homeConfigurations."jtraue@x13".activationPackage;
           };
 
-          # Shortcut while making my nixvim modular.
-          # Will be removed once the home configuration is final.
-          packages.nvim = inputs.my-nixvim.lib.nixvimConfiguration {
-            userConfig = {
-              myNixvim.features.writing.enable = true; # Disable spellchecking
-            };
-          };
-
-
           devShells.default = pkgs.mkShellNoCC {
 
             # For onboarding a system that doesn't use flakes yet.
