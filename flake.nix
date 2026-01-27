@@ -44,44 +44,49 @@
           inherit (hosts) nixosConfigurations homeConfigurations;
         };
 
-      perSystem = { pkgs, config, system, ... }: {
+      perSystem = { pkgs, config, system, ... }:
+        let
+          checkNixosConfigs = builtins.mapAttrs (_: cfg: cfg.config.system.build.toplevel);
+          checkHomeConfigs = builtins.mapAttrs (_: cfg: cfg.activationPackage);
+        in
+        {
 
-        checks = {
-          home-jtraue-x13 = self.homeConfigurations."jtraue@x13".activationPackage;
-        };
+          checks =
+            (checkNixosConfigs self.nixosConfigurations)
+            // (checkHomeConfigs self.homeConfigurations);
 
-        devShells.default = pkgs.mkShellNoCC {
+          devShells.default = pkgs.mkShellNoCC {
 
-          # For onboarding a system that doesn't use flakes yet.
-          NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+            # For onboarding a system that doesn't use flakes yet.
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
-          inputsFrom = [ config.pre-commit.settings.run ];
-          buildInputs = with pkgs; [
-            nix
-            home-manager.packages."${system}".default
-            git
-            cachix
-          ];
-          shellHook = config.pre-commit.installationScript;
-        };
+            inputsFrom = [ config.pre-commit.settings.run ];
+            buildInputs = with pkgs; [
+              nix
+              home-manager.packages."${system}".default
+              git
+              cachix
+            ];
+            shellHook = config.pre-commit.installationScript;
+          };
 
-        pre-commit = {
-          check.enable = true;
-          settings = {
-            hooks = {
-              nixpkgs-fmt.enable = true;
-              deadnix = {
-                enable = true;
-                settings = {
-                  noLambdaPatternNames = true;
-                  noLambdaArg = true;
+          pre-commit = {
+            check.enable = true;
+            settings = {
+              hooks = {
+                nixpkgs-fmt.enable = true;
+                deadnix = {
+                  enable = true;
+                  settings = {
+                    noLambdaPatternNames = true;
+                    noLambdaArg = true;
+                  };
                 };
+                statix.enable = true;
+                shellcheck.enable = false;
               };
-              statix.enable = true;
-              shellcheck.enable = false;
             };
           };
         };
-      };
     };
 }
