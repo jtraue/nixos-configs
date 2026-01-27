@@ -24,7 +24,6 @@
     inputs@{ self
     , nixpkgs
     , home-manager
-    , pre-commit-hooks
     , flake-parts
     , nixpkgs-unstable
     , ...
@@ -32,64 +31,69 @@
     flake-parts.lib.mkFlake { inherit inputs; }
       {
 
-        flake = rec {
-          nixosModules = import ./modules/nixos;
-          homeManagerModules = import ./modules/home-manager;
+        flake =
+          let
+            nixosModules = import ./modules/nixos;
+            homeManagerModules = import ./modules/home-manager;
+          in
+          {
+            inherit nixosModules homeManagerModules;
 
-          # NixOS configurations
-          # Some of them already ship with home-manager configuration.
-          nixosConfigurations = {
+            # NixOS configurations
+            # Some of them already ship with home-manager configuration.
+            nixosConfigurations = {
 
-            x13 = nixpkgs.lib.nixosSystem
-              {
-                system = "x86_64-linux";
-                specialArgs = {
-                  inherit inputs nixosModules;
+              x13 = nixpkgs.lib.nixosSystem
+                {
+                  system = "x86_64-linux";
+                  specialArgs = {
+                    inherit inputs nixosModules;
+                  };
+                  modules = [
+                    ./hosts/x13/configuration.nix
+                    ./hosts/x13/hardware-configuration.nix
+                  ];
                 };
-                modules = [
-                  ./hosts/x13/configuration.nix
-                  ./hosts/x13/hardware-configuration.nix
-                ];
-              };
 
+            };
 
-          };
-
-          homeConfigurations = {
-            # home-manager configurations - intended for non NixOS machines
-            "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
-              # Workaround for using unfree packages with home-manager
-              # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
-              pkgs = import nixpkgs {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-              extraSpecialArgs = {
-                inherit homeManagerModules inputs;
+            homeConfigurations =
+              let
+                # Workaround for using unfree packages with home-manager
+                # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
+                pkgs = import nixpkgs {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
                 pkgs-unstable = import nixpkgs-unstable {
                   system = "x86_64-linux";
                   config.allowUnfree = true;
                 };
+              in
+              {
+                # home-manager configurations - intended for non NixOS machines
+                "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
+                  inherit pkgs;
+                  extraSpecialArgs = {
+                    inherit homeManagerModules inputs pkgs-unstable;
+                  };
+                  modules = [
+                    ./hosts/x13/home-configuration.nix
+                  ];
+                };
 
+                "jtraue@igor2" = home-manager.lib.homeManagerConfiguration {
+                  inherit pkgs;
+                  extraSpecialArgs = {
+                    inherit homeManagerModules inputs;
+                  };
+                  modules = [
+                    ./hosts/igor2/home-configuration.nix
+                  ];
+                };
               };
-              modules = [
-                ./hosts/x13/home-configuration.nix
-              ];
-            };
-
-            "jtraue@igor2" = home-manager.lib.homeManagerConfiguration {
-              pkgs = import nixpkgs {
-                system = "x86_64-linux";
-              };
-              extraSpecialArgs = {
-                inherit homeManagerModules inputs;
-              };
-              modules = [
-                ./hosts/igor2/home-configuration.nix
-              ];
-            };
           };
-        };
+
         systems = [ "x86_64-linux" ];
         imports = [
           inputs.pre-commit-hooks.flakeModule
