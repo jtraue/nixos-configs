@@ -9,16 +9,17 @@ in
 
   options.home-modules.common.vim = {
     enable = lib.mkEnableOption "Enables vim.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      inherit (inputs.my-nixvim.packages.${pkgs.stdenv.hostPlatform.system}) default;
+      description = "Vim package to use";
+    };
   };
 
   config = lib.mkIf cfg.enable {
 
     home.packages = [
-      (inputs.my-nixvim.lib.nixvimConfiguration {
-        userConfig = {
-          myNixvim.features.writing.enable = true;
-        };
-      })
+      cfg.package
     ];
 
     home.shellAliases = {
