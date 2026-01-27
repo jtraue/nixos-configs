@@ -71,7 +71,6 @@
           };
 
           pre-commit = {
-            check.enable = true;
             settings = {
               hooks = {
                 nixpkgs-fmt.enable = true;
@@ -83,7 +82,7 @@
                   };
                 };
                 statix.enable = true;
-                shellcheck.enable = false;
+                shellcheck.enable = true;
               };
             };
           };
