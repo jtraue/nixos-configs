@@ -21,121 +21,64 @@
   };
 
   outputs =
-    inputs@{ self
-    , nixpkgs
-    , home-manager
-    , flake-parts
-    , nixpkgs-unstable
-    , ...
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; }
-      {
+    inputs@{ self, home-manager, flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
 
-        flake =
-          let
-            nixosModules = import ./modules/nixos;
-            homeManagerModules = import ./modules/home-manager;
-          in
-          {
-            inherit nixosModules homeManagerModules;
+      systems = [ "x86_64-linux" ];
 
-            # NixOS configurations
-            # Some of them already ship with home-manager configuration.
-            nixosConfigurations = {
+      imports = [
+        inputs.pre-commit-hooks.flakeModule
+      ];
 
-              x13 = nixpkgs.lib.nixosSystem
-                {
-                  system = "x86_64-linux";
-                  specialArgs = {
-                    inherit inputs nixosModules;
-                  };
-                  modules = [
-                    ./hosts/x13/configuration.nix
-                    ./hosts/x13/hardware-configuration.nix
-                  ];
-                };
+      flake =
+        let
+          nixosModules = import ./modules/nixos;
+          homeManagerModules = import ./modules/home-manager;
+          hosts = import ./hosts { inherit inputs nixosModules homeManagerModules; };
+        in
+        {
+          inherit nixosModules homeManagerModules;
+          inherit (hosts) nixosConfigurations homeConfigurations;
+        };
 
-            };
+      perSystem = { pkgs, config, system, ... }: {
 
-            homeConfigurations =
-              let
-                # Workaround for using unfree packages with home-manager
-                # (see https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909)
-                pkgs = import nixpkgs {
-                  system = "x86_64-linux";
-                  config.allowUnfree = true;
-                };
-                pkgs-unstable = import nixpkgs-unstable {
-                  system = "x86_64-linux";
-                  config.allowUnfree = true;
-                };
-              in
-              {
-                # home-manager configurations - intended for non NixOS machines
-                "jtraue@x13" = home-manager.lib.homeManagerConfiguration {
-                  inherit pkgs;
-                  extraSpecialArgs = {
-                    inherit homeManagerModules inputs pkgs-unstable;
-                  };
-                  modules = [
-                    ./hosts/x13/home-configuration.nix
-                  ];
-                };
+        checks = {
+          home-jtraue-x13 = self.homeConfigurations."jtraue@x13".activationPackage;
+        };
 
-                "jtraue@igor2" = home-manager.lib.homeManagerConfiguration {
-                  inherit pkgs;
-                  extraSpecialArgs = {
-                    inherit homeManagerModules inputs;
-                  };
-                  modules = [
-                    ./hosts/igor2/home-configuration.nix
-                  ];
+        devShells.default = pkgs.mkShellNoCC {
+
+          # For onboarding a system that doesn't use flakes yet.
+          NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+
+          inputsFrom = [ config.pre-commit.settings.run ];
+          buildInputs = with pkgs; [
+            nix
+            home-manager.packages."${system}".default
+            git
+            cachix
+          ];
+          shellHook = config.pre-commit.installationScript;
+        };
+
+        pre-commit = {
+          check.enable = true;
+          settings = {
+            hooks = {
+              nixpkgs-fmt.enable = true;
+              deadnix = {
+                enable = true;
+                settings = {
+                  noLambdaPatternNames = true;
+                  noLambdaArg = true;
                 };
               };
-          };
-
-        systems = [ "x86_64-linux" ];
-        imports = [
-          inputs.pre-commit-hooks.flakeModule
-        ];
-        perSystem = { pkgs, config, system, ... }: {
-
-          checks = {
-            home-jtraue-x13 = self.homeConfigurations."jtraue@x13".activationPackage;
-          };
-
-          devShells.default = pkgs.mkShellNoCC {
-
-            # For onboarding a system that doesn't use flakes yet.
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-
-            inputsFrom = [ config.pre-commit.settings.run ];
-            buildInputs = with pkgs; [
-              nix
-              home-manager.packages."${system}".default
-              git
-              cachix
-            ];
-            shellHook = config.pre-commit.installationScript;
-          };
-
-          pre-commit = {
-            check.enable = true;
-            settings = {
-              hooks = {
-                nixpkgs-fmt.enable = true;
-                deadnix = {
-                  enable = true;
-                  settings = {
-                    noLambdaPatternNames = true;
-                    noLambdaArg = true;
-                  };
-                };
-                statix.enable = true;
-                shellcheck.enable = false;
-              };
+              statix.enable = true;
+              shellcheck.enable = false;
             };
           };
         };
       };
+    };
 }
