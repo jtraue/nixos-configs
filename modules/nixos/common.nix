@@ -70,6 +70,14 @@ in
       ];
     };
 
+    nix.gc = {
+      automatic = true;
+      dates = "monthly";
+      options = "--delete-older-than 90d";
+    };
+
+    nix.optimise.automatic = true;
+
     nixpkgs = {
       config = {
         allowUnfree = true;
