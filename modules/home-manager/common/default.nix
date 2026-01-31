@@ -7,7 +7,6 @@ in
   imports = [
     ./ack.nix
     ./git.nix
-    ./gpg.nix
     ./mc.nix
     ./tmux
     ./vim.nix
@@ -24,7 +23,6 @@ in
   config = lib.mkIf cfg.enable {
     home-modules.common.ack.enable = lib.mkDefault true;
     home-modules.common.git.enable = lib.mkDefault true;
-    home-modules.common.gpg.enable = lib.mkDefault true;
     home-modules.common.mc.enable = lib.mkDefault true;
     home-modules.common.tmux.enable = lib.mkDefault true;
     home-modules.common.vim.enable = lib.mkDefault true;
