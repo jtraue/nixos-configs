@@ -24,10 +24,6 @@
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-
-  # Let's see whether this fixes random audio outages
-  # as suggested in https://discourse.nixos.org/t/weird-audio-behavior-pipewire-pulseaudio-not-working-sometimes/24124/2
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services.libinput.mouse.accelSpeed = "0.0";
