@@ -92,8 +92,7 @@ in
       enable = true;
       defaultApplications = associations;
     };
-    # Home-manager activation fails because mimeapps.list already exists.
-    # Trying a workarund.
+    # Force override - home-manager activation fails if mimeapps.list exists
     # https://github.com/nix-community/home-manager/issues/1213
     xdg.configFile."mimeapps.list".force = true;
 
