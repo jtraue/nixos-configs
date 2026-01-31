@@ -16,6 +16,7 @@ in
     boot = {
       tmp.cleanOnBoot = true;
       loader.systemd-boot.enable = lib.mkDefault true;
+      loader.systemd-boot.configurationLimit = 10;
       loader.efi.canTouchEfiVariables = true;
     };
 
