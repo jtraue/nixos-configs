@@ -115,7 +115,6 @@ in
             "wheel"
           ];
         shell = "${pkgs.zsh}/bin/zsh";
-        initialPassword = "1234";
       };
     };
 
