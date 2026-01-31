@@ -7,7 +7,7 @@ in
     ./gnome.nix
   ];
 
-  options.nixos-modules.desktop.enable = lib.mkEnableOption "Enable desktop environment.";
+  options.nixos-modules.desktop.enable = lib.mkEnableOption "desktop environment (graphics, audio, printing, bluetooth)";
 
   config = lib.mkIf cfg.enable {
 

@@ -13,7 +13,7 @@ in
   ];
 
   options.home-modules.common = {
-    enable = lib.mkEnableOption "Enables common options.";
+    enable = lib.mkEnableOption "common user settings (shell, git, vim, tmux)";
     user = lib.mkOption {
       type = lib.types.str;
       default = "jtraue";

@@ -4,7 +4,7 @@ let
 in
 {
   options.nixos-modules.common = {
-    enable = lib.mkEnableOption "Enable common options.";
+    enable = lib.mkEnableOption "common NixOS settings (boot, networking, nix, users)";
     user = lib.mkOption {
       type = lib.types.str;
       default = "jtraue";

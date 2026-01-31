@@ -29,7 +29,7 @@ in
     ./gnome.nix
   ];
 
-  options.home-modules.desktop.enable = lib.mkEnableOption "Enables desktop environment.";
+  options.home-modules.desktop.enable = lib.mkEnableOption "desktop apps and settings (chromium, mime types, redshift)";
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config.input-fonts.acceptLicense = true;
