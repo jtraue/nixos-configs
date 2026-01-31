@@ -1,17 +1,17 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.nixos-modules.desktop;
+  cfg = config.my.desktop;
 in
 {
   imports = [
     ./gnome.nix
   ];
 
-  options.nixos-modules.desktop.enable = lib.mkEnableOption "desktop environment (graphics, audio, printing, bluetooth)";
+  options.my.desktop.enable = lib.mkEnableOption "desktop environment (graphics, audio, printing, bluetooth)";
 
   config = lib.mkIf cfg.enable {
 
-    nixos-modules.desktop.gnome.enable = lib.mkDefault true;
+    my.desktop.gnome.enable = lib.mkDefault true;
 
     hardware = {
       graphics = {

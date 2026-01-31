@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.nixos-modules.common;
+  cfg = config.my.common;
 in
 {
-  options.nixos-modules.common = {
+  options.my.common = {
     enable = lib.mkEnableOption "common NixOS settings (boot, networking, nix, users)";
     user = lib.mkOption {
       type = lib.types.str;

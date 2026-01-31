@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.common.tmux;
+  cfg = config.my.common.tmux;
 in
 {
 
-  options.home-modules.common.tmux.enable = lib.mkEnableOption "Enables tmux.";
+  options.my.common.tmux.enable = lib.mkEnableOption "Enables tmux.";
 
   config = lib.mkIf cfg.enable {
 

@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.common.git;
+  cfg = config.my.common.git;
 in
 {
 
-  options.home-modules.common.git.enable = lib.mkEnableOption "Enables git.";
+  options.my.common.git.enable = lib.mkEnableOption "Enables git.";
 
   config = lib.mkIf cfg.enable {
 

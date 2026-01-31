@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.desktop;
+  cfg = config.my.desktop;
 
   browser = [ "chromium.desktop.desktop" ];
 
@@ -29,7 +29,7 @@ in
     ./gnome.nix
   ];
 
-  options.home-modules.desktop.enable = lib.mkEnableOption "desktop apps and settings (chromium, mime types, redshift)";
+  options.my.desktop.enable = lib.mkEnableOption "desktop apps and settings (chromium, mime types, redshift)";
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config.input-fonts.acceptLicense = true;

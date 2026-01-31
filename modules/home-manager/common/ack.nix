@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.common.ack;
+  cfg = config.my.common.ack;
 in
 {
 
-  options.home-modules.common.ack.enable = lib.mkEnableOption "Enables ack.";
+  options.my.common.ack.enable = lib.mkEnableOption "Enables ack.";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

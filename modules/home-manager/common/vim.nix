@@ -2,12 +2,12 @@
 
 let
 
-  cfg = config.home-modules.common.vim;
+  cfg = config.my.common.vim;
 
 in
 {
 
-  options.home-modules.common.vim = {
+  options.my.common.vim = {
     enable = lib.mkEnableOption "Enables vim.";
     package = lib.mkOption {
       type = lib.types.package;

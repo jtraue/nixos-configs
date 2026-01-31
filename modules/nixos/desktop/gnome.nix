@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.nixos-modules.desktop.gnome;
+  cfg = config.my.desktop.gnome;
 in
 {
-  options.nixos-modules.desktop.gnome.enable = lib.mkEnableOption "Enable gnome";
+  options.my.desktop.gnome.enable = lib.mkEnableOption "Enable gnome";
 
   config = lib.mkIf cfg.enable {
     # Certain features, including CLI integration and system authentication support,
@@ -24,7 +24,7 @@ in
         autoLogin =
           {
             enable = true;
-            user = "${config.nixos-modules.common.user}";
+            user = "${config.my.common.user}";
           };
       };
       desktopManager.gnome.enable = true;

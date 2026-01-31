@@ -2,8 +2,8 @@
 {
   imports = builtins.attrValues homeManagerModules;
 
-  home-modules.common.enable = true;
-  home-modules.desktop.enable = true;
+  my.common.enable = true;
+  my.desktop.enable = true;
 
   # x13-specific: convertible laptop rotation lock
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys" = {

@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.desktop.gnome;
+  cfg = config.my.desktop.gnome;
 in
 {
 
-  options.home-modules.desktop.gnome.enable = lib.mkEnableOption "Enables gnome.";
+  options.my.desktop.gnome.enable = lib.mkEnableOption "Enables gnome.";
 
   config = lib.mkIf cfg.enable {
     dconf = {

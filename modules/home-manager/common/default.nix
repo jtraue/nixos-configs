@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.common;
+  cfg = config.my.common;
 in
 {
   imports = [
@@ -12,7 +12,7 @@ in
     ./vim.nix
   ];
 
-  options.home-modules.common = {
+  options.my.common = {
     enable = lib.mkEnableOption "common user settings (shell, git, vim, tmux)";
     user = lib.mkOption {
       type = lib.types.str;
@@ -21,11 +21,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home-modules.common.ack.enable = lib.mkDefault true;
-    home-modules.common.git.enable = lib.mkDefault true;
-    home-modules.common.mc.enable = lib.mkDefault true;
-    home-modules.common.tmux.enable = lib.mkDefault true;
-    home-modules.common.vim.enable = lib.mkDefault true;
+    my.common.ack.enable = lib.mkDefault true;
+    my.common.git.enable = lib.mkDefault true;
+    my.common.mc.enable = lib.mkDefault true;
+    my.common.tmux.enable = lib.mkDefault true;
+    my.common.vim.enable = lib.mkDefault true;
 
     fonts.fontconfig.enable = true;
 

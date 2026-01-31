@@ -6,8 +6,8 @@
     nixosModules.desktop
   ];
 
-  nixos-modules.common.enable = true;
-  nixos-modules.desktop.enable = true;
+  my.common.enable = true;
+  my.desktop.enable = true;
 
   services.fprintd.enable = true;
 

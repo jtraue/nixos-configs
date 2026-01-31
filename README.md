@@ -12,8 +12,8 @@ Manages system configurations for multiple hosts with home-manager for dotfiles.
 │   ├── igor2/             # Home-manager only
 │   └── x13/               # ThinkPad X13 Yoga (GNOME)
 └── modules/
-    ├── nixos/             # NixOS modules (common, desktop, yubikey)
-    └── home-manager/      # Home-manager modules (common, desktop)
+    ├── nixos/             # NixOS modules (my.common, my.desktop)
+    └── home-manager/      # Home-manager modules (my.common, my.desktop)
 ```
 
 ## Usage

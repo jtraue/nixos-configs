@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.home-modules.common.mc;
+  cfg = config.my.common.mc;
   solarized = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/denius/mc-solarized-skin/master/solarized.ini";
     sha256 = "1gyxpmigdj6s0mvgslwxfpsjywpksmww2n0p196p1k31can8ymjx";
@@ -9,7 +9,7 @@ let
 in
 {
 
-  options.home-modules.common.mc.enable = lib.mkEnableOption "Enables mc.";
+  options.my.common.mc.enable = lib.mkEnableOption "Enables mc.";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

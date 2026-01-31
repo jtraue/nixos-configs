@@ -2,9 +2,9 @@
 {
   imports = builtins.attrValues homeManagerModules;
 
-  home-modules.common.enable = true;
+  my.common.enable = true;
 
-  home-modules.common.vim.package = inputs.my-nixvim.lib.nixvimConfiguration {
+  my.common.vim.package = inputs.my-nixvim.lib.nixvimConfiguration {
     userConfig = {
       myNixvim.features.writing.enable = false;
     };
