@@ -62,22 +62,5 @@
     gnome-boxes
   ];
 
-  powerManagement = {
-    powertop.enable = true;
-  };
-  services.auto-cpufreq = {
-    enable = false;
-    settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-      };
-    };
-  };
-
   system.stateVersion = "21.05";
 }
