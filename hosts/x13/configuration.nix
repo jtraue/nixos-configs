@@ -6,6 +6,9 @@
     nixosModules.desktop
   ];
 
+  nixos-modules.common.enable = true;
+  nixos-modules.desktop.enable = true;
+
   services.fprintd.enable = true;
 
   # workaround for autologin (see https://nixos.wiki/wiki/GNOME)
@@ -24,17 +27,13 @@
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   services.libinput.mouse.accelSpeed = "0.0";
   services = {
     tailscale.enable = true;
+    tailscale.useRoutingFeatures = "client";
     printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin ];
   };
   networking.firewall.checkReversePath = "loose"; # for tailscale
-
-  nixos-modules.common.enable = true;
-  nixos-modules.desktop.enable = true;
 
   networking = {
     hostName = "x13";
