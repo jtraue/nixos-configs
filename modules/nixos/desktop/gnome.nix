@@ -33,7 +33,6 @@ in
         xkb = {
           layout = "us";
           variant = "intl";
-          options = "caps:escape";
         };
       };
     };
@@ -44,13 +43,14 @@ in
     (with
     pkgs.gnomeExtensions; [
       battery-time
-      tray-icons-reloaded
-      tailscale-status
       caffeine
-      user-themes
+      emoji-copy
       move-clock
-      vitals
+      tailscale-status
       top-bar-organizer
+      tray-icons-reloaded
+      user-themes
+      vitals
     ]);
 
     services.udev.packages = [ pkgs.gnome-settings-daemon ];

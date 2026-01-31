@@ -1,9 +1,14 @@
-{ pkgs, homeManagerModules, pkgs-unstable, ... }:
+{ pkgs, lib, homeManagerModules, pkgs-unstable, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
 
   home-modules.common.enable = true;
   home-modules.desktop.enable = true;
+
+  # x13-specific: convertible laptop rotation lock
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys" = {
+    rotate-video-lock-static = [ "<Super>o" "XF86RotationLockToggle" ];
+  };
 
   home.file.".abcde.conf".text = ''
     PADTRACKS=y
