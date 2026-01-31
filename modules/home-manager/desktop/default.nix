@@ -26,7 +26,6 @@ let
 in
 {
   imports = [
-    ./sway
     ./gnome.nix
   ];
 

@@ -6,8 +6,6 @@ in
   options.nixos-modules.desktop.gnome.enable = lib.mkEnableOption "Enable gnome";
 
   config = lib.mkIf cfg.enable {
-    programs.sway.enable = true;
-
     # Certain features, including CLI integration and system authentication support,
     # require enabling PolKit integration on some desktop environments (e.g. Plasma).
     security.polkit.enable = true;
