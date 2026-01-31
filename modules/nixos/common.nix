@@ -103,8 +103,6 @@ in
       cron.enable = true;
     };
 
-    system.autoUpgrade.enable = true;
-
     time.timeZone = "Europe/Berlin";
 
     users = {
