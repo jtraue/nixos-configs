@@ -96,6 +96,7 @@ in
     # https://github.com/nix-community/home-manager/issues/1213
     xdg.configFile."mimeapps.list".force = true;
 
+    # Color temperature adjustment (Dresden area)
     services.redshift = {
       enable = true;
       latitude = "51.18204";
