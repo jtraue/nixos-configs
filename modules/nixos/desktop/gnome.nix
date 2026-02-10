@@ -53,6 +53,21 @@ in
       vitals
     ]);
 
+    environment.gnome.excludePackages = with pkgs; [
+      baobab
+      epiphany
+      geary
+      gnome-calculator
+      gnome-characters
+      gnome-connections
+      gnome-console
+      gnome-contacts
+      gnome-software
+      orca
+      simple-scan
+      yelp
+    ];
+
     services.udev.packages = [ pkgs.gnome-settings-daemon ];
 
   };
