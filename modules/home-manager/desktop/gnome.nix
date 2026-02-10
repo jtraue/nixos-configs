@@ -32,7 +32,8 @@ in
 
         # --- Window Manager Preferences ---
         "org/gnome/desktop/wm/preferences" = {
-          focus-mode = "sloppy";
+          auto-raise = false;
+          focus-mode = "mouse";
         };
 
         # --- Window Manager Keybindings ---
