@@ -49,15 +49,13 @@ in
       file
       htop
       nmap
+      pass
+      powerline-fonts
       psmisc
       qrencode
       ranger
       tldr
-      pass
-    ]
-    ++ (with pkgs; [
-      powerline-fonts
-    ]);
+    ];
 
     programs.zsh = {
       enable = true;

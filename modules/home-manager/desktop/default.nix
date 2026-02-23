@@ -61,31 +61,30 @@ in
     home.packages = with pkgs; [
       arandr
       aspellDicts.de
+      corefonts
       ffmpeg
+      file-roller
       filezilla
       gimp
-      simple-scan
-      file-roller
-      nautilus
       hunspell
       hunspellDicts.en-us-large
       imagemagick
       inkscape
-      libreoffice
-      nextcloud-client
       kdePackages.okular
+      libreoffice
+      nautilus
+      nextcloud-client
       pavucontrol
       pulseaudio
+      roboto
       scrot # used for screenshot in xournalpp
       signal-desktop
+      simple-scan
       sxiv
       vlc
       wireshark
       xclip
       xournalpp
-    ] ++ [
-      pkgs.corefonts # microsoft free fonts
-      pkgs.roboto
     ];
 
     xdg.mimeApps = {
