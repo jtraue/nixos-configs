@@ -60,7 +60,6 @@ in
       gnome-calculator
       gnome-characters
       gnome-connections
-      gnome-console
       gnome-contacts
       gnome-software
       orca
