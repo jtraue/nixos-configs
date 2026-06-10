@@ -15,6 +15,8 @@ in
     systemd.services."getty@tty1".enable = false;
     systemd.services."autovt@tty1".enable = false;
 
+    programs.firefox.enable = true;
+
     services = {
       libinput = {
         enable = true;
@@ -35,6 +37,7 @@ in
           variant = "intl";
         };
       };
+      gnome.gnome-browser-connector.enable = true;
     };
     environment.systemPackages = [
       pkgs.gnome-tweaks
