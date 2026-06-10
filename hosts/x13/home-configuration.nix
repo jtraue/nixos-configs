@@ -43,6 +43,7 @@
     freecad
     krita
     drawio
+    wine
   ]) ++ (with pkgs-unstable; [
     claude-code
   ]);
