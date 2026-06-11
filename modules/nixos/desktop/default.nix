@@ -18,6 +18,7 @@ in
         enable = true;
         enable32Bit = true;
       };
+      acpilight.enable = true;
     };
 
     programs = {
@@ -25,7 +26,6 @@ in
         enable = true;
         plugins = [ pkgs.evolution-ews ];
       };
-      light.enable = true; # backlight
     };
 
     services = {

@@ -15,7 +15,6 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-  programs.adb.enable = true;
   users.users.jtraue.extraGroups = [
     "adbusers"
     "libvirtd"
@@ -55,6 +54,7 @@
     steam
     calibre
     gnome-boxes
+    android-tools
   ];
 
   system.stateVersion = "21.05";
