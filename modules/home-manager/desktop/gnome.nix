@@ -34,6 +34,8 @@ in
         "org/gnome/desktop/wm/preferences" = {
           auto-raise = false;
           focus-mode = "mouse";
+          num-workspaces = 5;
+          workspace-names = [ "" "" "mail" "org" "chat" ];
         };
 
         # --- Window Manager Keybindings ---
@@ -108,12 +110,14 @@ in
         # --- Shell ---
         "org/gnome/shell" = {
           disable-user-extensions = false;
+          disabled-extensions = [ "paperwm@paperwm.github.com" ];
           enabled-extensions = [
             "appindicatorsupport@rgcjonas.gmail.com"
             "batime@martin.zurowietz.de"
             "caffeine@patapon.info"
             "emoji-copy@felipeftn"
             "Move_Clock@rmy.pobox.com"
+            "space-bar@luchrioh"
             "tailscale-status@maxgallup.github.com"
             "top-bar-organizer@julian.gse.jsts.xyz"
             "trayIconsReloaded@selfmade.pl"
@@ -121,11 +125,9 @@ in
             "Vitals@CoreCoding.com"
           ];
           favorite-apps = [
-            "org.gnome.Nautilus.desktop"
+            "nemo.desktop"
             "org.gnome.Evolution.desktop"
             "chromium-browser.desktop"
-            "org.gnome.Console.desktop"
-            "signal-desktop.desktop"
           ];
         };
 
@@ -151,6 +153,58 @@ in
         "org/gnome/shell/extensions/trayIconsReloaded" = {
           icon-size = 16;
           icons-limit = 10;
+        };
+
+        # --- Extension: Space Bar ---
+        "org/gnome/shell/extensions/space-bar/behavior" = {
+          always-show-numbers = true;
+          enable-custom-label = false;
+        };
+
+        "org/gnome/shell/extensions/space-bar/appearance" = {
+          application-styles = ''
+            .space-bar {
+              -natural-hpadding: 12px;
+            }
+
+            .space-bar-workspace-label.active {
+              margin: 0 4px;
+              background-color: rgba(255,255,255,0.3);
+              color: rgba(255,255,255,1);
+              border-color: rgba(0,0,0,0);
+              font-weight: 700;
+              border-radius: 4px;
+              border-width: 0px;
+              padding: 3px 8px;
+            }
+
+            .space-bar-workspace-label.inactive {
+              margin: 0 4px;
+              background-color: rgba(0,0,0,0);
+              color: rgba(255,255,255,1);
+              border-color: rgba(0,0,0,0);
+              font-weight: 700;
+              border-radius: 4px;
+              border-width: 0px;
+              padding: 3px 8px;
+            }
+
+            .space-bar-workspace-label.inactive.empty {
+              margin: 0 4px;
+              background-color: rgba(0,0,0,0);
+              color: rgba(255,255,255,0.5);
+              border-color: rgba(0,0,0,0);
+              font-weight: 700;
+              border-radius: 4px;
+              border-width: 0px;
+              padding: 3px 8px;
+            }
+          '';
+        };
+
+        # --- Extension: Top Bar Organizer ---
+        "org/gnome/shell/extensions/top-bar-organizer" = {
+          left-box-order = [ "activities" "WorkspaceMenu" "FocusButton" "OpenPositionButton" "Space Bar" ];
         };
 
         # --- Nautilus ---
