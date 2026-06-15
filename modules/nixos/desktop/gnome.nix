@@ -49,6 +49,7 @@ in
       caffeine
       emoji-copy
       move-clock
+      space-bar
       tailscale-status
       top-bar-organizer
       tray-icons-reloaded
@@ -60,7 +61,6 @@ in
       baobab
       epiphany
       geary
-      gnome-calculator
       gnome-characters
       gnome-connections
       gnome-contacts
