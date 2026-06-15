@@ -47,7 +47,7 @@ in
       dos2unix
       dosfstools
       file
-      htop
+      btop
       nmap
       pass
       powerline-fonts
