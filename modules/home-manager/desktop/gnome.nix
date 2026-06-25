@@ -45,6 +45,7 @@ in
           switch-to-workspace-2 = [ "<Super>2" ];
           switch-to-workspace-3 = [ "<Super>3" ];
           switch-to-workspace-4 = [ "<Super>4" ];
+          switch-to-workspace-5 = [ "<Super>5" ];
           switch-to-workspace-left = [ "<Super>Page_Up" "<Super><Alt>Left" "<Control><Alt>Left" ];
           switch-to-workspace-right = [ "<Super>Page_Down" "<Super><Alt>Right" "<Control><Alt>Right" ];
           switch-to-workspace-last = [ "<Super>End" ];
@@ -54,6 +55,7 @@ in
           move-to-workspace-2 = [ "<Shift><Super>2" ];
           move-to-workspace-3 = [ "<Shift><Super>3" ];
           move-to-workspace-4 = [ "<Shift><Super>4" ];
+          move-to-workspace-5 = [ "<Shift><Super>5" ];
           move-to-workspace-left = [ "<Super><Shift>Page_Up" "<Super><Shift><Alt>Left" "<Control><Shift><Alt>Left" ];
           move-to-workspace-right = [ "<Super><Shift>Page_Down" "<Super><Shift><Alt>Right" "<Control><Shift><Alt>Right" ];
 
