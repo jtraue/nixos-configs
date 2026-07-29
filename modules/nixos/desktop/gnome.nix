@@ -42,6 +42,7 @@ in
     environment.systemPackages = [
       pkgs.gnome-tweaks
       pkgs.gnomeExtensions.appindicator
+      pkgs.nemo
     ] ++
     (with
     pkgs.gnomeExtensions; [
