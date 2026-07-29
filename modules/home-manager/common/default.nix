@@ -35,6 +35,9 @@ in
       };
     };
 
+    # application icons are missing in gnome for apps installed by home-manager otherwise
+    targets.genericLinux.enable = true;
+
     programs.command-not-found.enable = true;
 
     programs.direnv = {
