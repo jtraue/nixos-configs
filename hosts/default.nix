@@ -22,6 +22,13 @@ let
       extraSpecialArgs = { inherit homeManagerModules inputs; } // extraArgs;
       inherit modules;
     };
+
+  # claude-code moves fast; pull it from nixpkgs-unstable instead of the pinned stable channel
+  claudeCodeOverlay = {
+    nixpkgs.overlays = [
+      (_final: _prev: { inherit (pkgs-unstable) claude-code; })
+    ];
+  };
 in
 {
   nixosConfigurations = {
@@ -35,12 +42,11 @@ in
 
   homeConfigurations = {
     "jtraue@x13" = mkHomeConfig {
-      modules = [ ./x13/home-configuration.nix ];
-      extraArgs = { inherit pkgs-unstable; };
+      modules = [ ./x13/home-configuration.nix claudeCodeOverlay ];
     };
 
     "jtraue@igor2" = mkHomeConfig {
-      modules = [ ./igor2/home-configuration.nix ];
+      modules = [ ./igor2/home-configuration.nix claudeCodeOverlay ];
     };
   };
 }

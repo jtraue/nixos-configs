@@ -1,4 +1,4 @@
-{ pkgs, lib, homeManagerModules, pkgs-unstable, ... }:
+{ pkgs, lib, homeManagerModules, ... }:
 {
   imports = builtins.attrValues homeManagerModules;
 
@@ -35,18 +35,15 @@
   };
 
 
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     abcde
     digikam
     sweethome3d.application
     snapmaker-luban
     freecad
     krita
-    drawio
     wine
-  ]) ++ (with pkgs-unstable; [
-    claude-code
-  ]);
+  ];
 
   programs.ssh = {
     enable = true;

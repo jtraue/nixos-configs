@@ -44,6 +44,7 @@ in
 
     home.packages = with pkgs; [
       cht-sh
+      claude-code
       dos2unix
       dosfstools
       file
