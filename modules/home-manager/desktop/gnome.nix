@@ -23,11 +23,19 @@ in
           color-scheme = "default";
           gtk-theme = "gruvbox-light-soft";
           show-battery-percentage = true;
+          gtk-enable-primary-paste = true;
+          toolkit-accessibility = false;
         };
 
         # --- Input ---
         "org/gnome/desktop/input-sources" = {
           sources = [ (mkTuple [ "xkb" "us+intl" ]) ];
+        };
+
+        # --- Peripherals: touchpad disabled, using trackpoint instead ---
+        "org/gnome/desktop/peripherals/touchpad" = {
+          send-events = "disabled";
+          two-finger-scrolling-enabled = true;
         };
 
         # --- Window Manager Preferences ---
@@ -146,6 +154,16 @@ in
           switch-to-application-4 = [ ];
         };
 
+        # --- Extension: Auto Move Windows ---
+        "org/gnome/shell/extensions/auto-move-windows" = {
+          application-list = [
+            "element-desktop.desktop:5"
+            "1password.desktop:5"
+            "org.gnome.Evolution.desktop:3"
+            "super-productivity.desktop:4"
+          ];
+        };
+
         # --- Extension: Caffeine ---
         "org/gnome/shell/extensions/caffeine" = {
           show-indicator = "always";
@@ -161,6 +179,10 @@ in
         "org/gnome/shell/extensions/space-bar/behavior" = {
           always-show-numbers = true;
           enable-custom-label = false;
+        };
+
+        "org/gnome/shell/extensions/space-bar/shortcuts" = {
+          enable-move-to-workspace-shortcuts = true;
         };
 
         "org/gnome/shell/extensions/space-bar/appearance" = {
@@ -207,6 +229,27 @@ in
         # --- Extension: Top Bar Organizer ---
         "org/gnome/shell/extensions/top-bar-organizer" = {
           left-box-order = [ "activities" "WorkspaceMenu" "FocusButton" "OpenPositionButton" "Space Bar" ];
+          right-box-order = [
+            "appindicator-kstatusnotifieritem-superProductivity_status_icon_1"
+            "appindicator-kstatusnotifieritem-Element_status_icon_1"
+            "appindicator-kstatusnotifieritem-Vorta"
+            "appindicator-kstatusnotifieritem-chrome_status_icon_1"
+            "TrayIconsReloaded"
+            "vitalsMenu"
+            "emoji-copy@felipeftn"
+            "tailscale"
+            "appindicator-kstatusnotifieritem-udiskie"
+            "appindicator-kstatusnotifieritem-blueman"
+            "appindicator-kstatusnotifieritem-Nextcloud"
+            "screenRecording"
+            "appindicator-kstatusnotifieritem-nm-applet"
+            "screenSharing"
+            "dwellClick"
+            "a11y"
+            "keyboard"
+            "dateMenu"
+            "quickSettings"
+          ];
         };
 
         # --- Nautilus ---
@@ -221,6 +264,17 @@ in
 
         "org/gnome/nautilus/compression" = {
           default-compression-format = "encrypted_zip";
+        };
+
+        # --- Nemo ---
+        "org/nemo/preferences" = {
+          default-folder-viewer = "list-view";
+          date-format = "iso";
+          date-font-choice = "no-mono";
+          show-open-in-terminal-toolbar = true;
+          show-home-icon-toolbar = false;
+          show-full-path-titles = false;
+          show-advanced-permissions = false;
         };
 
       };

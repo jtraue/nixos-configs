@@ -45,6 +45,7 @@ in
     ] ++
     (with
     pkgs.gnomeExtensions; [
+      auto-move-windows
       battery-time
       caffeine
       emoji-copy
