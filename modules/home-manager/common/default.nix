@@ -50,6 +50,7 @@ in
       claude-code
       dos2unix
       dosfstools
+      drawio
       file
       btop
       nmap
