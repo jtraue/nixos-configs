@@ -32,7 +32,6 @@ in
   options.my.desktop.enable = lib.mkEnableOption "desktop apps and settings (chromium, mime types, redshift)";
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.input-fonts.acceptLicense = true;
     services.network-manager-applet.enable = true;
 
     # Allow fonts installed via home.packages to be discovered by fontconfig

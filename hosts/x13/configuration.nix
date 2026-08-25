@@ -36,6 +36,12 @@
     hostName = "x13";
   };
 
+  # Moved here from home-configuration.nix: this nixpkgs.config option is a
+  # no-op inside home-manager's per-user module once useGlobalPkgs is enabled.
+  nixpkgs.config.permittedInsecurePackages = [
+    "snapmaker-luban-4.15.0"
+  ];
+
   hardware = {
     trackpoint.device = "TPPS/2 ALPS TrackPoint";
     graphics = {

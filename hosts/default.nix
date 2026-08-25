@@ -36,15 +36,21 @@ in
       modules = [
         ./x13/configuration.nix
         ./x13/hardware-configuration.nix
+        claudeCodeOverlay
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit homeManagerModules inputs; };
+            users.jtraue = import ./x13/home-configuration.nix;
+          };
+        }
       ];
     };
   };
 
   homeConfigurations = {
-    "jtraue@x13" = mkHomeConfig {
-      modules = [ ./x13/home-configuration.nix claudeCodeOverlay ];
-    };
-
     "jtraue@igor2" = mkHomeConfig {
       modules = [ ./igor2/home-configuration.nix claudeCodeOverlay ];
     };

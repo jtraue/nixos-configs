@@ -17,11 +17,6 @@
     EJECTCD=y
   '';
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "snapmaker-luban-4.15.0"
-  ];
-
-
   services.udiskie = {
     settings = {
       device_config = [
