@@ -1,15 +1,39 @@
-{ config, lib, inputs, ... }:
+{ config, lib, inputs, osConfig ? null, ... }:
 let
   cfg = config.my.desktop.niri;
+
+  # `osConfig` is only set (see home-manager's nixos/common.nix specialArgs)
+  # when this module runs embedded via the NixOS home-manager module. In
+  # that case, default to following the NixOS-level my.desktop.niri.enable
+  # so enabling the session at the system level (programs.niri.enable) also
+  # brings along config.kdl and noctalia here, instead of silently leaving
+  # niri running with its built-in fallback config and no shell.
+  osLevelEnable = osConfig != null && (osConfig.my.desktop.niri.enable or false);
 in
 {
   imports = [
     inputs.noctalia.homeModules.default
   ];
 
-  options.my.desktop.niri.enable = lib.mkEnableOption "niri session config (config.kdl) and the noctalia shell";
+  options.my.desktop.niri.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = osLevelEnable;
+    defaultText = lib.literalExpression "osConfig.my.desktop.niri.enable or false";
+    description = "niri session config (config.kdl) and the noctalia shell.";
+  };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = osConfig == null || osLevelEnable;
+        message = ''
+          `my.desktop.niri.enable` is set in home-manager but not at the
+          NixOS level (`my.desktop.niri.enable` in configuration.nix) - the
+          niri session itself won't be installed. Enable it there too.
+        '';
+      }
+    ];
+
     xdg.configFile."niri/config.kdl".source = ./config.kdl;
 
     programs.noctalia = {
