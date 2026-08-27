@@ -15,6 +15,9 @@ in
       # niri session: multi-monitor setup (Super+Alt+M)
       wdisplays
       wl-mirror
+      # niri auto-spawns this on demand for any X11 client and exports
+      # $DISPLAY, but only if it's actually on PATH (niri >= 25.08).
+      xwayland-satellite
     ];
   };
 }
