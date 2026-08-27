@@ -14,6 +14,7 @@ in
       fuzzel
       # niri session: multi-monitor setup (Super+Alt+M)
       wdisplays
+      wl-mirror
     ];
   };
 }
