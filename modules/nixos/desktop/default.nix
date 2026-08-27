@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./gnome.nix
+    ./niri.nix
   ];
 
   options.my.desktop.enable = lib.mkEnableOption "desktop environment (graphics, audio, printing, bluetooth)";

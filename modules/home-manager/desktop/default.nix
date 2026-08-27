@@ -27,6 +27,7 @@ in
 {
   imports = [
     ./gnome.nix
+    ./niri
   ];
 
   options.my.desktop.enable = lib.mkEnableOption "desktop apps and settings (chromium, mime types, redshift)";

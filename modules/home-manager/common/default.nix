@@ -1,7 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? null, ... }:
 
 let
   cfg = config.my.common;
+
+  # `osConfig` is only set (see home-manager's nixos/common.nix specialArgs)
+  # when this module runs embedded via the NixOS home-manager module. In that
+  # case, `useGlobalPkgs` already shares the system's `pkgs` (with its own
+  # `nixpkgs.config.allowUnfree`), and setting `nixpkgs.config` here as well
+  # is deprecated/disallowed. Only fall back to setting it ourselves for a
+  # true standalone home-manager configuration.
+  useGlobalPkgs = osConfig != null && (osConfig.home-manager.useGlobalPkgs or false);
 in
 {
   imports = [
@@ -29,7 +37,7 @@ in
 
     fonts.fontconfig.enable = true;
 
-    nixpkgs = {
+    nixpkgs = lib.mkIf (!useGlobalPkgs) {
       config = {
         allowUnfree = true;
       };
