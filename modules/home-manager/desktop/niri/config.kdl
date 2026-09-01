@@ -333,6 +333,12 @@ window-rule {
     open-floating true
 }
 
+window-rule {
+    // Start VirtualBox in 100% width
+    match app-id=r#"VirtualBox*"# 
+    open-maximized true
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
