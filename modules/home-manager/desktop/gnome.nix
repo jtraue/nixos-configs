@@ -32,6 +32,18 @@ in
           sources = [ (mkTuple [ "xkb" "us+intl" ]) ];
         };
 
+        # --- Evolution Calendar ---
+        # "Use system timezone" auto-detects by content-matching /etc/localtime
+        # against the zoneinfo database. NixOS's /etc/localtime lives in the Nix
+        # store rather than /usr/share/zoneinfo, so that scan falls back to
+        # whichever identically-ruled zone sorts first alphabetically
+        # (Arctic/Longyearbyen, same DST rules as Europe/Berlin since the 1940s)
+        # instead of the intended zone. Set it explicitly to avoid the mislabel.
+        "org/gnome/evolution/calendar" = {
+          use-system-timezone = false;
+          timezone = "Europe/Berlin";
+        };
+
         # --- Peripherals: touchpad disabled, using trackpoint instead ---
         "org/gnome/desktop/peripherals/touchpad" = {
           send-events = "disabled";
