@@ -43,12 +43,12 @@ in
         theme = {
           mode = "dark";
           source = "builtin";
-          builtin = "Catppuccin";
-          community_palette = "Oxocarbon";
+          builtin = "Gruvbox";
+          community_palette = "Solarized";
           wallpaper_scheme = "m3-content";
           templates = {
             builtin_ids = [ "alacritty" "btop" "niri" "qt" "gtk3" "gtk4" ];
-            community_ids = [ "fuzzel" ];
+            community_ids = [ "fuzzel" "zellij" "tmux" ];
           };
         };
 
@@ -81,8 +81,21 @@ in
           app_icon_colorize = true;
         };
 
+        control_center.calendar = {
+          show_week_numbers = true;
+        };
+
+        widget.workspaces = {
+          label_source = "name";
+          max_label_chars = 10;
+        };
+
+        widget.wallhaven.type = "noctalia/wallhaven:wallhaven";
+        widget.mirror.type = "elijaharch/wl-screen-mirror:mirror";
+
         bar.default = {
-          center = [ ];
+          start = [ "launcher" "wallpaper" "workspaces" "wallhaven" ];
+          center = [ "mirror" ];
           end = [
             "media"
             "tray"
@@ -105,7 +118,7 @@ in
           smart_auto_hide = true;
         };
 
-        plugins.enabled = [ "raycursive/niri-displays" "noctalia/wallhaven" ];
+        plugins.enabled = [ "raycursive/niri-displays" "noctalia/wallhaven" "elijaharch/wl-screen-mirror" ];
       };
     };
   };
