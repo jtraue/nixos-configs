@@ -21,7 +21,27 @@ in
 
       plugins = with pkgs.tmuxPlugins;
         [
-          power-theme
+          {
+            plugin = catppuccin;
+            extraConfig = ''
+              set -g @catppuccin_flavor 'mocha' # latte, frappe, macchiato or mocha
+              set -g @catppuccin_status_background 'none'
+              set -g @catppuccin_date_time_text " W%V %Y-%m-%d %H:%M"
+
+              # window list: number and application name
+              # ('rounded' looks wrong here: its pill-shaped separators rely
+              # on blending into a solid status-bar background color via a
+              # reverse-video trick, but @catppuccin_status_background is
+              # 'none' (transparent), so inactive windows get a mismatched
+              # colored halo instead of a clean rounded cap)
+              set -g @catppuccin_window_status_style 'basic'
+              set -g @catppuccin_window_text " #{pane_current_command}"
+              set -g @catppuccin_window_current_text " #{pane_current_command}"
+
+              # user status module: person icon
+              set -g @catppuccin_user_icon " "
+            '';
+          }
         ];
 
       # select-layout even-vertical
@@ -30,11 +50,13 @@ in
         # reload configuration
         bind R source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
 
-        set -g @tmux_power_theme 'gold'
-        set -g @tmux_power_left_a '''''' # hide user and host
-        set -g @tmux_power_left_b '''''' # hide session
-        set -g @tmux_power_right_y ' %H:%M'
-        set -g @tmux_power_right_z ' KW%V %Y-%m-%d'
+        # window list: application name only, no number/flags
+        set -g window-status-format "#[fg=#{@thm_overlay_2}] #{pane_current_command} "
+        set -g window-status-current-format "#[fg=#{@thm_mauve},bold] #{pane_current_command} "
+
+        # status bar: nothing on the left, only time/date on the right
+        set -g status-left ""
+        set -g status-right "#{E:@catppuccin_status_date_time}"
 
         bind q kill-session
 
