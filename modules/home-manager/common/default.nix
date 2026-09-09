@@ -61,6 +61,7 @@ in
       drawio
       file
       btop
+      nerd-fonts.symbols-only
       nmap
       pass
       powerline-fonts

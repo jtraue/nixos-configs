@@ -50,12 +50,9 @@ in
         # reload configuration
         bind R source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
 
-        # window list: application name only, no number/flags
-        set -g window-status-format "#[fg=#{@thm_overlay_2}] #{pane_current_command} "
-        set -g window-status-current-format "#[fg=#{@thm_mauve},bold] #{pane_current_command} "
-
-        # status bar: nothing on the left, only time/date on the right
-        set -g status-left ""
+        # status bar: user/host on the left, time/date on the right
+        set -g status-left-length 40
+        set -g status-left "#{E:@catppuccin_status_user}#{E:@catppuccin_status_host}"
         set -g status-right "#{E:@catppuccin_status_date_time}"
 
         bind q kill-session
