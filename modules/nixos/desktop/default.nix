@@ -68,8 +68,10 @@ in
       # fontconfig = {
       # defaultFonts = { monospace = [ "Fira Code Light" ]; };
       # };
-      packages = builtins.filter lib.isDerivation (builtins.attrValues pkgs.nerd-fonts);
-
+      packages = with pkgs.nerd-fonts; [
+        jetbrains-mono # Alacritty terminal font
+        symbols-only # icon glyphs layered onto non-patched fonts (e.g. tmux)
+      ];
     };
     nixpkgs.config.input-fonts.acceptLicense = true;
 

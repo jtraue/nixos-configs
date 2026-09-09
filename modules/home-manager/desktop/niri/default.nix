@@ -36,6 +36,19 @@ in
 
     xdg.configFile."niri/config.kdl".source = ./config.kdl;
 
+    # noctalia's "alacritty" template (below) only manages
+    # ~/.config/alacritty/themes/noctalia.toml (colors); the font has to be
+    # set separately in the base config it's imported from.
+    xdg.configFile."alacritty/alacritty.toml".text = ''
+      [general]
+      import = [
+          "~/.config/alacritty/themes/noctalia.toml"
+      ]
+
+      [font]
+      normal = { family = "JetBrainsMono Nerd Font Mono" }
+    '';
+
     programs.noctalia = {
       enable = true;
       settings = {
