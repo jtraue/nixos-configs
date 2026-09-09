@@ -91,22 +91,46 @@ in
         };
 
         widget.wallhaven.type = "noctalia/wallhaven:wallhaven";
-        widget.mirror.type = "elijaharch/wl-screen-mirror:mirror";
+        widget.mirror_2.type = "elijaharch/wl-screen-mirror:mirror";
+        widget.date.format = "KW{:%V %a %d %b}";
+        widget.media.enabled = false;
+
+        widget.spacer_2.type = "spacer";
+        widget.spacer_3.type = "spacer";
+        widget.spacer_4.type = "spacer";
+        widget.spacer_5.type = "spacer";
+        widget.spacer_6.type = "spacer";
+        widget.spacer_7.type = "spacer";
 
         bar.default = {
-          start = [ "launcher" "wallpaper" "workspaces" "wallhaven" ];
-          center = [ "mirror" ];
+          start = [ "launcher" "workspaces" "spacer_2" "wallpaper" "wallhaven" "spacer_3" "screenshot" "mirror_2" ];
+          capsule_group = [
+            {
+              id = "g1";
+              members = [ "brightness" ];
+              fill = "surface_variant";
+              padding = 6.0;
+              opacity = 1.0;
+              accordion = false;
+              accordion_direction = "end";
+              enabled = true;
+            }
+          ];
           end = [
             "media"
             "tray"
+            "spacer_7"
             "notifications"
             "clipboard"
+            "spacer_6"
             "network"
             "bluetooth"
-            "volume"
-            "brightness"
+            "group:g1"
             "battery"
+            "spacer_5"
+            "date"
             "clock"
+            "spacer_4"
             "control-center"
             "session"
           ];
