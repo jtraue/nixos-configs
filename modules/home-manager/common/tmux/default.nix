@@ -32,9 +32,11 @@ in
         bind R source-file ~/.config/tmux/tmux.conf \; display '~/tmux.conf sourced'
 
         set -g @tmux_power_theme 'gold'
-        set -g @tmux_power_show_user    false
-        set -g @tmux_power_show_host    false
-        set -g @tmux_power_show_session    true
+        set -g @tmux_power_left_a '''' # hide user and host
+        set -g @tmux_power_left_b '''' # hide session
+        set -g @tmux_power_right_y ' %H:%M'
+        set -g @tmux_power_right_z ' KW%V %Y-%m-%d'
+
         run-shell "${pkgs.tmuxPlugins.power-theme}/share/tmux-plugins/power/tmux-power.tmux"
 
         bind q kill-session
