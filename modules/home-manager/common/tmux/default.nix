@@ -22,7 +22,6 @@ in
       plugins = with pkgs.tmuxPlugins;
         [
           power-theme
-          resurrect
         ];
 
       # select-layout even-vertical
@@ -36,8 +35,6 @@ in
         set -g @tmux_power_left_b '''' # hide session
         set -g @tmux_power_right_y ' %H:%M'
         set -g @tmux_power_right_z ' KW%V %Y-%m-%d'
-
-        run-shell "${pkgs.tmuxPlugins.power-theme}/share/tmux-plugins/power/tmux-power.tmux"
 
         bind q kill-session
 
