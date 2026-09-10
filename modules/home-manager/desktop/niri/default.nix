@@ -47,6 +47,9 @@ in
 
       [font]
       normal = { family = "JetBrainsMono Nerd Font Mono" }
+
+      [window]
+      decorations = "None" # niri has no server-side title bar; drop Alacritty's own CSD one too
     '';
 
     programs.noctalia = {
