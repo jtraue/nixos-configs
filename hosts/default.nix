@@ -44,6 +44,7 @@ in
             useUserPackages = true;
             extraSpecialArgs = { inherit homeManagerModules inputs; };
             users.jtraue = import ./x13/home-configuration.nix;
+            backupFileExtension = ".bak";
           };
         }
       ];
