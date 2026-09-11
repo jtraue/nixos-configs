@@ -67,6 +67,14 @@ input {
         // middle-emulation
     }
 
+    // Wacom One pen tablet: map to the external monitor from the "docked"
+    // kanshi profile (see hosts/carbonara/home-configuration.nix), matched
+    // by make/model/serial so it stays correct regardless of which port
+    // it's plugged into.
+    tablet {
+        map-to-output "Dell Inc. DELL U3419W HXL46T2"
+    }
+
     // Uncomment this to make the mouse warp to the center of newly focused windows.
     // warp-mouse-to-focus
 
