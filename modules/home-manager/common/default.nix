@@ -43,8 +43,17 @@ in
       };
     };
 
-    # application icons are missing in gnome for apps installed by home-manager otherwise
-    targets.genericLinux.enable = true;
+    # NOTE: targets.genericLinux used to be enabled here to fix missing GNOME
+    # icons for home-manager-installed apps, but it's meant for non-NixOS
+    # distros: it unconditionally sources the standalone Nix installer's
+    # etc/profile.d/nix.sh, which overwrites $NIX_PROFILES with a value that
+    # drops /run/current-system/sw and /etc/profiles/per-user/$USER, breaking
+    # zsh's `_nix` completion (nix build/run flake-output tab-completion) and
+    # anything else relying on the full profile list. Since useGlobalPkgs and
+    # useUserPackages are both enabled, /etc/profiles/per-user/$USER/share is
+    # already in $XDG_DATA_DIRS via NixOS's own environment setup, so this
+    # shouldn't be needed; leaving disabled unless GNOME icons regress.
+    targets.genericLinux.enable = false;
 
     programs.command-not-found.enable = true;
 
