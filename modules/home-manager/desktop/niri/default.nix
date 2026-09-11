@@ -108,7 +108,7 @@ in
 
         widget.wallhaven.type = "noctalia/wallhaven:wallhaven";
         widget.mirror_2.type = "elijaharch/wl-screen-mirror:mirror";
-        widget.date.format = "KW{:%V %a %d %b}";
+        widget.date.format = "W{:%V %Y-%m-%d %H:%M}";
         widget.media.enabled = false;
 
         widget.spacer_2.type = "spacer";
@@ -145,7 +145,6 @@ in
             "battery"
             "spacer_5"
             "date"
-            "clock"
             "spacer_4"
             "control-center"
             "session"
